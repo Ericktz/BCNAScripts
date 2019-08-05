@@ -37,7 +37,8 @@ unzip -xfz bcna-1.0.0-unix.zip -d Bitcanna
 sync(){
 echo "WAIT TO SYNC..."
 # FOR cicle to check syncing --> 
-.~/Bitcanna/bitcanna-cli getblockchaininfo
+tail -f ~/.bitcanna/debug.log | grep 'process=1' | read -t 15 dummyvar
+[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; .~/Bitcanna/bitcanna-cli getinfo
 }
 
 choice(){
@@ -63,7 +64,8 @@ rm .bitcanna/masternode.conf
 .~/Bitcanna/bitcannad --daemon
 echo "wait... little more..." sleep 10 
 sync
-
+echo "Lets Generate your Address"
+~/Bitcanna/bitcanna-cli getnewaddress wallet.dat
 }
 
 check
