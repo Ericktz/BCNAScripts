@@ -25,22 +25,56 @@ apt install -y unzip
 userad(){
 adduser bitcanna
 cp /etc/sudoers /etc/oldsudoers
-sed '/root    ALL=(ALL:ALL) ALL/a bitcanna  ALL=(ALL:ALL) ALL' file /etc/sudoers
+sed '/root    ALL=(ALL:ALL) ALL/a bitcanna  ALL=(ALL:ALL) ALL' /etc/sudoers
+}
+
+bcnadown(){
+wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/bcna-1.0.0-unix.zip
+mkdir Bitcanna
+unzip -xfz bcna-1.0.0-unix.zip -d Bitcanna
+}
+
+sync(){
+echo "WAIT TO SYNC..."
+# FOR cicle to check syncing --> 
+.~/Bitcanna/bitcanna-cli getblockchaininfo
+}
+
+choice(){
+read -n 1 -p "Would you like Configuere STAKE (POS) or MasterNode (MN)? (P/M) " cho;
+case $cho in
+    p|P)
+        stake ;;
+    m|M)
+        masternode ;;
+    *)
+        echo "invalid option" ;;
+esac
+}
+
+masternode(){
+}
+
+stake(){
+#cd Bitcanna
+.~/Bitcanna/bitcannad --daemon && sleep 2 && .~/Bitcanna/bitcanna-cli stop
+rm .bitcanna/masternode.conf
+"Connecting..."
+.~/Bitcanna/bitcannad --daemon
+echo "wait... little more..." sleep 10 
+sync
+
 }
 
 check
 checkapt
 userad
-
 su bitcanna && cd ~
-wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/bcna-1.0.0-unix.zip
-mkdir Bitcanna
-unzip -xfz bcna-1.0.0-unix.zip -d Bitcanna
-#cd Bitcanna
-.~/Bitcanna/bitcannad --daemon && sleep 2 && .~/Bitcanna/bitcanna-cli stop
+bcnadown
+choice
 
-rm .bitcanna/masternode.conf
-.~/Bitcanna/bitcannad --daemon
 
-echo "WAIT TO SYNC..."
-# FOR cicle to check syncing --> .~/Bitcanna/bitcanna-cli 
+
+
+
+
