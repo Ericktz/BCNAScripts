@@ -96,6 +96,10 @@ WantedBy=multi-user.target
 fi
 }
 
+backup(){
+#backup wallet privkeys pub keys passwords bl BLaa bla and compressing it with password :)
+}
+
 walletconf(){
 echo "Lets Generate your Address"
 ~/Bitcanna/bitcanna-cli getnewaddress wallet.dat
@@ -110,6 +114,8 @@ firstrun
 sync
 walletconf
 service
+
+backup
 }
 
 stake(){
@@ -117,6 +123,8 @@ firstrun
 sync
 walletconf
 service
+
+backup
 }
 
 check
