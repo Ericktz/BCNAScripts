@@ -139,11 +139,6 @@ read walletpass
 $BCNADIR/bitcanna-cli walletpassphrase $walletpass
 }
 
-finalconfigs(){
-echo "Set Stake"
-$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
-}
-
 mess(){
 rm /etc/sudoers.tmp
 rm /etc/oldsudoers
@@ -162,7 +157,7 @@ stake(){
 firstrun
 sync
 walletconf
-finalconfigs
+$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
 service
 backup
 }
