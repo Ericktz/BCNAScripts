@@ -1,5 +1,7 @@
 # BCNA Scripts
-Bitcanna Installer Contribute script
+Bitcanna Community Contribution script
+
+STATUS: Developing
 
 Script to:
 - Ubuntu 18.04 LTS Server
