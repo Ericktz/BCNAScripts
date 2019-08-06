@@ -13,7 +13,7 @@ varys(){
 BCNAPKG=bcna-1.0.0-unix.zip
 BCNAHOME=/home/bitcanna
 BCNADIR='$BCNAHOME/Bitcanna'
-STAKE=100
+STAKE='100'
 }
 
 check(){
@@ -23,11 +23,6 @@ if [ "root" != "$USER" ]
   then  sudo su -c "$0" root
   exit
 fi
-}
-
-checkapt(){
-echo "Checking packages.."
-apt update && apt upgrade -y apt install -y unzip
 }
 
 userad(){
@@ -163,7 +158,6 @@ backup
 }
 
 check
-checkapt
 userad
 su bitcanna && cd ~
 bcnadown
