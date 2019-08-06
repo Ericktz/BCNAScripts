@@ -5,6 +5,9 @@
 # Updating
 # Donate BCNA: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
 #
+varys(){
+# Starting "variabling"
+}
 
 check(){
 echo "Checking as running as root user"
@@ -17,9 +20,7 @@ fi
 
 checkapt(){
 echo "Checking packages.."
-apt update
-apt upgrade -y
-apt install -y unzip
+apt update && apt upgrade -y apt install -y unzip
 }
 
 userad(){
@@ -97,13 +98,26 @@ fi
 }
 
 backup(){
-#backup wallet privkeys pub keys passwords bl BLaa bla and compressing it with password :)
+mkdir ~/home/bitcanna/BACKUP && chmod 700 ~/home/bitcanna/BACKUP
+~/Bitcanna/bitcanna-cli backupwallet ~/home/bitcanna/BACKUP
+~/Bitcanna/bitcanna-cli dumpprivkey $WALLETADDRESS
+~/Bitcanna/bitcanna-cli backupwallet dumpwallet wallet.dat
+echo "$walletpass" >> ~/home/bitcanna/BACKUP/password.txt
+tar -czvf ~/home/bitcanna/WalletBackup.tar.gz ~/home/bitcanna/BACKUP
+chmod 500 ~/home/bitcanna/WalletBackup.tar.gz
+echo && echo "WALLET BACKUPED ON: ~/home/bitcanna/WalletBackup.tar.gz && echo
+echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"1
+sleep 3
+cd ~/home/bitcanna/ && echo pwd && ls -a
+read -n 1 -s -r -p "Press any key to continue" 
 }
 
 walletconf(){
 echo "Lets Generate your Address"
 ~/Bitcanna/bitcanna-cli getnewaddress wallet.dat
-~/Bitcanna/bitcanna-cli getaddressesbyaccount wallet.dat
+WALLETADDRESS='~/Bitcanna/bitcanna-cli getaddressesbyaccount wallet.dat'
+echo "My Wallet Address Is:"
+echo $WALLETADDRESS
 echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
 read walletpass
 ~/Bitcanna/bitcanna-cli walletpassphrase $walletpass
