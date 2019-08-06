@@ -52,7 +52,7 @@ unzip -xfz $BCNAPKG -d Bitcanna
 sync(){
 echo "WAIT TO SYNC..."
 # FOR cicle to check syncing --> 
-tail -f ~/.bitcanna/debug.log | grep 'process=1' | read -t 5 dummyvar
+tail -f $BCNAHOME/.bitcanna/debug.log | grep 'process=1' | read -t 5 dummyvar
 [ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; .$BCNADIR/bitcanna-cli getinfo
 }
 
@@ -70,7 +70,7 @@ esac
 
 firstrun(){
 #cd Bitcanna
-.$BCNADIR/bitcannad --daemon && sleep 2 && .$BCNAHOME/Bitcanna/bitcanna-cli stop
+.$BCNADIR/bitcannad --daemon && sleep 2 && .$BCNADIR/bitcanna-cli stop
 rm $BCNAHOME/.bitcanna/masternode.conf
 "Connecting..."
 .$BCNADIR/bitcannad --daemon
