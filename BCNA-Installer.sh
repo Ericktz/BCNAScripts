@@ -37,6 +37,14 @@ read -n 1 -s -r -p "Press any key to continue to VISUDO"
 visudo
 }
 
+login(){
+sudo -u bitcanna bash << EOF
+echo "In"
+whoami
+echo "smells me ... cant pass vars :D work'n'it"
+EOF
+}
+
 bcnadown(){
 wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
 mkdir Bitcanna
@@ -159,7 +167,7 @@ backup
 
 check
 userad
-su bitcanna && cd ~
+login
 bcnadown
 choice
 mess
