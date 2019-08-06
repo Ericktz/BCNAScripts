@@ -8,6 +8,8 @@
 varys(){
 # Starting "variabling"
 BCNAPKG=bcna-1.0.0-unix.zip
+BCNAHOME=~/home/bitcanna
+BCNADIR=$BCNAHOME/Bitcanna
 }
 
 check(){
@@ -50,8 +52,8 @@ unzip -xfz $BCNAPKG -d Bitcanna
 sync(){
 echo "WAIT TO SYNC..."
 # FOR cicle to check syncing --> 
-tail -f ~/.bitcanna/debug.log | grep 'process=1' | read -t 15 dummyvar
-[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; .~/Bitcanna/bitcanna-cli getinfo
+tail -f ~/.bitcanna/debug.log | grep 'process=1' | read -t 5 dummyvar
+[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; .$BCNADIR/bitcanna-cli getinfo
 }
 
 choice(){
@@ -68,10 +70,10 @@ esac
 
 firstrun(){
 #cd Bitcanna
-.~/Bitcanna/bitcannad --daemon && sleep 2 && .~/Bitcanna/bitcanna-cli stop
-rm .bitcanna/masternode.conf
+.$BCNADIR/bitcannad --daemon && sleep 2 && .$BCNAHOME/Bitcanna/bitcanna-cli stop
+rm $BCNAHOME/.bitcanna/masternode.conf
 "Connecting..."
-.~/Bitcanna/bitcannad --daemon
+.$BCNADIR/bitcannad --daemon
 echo "wait... little more..." sleep 10
 }
 
@@ -79,7 +81,7 @@ service(){
 echo "!!!!DO THIS NEEDS STOP THE WALLET!!!!!"
 read -p "You want set Bitcanna Run as Server Booting? [Y/N]" answer
 if [[ $answer = y ]] ; then
- ~/Bitcanna/bitcanna-cli stop
+ $BCNADIR/bitcanna-cli stop
  cat << EOF > /lib/systemd/system/bitcanna.service
 [Unit]
 Description=BCNA's distributed currency daemon EDITED by hellrezistor
@@ -90,7 +92,7 @@ Group=bitcanna
 Type=forking
 PIDFile=/var/lib/bitcannad/bitcannad.pid
 ### THIS ARE ALL WROONNGG :DDD ####
-ExecStart=/home/bitcanna/Bitcanna/bitcannad -daemon -pid=/home/bitcanna/.bitcanna/bitcannad.pid \
+ExecStart=$BCNADIR/bitcannad -daemon -pid=/home/bitcanna/.bitcanna/bitcannad.pid \
           -conf=/home/bitcanna/.bitcanna/bitcanna.conf -datadir=/home/bitcanna/.bitcanna
 ExecStop=-/home/bitcanna/Bitcanna/bitcanna-cli stop -conf=/home/bitcanna/.bitcanna/bitcanna.conf \
          -datadir=/home/bitcanna/.bitcanna
@@ -110,29 +112,34 @@ fi
 }
 
 backup(){
-mkdir ~/home/bitcanna/BACKUP && chmod 700 ~/home/bitcanna/BACKUP
-~/Bitcanna/bitcanna-cli backupwallet ~/home/bitcanna/BACKUP
-~/Bitcanna/bitcanna-cli dumpprivkey $WALLETADDRESS
-~/Bitcanna/bitcanna-cli backupwallet dumpwallet wallet.dat
-echo "$walletpass" >> ~/home/bitcanna/BACKUP/password.txt
-tar -czvf ~/home/bitcanna/WalletBackup.tar.gz ~/home/bitcanna/BACKUP
-chmod 500 ~/home/bitcanna/WalletBackup.tar.gz
-echo && echo "WALLET BACKUPED ON: ~/home/bitcanna/WalletBackup.tar.gz && echo
-echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"1
+mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
+$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP
+$BCNADIR/bitcanna-cli dumpprivkey $WALLETADDRESS
+$BCNADIR/bitcanna-cli backupwallet dumpwallet wallet.dat
+echo "$walletpass" >> $BCNAHOME/BACKUP/password.txt
+tar -czvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
+chmod 500 $BCNAHOME/WalletBackup.tar.gz
+echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz && echo
+echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"
 sleep 3
-cd ~/home/bitcanna/ && echo pwd && ls -a
+cd $BCNAHOME && echo pwd && ls -a
 read -n 1 -s -r -p "Press any key to continue" 
 }
 
 walletconf(){
 echo "Lets Generate your Address"
-~/Bitcanna/bitcanna-cli getnewaddress wallet.dat
-WALLETADDRESS='~/Bitcanna/bitcanna-cli getaddressesbyaccount wallet.dat'
+$BCNADIR/bitcanna-cli getnewaddress wallet.dat
+WALLETADDRESS='$BCNADIR/bitcanna-cli getaddressesbyaccount wallet.dat'
 echo "My Wallet Address Is:"
 echo $WALLETADDRESS
 echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
 read walletpass
-~/Bitcanna/bitcanna-cli walletpassphrase $walletpass
+$BCNADIR/bitcanna-cli walletpassphrase $walletpass
+}
+
+finalconfigs(){
+echo "Set Stake"
+$BCNADIR/bitcanna-cli setstakesplitthreshold 100
 }
 
 masternode(){
@@ -148,8 +155,8 @@ stake(){
 firstrun
 sync
 walletconf
+finalconfigs
 service
-
 backup
 }
 
