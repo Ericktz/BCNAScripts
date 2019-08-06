@@ -1,15 +1,19 @@
 #!/bin/sh
-# Script Contribution
+# Script Contribution to BitCanna Community
 # To Ubuntu Server 18.04
-# by DoMato
-# Updating
+#
+# STATUS: Developing
+#
+# by DoMato aka hellresistor
 # Donate BCNA: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
 #
+
 varys(){
 # Starting "variabling"
 BCNAPKG=bcna-1.0.0-unix.zip
-BCNAHOME=~/home/bitcanna
-BCNADIR=$BCNAHOME/Bitcanna
+BCNAHOME=/home/bitcanna
+BCNADIR='$BCNAHOME/Bitcanna'
+STAKE=100
 }
 
 check(){
@@ -39,8 +43,6 @@ visudo -c -f /tmp/sudoers.new
 if [ "$?" -eq "0" ]; then
     cp /tmp/sudoers.new /etc/sudoers
 fi
-rm /etc/sudoers.tmp
-rm /etc/oldsudoers
 }
 
 bcnadown(){
@@ -79,12 +81,12 @@ echo "wait... little more..." sleep 10
 
 service(){
 echo "!!!!DO THIS NEEDS STOP THE WALLET!!!!!"
-read -p "You want set Bitcanna Run as Server Booting? [Y/N]" answer
+read -p "You want set Bitcanna as Run a service on startup? [Y/N]" answer
 if [[ $answer = y ]] ; then
  $BCNADIR/bitcanna-cli stop
  cat << EOF > /lib/systemd/system/bitcanna.service
 [Unit]
-Description=BCNA's distributed currency daemon EDITED by hellrezistor
+Description=BCNA's distributed currency daemon EDITED by hellresistor
 After=network.target
 [Service]
 User=bitcanna
@@ -92,10 +94,10 @@ Group=bitcanna
 Type=forking
 PIDFile=/var/lib/bitcannad/bitcannad.pid
 ### THIS ARE ALL WROONNGG :DDD ####
-ExecStart=$BCNADIR/bitcannad -daemon -pid=/home/bitcanna/.bitcanna/bitcannad.pid \
-          -conf=/home/bitcanna/.bitcanna/bitcanna.conf -datadir=/home/bitcanna/.bitcanna
-ExecStop=-/home/bitcanna/Bitcanna/bitcanna-cli stop -conf=/home/bitcanna/.bitcanna/bitcanna.conf \
-         -datadir=/home/bitcanna/.bitcanna
+ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNAHOME/.bitcanna/bitcannad.pid \
+          -conf=$BCNAHOME/.bitcanna/bitcanna.conf -datadir=$BCNAHOME/.bitcanna
+ExecStop=$BCNADIR/bitcanna-cli stop -conf=$BCNAHOME/.bitcanna/bitcanna.conf \
+         -datadir=$BCNAHOME/.bitcanna
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
@@ -139,7 +141,12 @@ $BCNADIR/bitcanna-cli walletpassphrase $walletpass
 
 finalconfigs(){
 echo "Set Stake"
-$BCNADIR/bitcanna-cli setstakesplitthreshold 100
+$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
+}
+
+mess(){
+rm /etc/sudoers.tmp
+rm /etc/oldsudoers
 }
 
 masternode(){
@@ -166,6 +173,7 @@ userad
 su bitcanna && cd ~
 bcnadown
 choice
+mess
 
 
 
