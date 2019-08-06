@@ -53,19 +53,72 @@ case $cho in
 esac
 }
 
-masternode(){
-}
-
-stake(){
+firstrun(){
 #cd Bitcanna
 .~/Bitcanna/bitcannad --daemon && sleep 2 && .~/Bitcanna/bitcanna-cli stop
 rm .bitcanna/masternode.conf
 "Connecting..."
 .~/Bitcanna/bitcannad --daemon
-echo "wait... little more..." sleep 10 
-sync
+echo "wait... little more..." sleep 10
+}
+
+startup(){
+echo "!!!!DO THIS NEEDS STOP THE WALLET!!!!!"
+read -p "You want set Bitcanna Run as Server Booting? [Y/N]" answer
+if [[ $answer = y ]] ; then
+ ~/Bitcanna/bitcanna-cli stop
+ cat <<EOF > /lib/systemd/system/bitcanna.service
+[Unit]
+Description=BCNA's distributed currency daemon
+After=network.target
+[Service]
+User=bitcanna
+Group=bitcanna
+Type=forking
+PIDFile=/var/lib/bitcannad/bitcannad.pid
+### THIS ARE ALL WROONNGG :DDD ####
+ExecStart=/usr/bin/bitcannad -daemon -pid=/var/lib/bitcannad/bitcannad.pid \
+          -conf=/etc/bitcanna/bitcanna.conf -datadir=/var/lib/bitcannad
+ExecStop=-/usr/bin/bitcanna-cli -conf=/etc/bitcanna/bitcanna.conf \
+         -datadir=/var/lib/bitcannad stop
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+[Install]
+WantedBy=multi-user.target
+ EOF
+ systemctl enable bitcoind
+ systemctl start bitcoind
+ systemctl status bitcoind
+fi
+
+
+}
+
+walletconf(){
 echo "Lets Generate your Address"
 ~/Bitcanna/bitcanna-cli getnewaddress wallet.dat
+~/Bitcanna/bitcanna-cli getaddressesbyaccount wallet.dat
+echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
+read walletpass
+~/Bitcanna/bitcanna-cli walletpassphrase $walletpass
+}
+
+masternode(){
+firstrun
+sync
+walletconf
+startup
+}
+
+stake(){
+firstrun
+sync
+walletconf
+startup
 }
 
 check
