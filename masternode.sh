@@ -62,14 +62,14 @@ rm .bitcanna/masternode.conf
 echo "wait... little more..." sleep 10
 }
 
-startup(){
+service(){
 echo "!!!!DO THIS NEEDS STOP THE WALLET!!!!!"
 read -p "You want set Bitcanna Run as Server Booting? [Y/N]" answer
 if [[ $answer = y ]] ; then
  ~/Bitcanna/bitcanna-cli stop
- cat <<EOF > /lib/systemd/system/bitcanna.service
+ cat << EOF > /lib/systemd/system/bitcanna.service
 [Unit]
-Description=BCNA's distributed currency daemon
+Description=BCNA's distributed currency daemon EDITED by hellrezistor
 After=network.target
 [Service]
 User=bitcanna
@@ -77,10 +77,10 @@ Group=bitcanna
 Type=forking
 PIDFile=/var/lib/bitcannad/bitcannad.pid
 ### THIS ARE ALL WROONNGG :DDD ####
-ExecStart=/usr/bin/bitcannad -daemon -pid=/var/lib/bitcannad/bitcannad.pid \
-          -conf=/etc/bitcanna/bitcanna.conf -datadir=/var/lib/bitcannad
-ExecStop=-/usr/bin/bitcanna-cli -conf=/etc/bitcanna/bitcanna.conf \
-         -datadir=/var/lib/bitcannad stop
+ExecStart=/home/bitcanna/Bitcanna/bitcannad -daemon -pid=/home/bitcanna/.bitcanna/bitcannad.pid \
+          -conf=/home/bitcanna/.bitcanna/bitcanna.conf -datadir=/home/bitcanna/.bitcanna
+ExecStop=-/home/bitcanna/Bitcanna/bitcanna-cli stop -conf=/home/bitcanna/.bitcanna/bitcanna.conf \
+         -datadir=/home/bitcanna/.bitcanna
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
@@ -90,12 +90,10 @@ StartLimitBurst=5
 [Install]
 WantedBy=multi-user.target
  EOF
- systemctl enable bitcoind
- systemctl start bitcoind
- systemctl status bitcoind
+ systemctl enable bitcannad
+ systemctl start bitcannad
+ systemctl status bitcannad
 fi
-
-
 }
 
 walletconf(){
@@ -111,14 +109,14 @@ masternode(){
 firstrun
 sync
 walletconf
-startup
+service
 }
 
 stake(){
 firstrun
 sync
 walletconf
-startup
+service
 }
 
 check
