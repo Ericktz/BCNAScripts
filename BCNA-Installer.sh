@@ -38,23 +38,22 @@ visudo
 }
 
 login(){
-sudo -u bitcanna bash << EOF
-echo "In"
-whoami
 echo "smells me ... cant pass vars :D work'n'it"
-EOF
+#runuser -l usuario1 -c "whoami && echo $$"
+RUNUSR='runuser -l bitcanna -p -c "'
+ENDRUSR='"'
 }
 
 bcnadown(){
-wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
-mkdir Bitcanna
-unzip -xfz $BCNAPKG -d Bitcanna
+$RUNUSR wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG $ENDRUSR
+$RUNUSR mkdir Bitcanna $ENDRUSR
+$RUNUSR unzip -xfz $BCNAPKG -d Bitcanna $ENDRUSR
 }
 
 sync(){
 echo "WAIT TO SYNC..."
 # FOR cicle to check syncing --> 
-tail -f $BCNAHOME/.bitcanna/debug.log | grep 'process=1' | read -t 5 dummyvar
+tail -f $BCNAHOME/.bitcanna/debug.log | grep 'process=1' | read -t 5 dummyvar 
 [ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; .$BCNADIR/bitcanna-cli getinfo
 }
 
@@ -171,9 +170,3 @@ login
 bcnadown
 choice
 mess
-
-
-
-
-
-
