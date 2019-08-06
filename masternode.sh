@@ -7,6 +7,7 @@
 #
 varys(){
 # Starting "variabling"
+BCNAPKG=bcna-1.0.0-unix.zip
 }
 
 check(){
@@ -41,9 +42,9 @@ rm /etc/oldsudoers
 }
 
 bcnadown(){
-wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/bcna-1.0.0-unix.zip
+wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
 mkdir Bitcanna
-unzip -xfz bcna-1.0.0-unix.zip -d Bitcanna
+unzip -xfz $BCNAPKG -d Bitcanna
 }
 
 sync(){
