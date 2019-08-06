@@ -24,9 +24,20 @@ apt update && apt upgrade -y apt install -y unzip
 }
 
 userad(){
+echo "Creating bitcanna user and add to sudoers"
 adduser bitcanna
 cp /etc/sudoers /etc/oldsudoers
-sed '/root    ALL=(ALL:ALL) ALL/a bitcanna  ALL=(ALL:ALL) ALL' /etc/sudoers
+if [ -f "/etc/sudoers.tmp" ]; then
+    exit 1
+fi
+cp /etc/sudoers /etc/sudoers.tmp
+sed '/root    ALL=(ALL:ALL) ALL/a bitcanna  ALL=(ALL:ALL) ALL' /tmp/sudoers.new
+visudo -c -f /tmp/sudoers.new
+if [ "$?" -eq "0" ]; then
+    cp /tmp/sudoers.new /etc/sudoers
+fi
+rm /etc/sudoers.tmp
+rm /etc/oldsudoers
 }
 
 bcnadown(){
