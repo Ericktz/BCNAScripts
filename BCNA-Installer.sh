@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script Contribution to BitCanna Community
 # To Ubuntu Server 18.04
 #
@@ -28,16 +28,13 @@ fi
 userad(){
 echo "Creating bitcanna user and add to sudoers"
 adduser bitcanna
-cp /etc/sudoers /etc/oldsudoers
-if [ -f "/etc/sudoers.tmp" ]; then
-    exit 1
-fi
-cp /etc/sudoers /etc/sudoers.tmp
-sed '/root    ALL=(ALL:ALL) ALL/a bitcanna  ALL=(ALL:ALL) ALL' /tmp/sudoers.new
-visudo -c -f /tmp/sudoers.new
-if [ "$?" -eq "0" ]; then
-    cp /tmp/sudoers.new /etc/sudoers
-fi
+cp /etc/sudoers /etc/sudoers.bck
+echo ":( :( Soorrryy You need do it by hand :( :( :(" && sleep 1 && echo && sleep 1 && echo
+echo "!!!!!!!!!!!!!!!! COPY THIS LINE BELOW !!!!!!!!!!!!!!!!" && echo && echo && sleep 1
+echo "bicanna	ALL=(ALL:ALL) ALL" && echo && echo && sleep 1
+echo "You need PASTE THAT above of this line: root	ALL=(ALL:ALL) ALL"
+read -n 1 -s -r -p "Press any key to continue to VISUDO"
+visudo
 }
 
 bcnadown(){
@@ -69,42 +66,44 @@ firstrun(){
 #cd Bitcanna
 .$BCNADIR/bitcannad --daemon && sleep 2 && .$BCNADIR/bitcanna-cli stop
 rm $BCNAHOME/.bitcanna/masternode.conf
-"Connecting..."
+echo "Connecting..."
 .$BCNADIR/bitcannad --daemon
 echo "wait... little more..." sleep 10
 }
 
 service(){
 echo "!!!!DO THIS NEEDS STOP THE WALLET!!!!!"
-read -p "You want set Bitcanna as Run a service on startup? [Y/N]" answer
+read -p "You want set Bitcanna as Run a service on startup? [y/n]" answer
 if [[ $answer = y ]] ; then
  $BCNADIR/bitcanna-cli stop
- cat << EOF > /lib/systemd/system/bitcanna.service
-[Unit]
-Description=BCNA's distributed currency daemon EDITED by hellresistor
-After=network.target
-[Service]
-User=bitcanna
-Group=bitcanna
-Type=forking
-PIDFile=/var/lib/bitcannad/bitcannad.pid
-### THIS ARE ALL WROONNGG :DDD ####
-ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNAHOME/.bitcanna/bitcannad.pid \
+( 
+cat <<AIAI 
+ [Unit]
+ Description=BCNAs distributed currency daemon EDITED by hellresistor
+ After=network.target
+ [Service]
+ User=bitcanna
+ Group=bitcanna
+ Type=forking
+ PIDFile=/var/lib/bitcannad/bitcannad.pid
+ ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNAHOME/.bitcanna/bitcannad.pid \
           -conf=$BCNAHOME/.bitcanna/bitcanna.conf -datadir=$BCNAHOME/.bitcanna
-ExecStop=$BCNADIR/bitcanna-cli stop -conf=$BCNAHOME/.bitcanna/bitcanna.conf \
+ ExecStop=$BCNADIR/bitcanna-cli stop -conf=$BCNAHOME/.bitcanna/bitcanna.conf \
          -datadir=$BCNAHOME/.bitcanna
-Restart=always
-PrivateTmp=true
-TimeoutStopSec=60s
-TimeoutStartSec=2s
-StartLimitInterval=120s
-StartLimitBurst=5
-[Install]
-WantedBy=multi-user.target
- EOF
- systemctl enable bitcannad
- systemctl start bitcannad
- systemctl status bitcannad
+ Restart=always
+ PrivateTmp=true
+ TimeoutStopSec=60s
+ TimeoutStartSec=2s
+ StartLimitInterval=120s
+ StartLimitBurst=5
+ [Install]
+ WantedBy=multi-user.target
+AIAI
+) > /tmp/bitcanna.service
+cp /tmp/bitcanna.service /lib/systemd/system/bitcanna.service
+sudo systemctl enable bitcannad
+sudo systemctl start bitcannad
+sudo systemctl status bitcannad
 fi
 }
 
@@ -116,7 +115,7 @@ $BCNADIR/bitcanna-cli backupwallet dumpwallet wallet.dat
 echo "$walletpass" >> $BCNAHOME/BACKUP/password.txt
 tar -czvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
 chmod 500 $BCNAHOME/WalletBackup.tar.gz
-echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz && echo
+echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz" && echo
 echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"
 sleep 3
 cd $BCNAHOME && echo pwd && ls -a
@@ -137,6 +136,7 @@ $BCNADIR/bitcanna-cli walletpassphrase $walletpass
 mess(){
 rm /etc/sudoers.tmp
 rm /etc/oldsudoers
+rm /tmp/bitcanna.service
 }
 
 masternode(){
