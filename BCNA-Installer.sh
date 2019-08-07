@@ -44,6 +44,7 @@ $RUNUSR wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/downlo
 $RUNUSR mkdir $BCNADIR
 $RUNUSR unzip $BCNAHOME/$BCNAPKG -d $BCNADIR
 $RUNUSR mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
+$RUNUSR chmod -R 777 $BCNADIR
 }
 
 sync(){
