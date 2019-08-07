@@ -37,14 +37,16 @@ read -n 1 -s -r -p "Press any key to continue to VISUDO"
 visudo
 }
 
-login(){
-echo "smells me ... cant pass vars :D work'n'it"
+#login(){
+#echo "smells me ... cant pass vars :D work'n'it"
 #runuser -l usuario1 -c "whoami && echo $$"
-RUNUSR='runuser -l bitcanna -p -c "'
-ENDRUSR='"'
-}
+#RUNUSR='runuser -l bitcanna -p -c "'
+#ENDRUSR='"'
+#}
 
 bcnadown(){
+## Save as root.. not bitcana user .... :( I think this will not tun as user
+sudo -E -u bitcanna bash -c "wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG "
 $RUNUSR wget https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG $ENDRUSR
 $RUNUSR mkdir Bitcanna $ENDRUSR
 $RUNUSR unzip -xfz $BCNAPKG -d Bitcanna $ENDRUSR
@@ -143,7 +145,6 @@ $BCNADIR/bitcanna-cli walletpassphrase $walletpass
 mess(){
 rm /etc/sudoers.tmp
 rm /etc/oldsudoers
-rm /tmp/bitcanna.service
 }
 
 masternode(){
@@ -151,8 +152,6 @@ firstrun
 sync
 walletconf
 service
-
-backup
 }
 
 stake(){
@@ -161,7 +160,6 @@ sync
 walletconf
 $BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
 service
-backup
 }
 
 check
@@ -169,4 +167,5 @@ userad
 login
 bcnadown
 choice
+backup
 mess
