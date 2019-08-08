@@ -7,7 +7,7 @@ BCNAUSER="bitcanna"
 BCNAPKG="bcna-1.0.0-unix.zip"
 BCNAHOME="/home/$BCNAUSER"
 BCNADIR="$BCNAHOME/Bitcanna"
-STAKE=100
+STAKE="100"
 
 echo "BitCanna Comunity Script by Hellresistor aKa domato "
 echo
@@ -31,19 +31,20 @@ chmod -R 777 $BCNADIR
 rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
 }
 
-#sync(){
-#echo "WAIT TO SYNC..."
-### Failing not work... more time to dedicated a miscellinous
-#tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
-#[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
-#}
+sync(){
+echo "WAIT TO SYNC..."
+## Failing not work... more time to dedicated a miscellinous
+tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
+[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
+}
 
 choice(){
 read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M) " cho;
 case $cho in
     p|P) echo && echo && echo "Stake (POS) Installation Choosed" && sleep 0.5 && stake  ;;
-    m|M) echo && echo && echo "MasterNode (MN) Installation Choosed" && sleep 0.5 && masternode ;;
-    *) echo "invalid option" ;;
+    m|M) masternode ;;
+    *)
+        echo "invalid option" ;;
 esac
 }
 
@@ -71,7 +72,7 @@ mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
 $BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP
 $BCNADIR/bitcanna-cli dumpprivkey $WALLETADDRESS
 $BCNADIR/bitcanna-cli backupwallet dumpwallet wallet.dat
-echo "$WALLETADDRESS" >> $BCNAHOME/BACKUP/password.txt
+echo "$WLTADRS" >> $BCNAHOME/BACKUP/password.txt
 echo "$WALLETPASS" >> $BCNAHOME/BACKUP/password.txt
 echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
 echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
@@ -90,7 +91,7 @@ WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
 read -s -p "ENCRYPT YOUR WALLET WITH PASSPHRASE: " WALLETPASS
 
-### W T F !? !? !? :\ what i mising here.. MYOPIA are strong here?!?!
+### W T F what i mising here  MYOPIA are strong here
 
 WLTPSSCMD=$"$BCNADIR/bitcanna-cli walletpassphrase '$WALLETPASS' true"
 echo
@@ -106,22 +107,22 @@ rm $BCNADIR/bcna_unix_29_07_19
 
 masternode(){
 echo
-firstrun
+#firstrun
 #sync
 #walletconf
 #backup
 }
 
 stake(){
-firstrun
-##sync
+#firstrun
+#sync
 walletconf
-$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
-backup
+#$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
+#backup
 read -n 1 -s -r -p "Press any key to continue" 
-mess
 }
 
-check
-bcnadown
+#check
+#bcnadown
 choice
+#mess
