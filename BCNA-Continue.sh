@@ -68,20 +68,23 @@ sleep 10
 }
 
 backup(){
-mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
-$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP
-$BCNADIR/bitcanna-cli dumpprivkey $WALLETADDRESS
-$BCNADIR/bitcanna-cli backupwallet dumpwallet wallet.dat
-echo "$WLTADRS" >> $BCNAHOME/BACKUP/password.txt
-echo "$WALLETPASS" >> $BCNAHOME/BACKUP/password.txt
-echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
-echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
-tar -czvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
+mkdir $BCNAHOME/BACKUP && chmod 770 $BCNAHOME/BACKUP
+BCKWLT=$"$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat"
+$BCKWLT
+echo "Dont be lazy... iTS TO SURE YOU KNOWS YOUR PASSWORD"
+read -s -p "PASSPHRASE FOR YOUR WALLET: " WALLETPASS
+WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false"
+$WLTUNLOCK
+WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
+echo "Address: $WLTADRS" > $BCNAHOME/BACKUP/wallet.txt
+echo "Password: $WALLETPASS" >> $BCNAHOME/BACKUP/wallet.txt
+echo "Dump: $BCNADUMP" >> $BCNAHOME/BACKUP/wallet.txt
+sleep 0.5
+tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
 chmod 500 $BCNAHOME/WalletBackup.tar.gz
 echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz" && echo
 echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"
-sleep 3
-cd $BCNAHOME && echo pwd && ls -a
 read -n 1 -s -r -p "Press any key to continue" 
 }
 
@@ -97,29 +100,28 @@ WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
 $WLTUNLOCK
 WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
 $WLTSTAKE
-} 
+}
 
 mess(){
 rm $BCNADIR/bcna_unix_29_07_19
+rm -rf $BCNAHOME/BACKUP
 }
 
 masternode(){
-echo
-#firstrun
+firstrun
 #sync
-#walletconf
-#backup
+walletconf
+backup
 }
 
 stake(){
-#firstrun
+firstrun
 #sync
 walletconf
-#backup
-read -n 1 -s -r -p "Press any key to continue" 
+backup
 }
 
-#check
-#bcnadown
+check
+bcnadown
 choice
-#mess
+mess
