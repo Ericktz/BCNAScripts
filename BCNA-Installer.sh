@@ -74,6 +74,7 @@ chmod 777 /home/bitcanna/BCNA-Continue.sh
  echo "Next Login With - $BCNAUSER - user"
 ## YES LAMME KID .... On future will be auto .. not time to that now =D
  echo "And run ./cont.sh"
+ ## nhhheee... Workin an other thing :P
  echo
  read -n 1 -s -r -p "Press any key to REBOOT"
  echo "Rebooting..." && sleep 1 && reboot
@@ -102,9 +103,9 @@ read -n 1 -s -r -p "Press any key to REBOOT"
 #echo "Rebooting..." && sleep 1 && reboot
 }
 
-#check
-#checkapt
-#userad
-#service
+check
+checkapt
+userad
+service
 #bypass
 bypass2
