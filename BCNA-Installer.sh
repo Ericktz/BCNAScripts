@@ -25,8 +25,8 @@ fi
 
 userad(){
 echo "Creating user to bitcanna and add to sudoers"
-# adduser $BCNAUSER --shell=/bin/bash
-# usermod -aG sudo $BCNAUSER
+adduser $BCNAUSER --shell=/bin/bash
+usermod -aG sudo $BCNAUSER
 echo "Soorrryy You need do it by hand" && echo && echo
 echo "!!!!!!!!!!!!!!!! COPY THIS LINE BELOW !!!!!!!!!!!!!!!!" 
 echo "SeCuRe if exist A <TAB> between $BCNAUSER-	-ALL=(ALL:ALL) ALL when pasting"
