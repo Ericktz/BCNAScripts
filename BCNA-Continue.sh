@@ -98,7 +98,7 @@ echo
 echo "$WLTPSSCMD"
 echo
 .$WLTPSSCMD
-## ./BCNA-Continue.sh: line 101: ./home/bitcanna/Bitcanna/bitcanna-cli: No such file or directory ##
+## ./BCNA-Continue.sh: line 100: ./home/bitcanna/Bitcanna/bitcanna-cli: No such file or directory ##
 } 
 
 mess(){
