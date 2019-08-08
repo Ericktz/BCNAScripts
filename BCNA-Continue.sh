@@ -61,10 +61,16 @@ echo $RPCPWD >> $BCNAHOME/.bitcanna/bitcanna.conf
 chmod 777 $BCNAHOME/.bitcanna/masternode.conf
 rm $BCNAHOME/.bitcanna/masternode.conf
 echo "Connecting..."
+echo "wait... more... ~10sec.."
+echo "let the baby rest a little xD" && sleep 1
 $BCNADIR/bitcannad &
-read -n 1 -s -r -p "READ the RESULT ... Press any key to continue"
-echo "wait... little more..."
-sleep 10
+sleep 9
+echo "PLEASE WAIT TO FULL SYNCRONIZATION!!!"
+echo "Can check opening other session and run"
+echo "tail -f $BCNAHOME/.bitcanna/debug.log"
+echo "AND search to parameter: progress=1"
+echo "1 , means 100% sync.."
+read -n 1 -s -r -p "After SYNCED!! Press any key to continue" 
 }
 
 backup(){
