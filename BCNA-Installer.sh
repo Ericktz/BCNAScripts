@@ -63,6 +63,14 @@ systemctl enable bitcannad.service
 rm /tmp/bitcannad.service
 }
 
+bckprep(){
+mkdir "$BCNAHOME/BACKUP"
+## && chmod 770 $BCNAHOME/BACKUP && chown $BCNAUSER $BCNAHOME/BACKUP
+echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
+echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
+chmod -R 770 $BCNAHOME/BACKUP && chown -R $BCNAUSER $BCNAHOME/BACKUP
+}
+
 bypass(){
  cp vars $BCNAHOME/vars
 cp BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
@@ -107,5 +115,6 @@ check
 checkapt
 userad
 service
+bckprep
 #bypass
 bypass2
