@@ -83,6 +83,18 @@ echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN S
 read -n 1 -s -r -p "Press any key to continue" 
 }
 
+cryptwallet(){
+echo "lets encrypt your wallet"
+read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
+echo
+WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
+$WLTPSSCMD
+WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
+$WLTUNLOCK
+WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
+$WLTSTAKE
+}
+
 walletposconf(){
 echo "Connecting..."
 echo "wait... more... ~10sec.."
@@ -99,14 +111,7 @@ read -n 1 -s -r -p "After SYNCED!! Press any key to continue"
 echo "My Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
-read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
-echo
-WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
-$WLTPSSCMD
-WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
-$WLTUNLOCK
-WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
-$WLTSTAKE
+cryptwallet
 }
 
 walletmnconf(){
@@ -138,40 +143,47 @@ echo "My MN0 Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
 echo "Please wait at least 16+ confirmations of trasaction"
-./bitcanna-cli listtransactions
+echo
+read -n 1 -s -r -p "After 16+ confirmations, Press any key to continue to lists"
+./$BCNAHOME/bitcanna-cli listtransactions
+echo "Copy respectiv the txID?!?!?"
+read -s "Copy respectiv transfer txID?!?!?" TXID
 
+echo "Lets Find the collateral output tx and index"
+./$BCNADIR/bitcanna-cli masternode outputs
+read -s "Set the long part (tx) string" MNTX
+read -s "Set the short part (id) string" MNID
 
-echo "Lets Find the collateral output tx id"
-./bitcanna-cli masternode outputs
+killall bitcannad && sleep 10
 
-killall bitcannad
-sleep 10
+echo "Get VPS IP..."
+VPSIP="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 echo "more bitcanna.conf configs..."
-echo "externalip=$VPSIP" >> $BCNAHOME/.bitcanna/bitcanna.conf
+echo "externalip=${VPSIP}" >> $BCNAHOME/.bitcanna/bitcanna.conf
 echo "port=12888" >> $BCNAHOME/.bitcanna/bitcanna.conf
 
+read -s "Number of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node)" IDMN
 
+cat <<EOF>
 # Example result:
-#  0    MN0   2.4.9.8:12888 6CsLuRCaM-fzvvdzYK       06085ec1adb7c3cd33329      1
-#Index alias      ip:port   masternode_private_key collateral_transaction_id tx_in-dex
-#				step 7			step 10			step 10
+0 MN1 72.46.79.228:12888 6CsM56RjQbL4vdLuRCaM-fvdzYK 109e49adb637ed-d206c3cd33329 1
+Nº Alias	IP:Port		step 7			    step 10		  step 10
 #nano ~/.bitcanna/masternode.conf
+EOF
+sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNAHOME/.bitcanna/masternode.conf
+cat  $BCNAHOME/.bitcanna/masternode.conf
+sleep 1
 
 echo "Run Bitcanna Wallet"
-./bitcannad --maxconnections=1000 &
+.$BCNAHOME/bitcannad --maxconnections=1000 &
 
 echo "Activate MasterNode"
-./bitcanna-cli masternode start-many
+.$BCNAHOME/bitcanna-cli masternode start-many
 
 ## No Reference on Guides about Encrypt ##
 ##    Maybe cause problems? 
 ## ohohoh PROTECT YOUR SERVER AND CONNECTION xD
-#read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
-#echo
-#WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
-#$WLTPSSCMD
-#WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false|true"
-#$WLTUNLOCK
+cryptwallet
 }
 
 mess(){
