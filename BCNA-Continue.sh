@@ -33,15 +33,15 @@ rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
 
 sync(){
 echo "WAIT TO SYNC..."
-## A cicle to check syncing...
-tail -f $BCNAHOME/.bitcanna/debug.log | grep 'process=1' | read -t 5 dummyvar
-[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; .$BCNADIR/bitcanna-cli getinfo
+## Failing not work... more time to dedicated a miscellinous
+tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
+[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
 }
 
 choice(){
 read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M) " cho;
 case $cho in
-    p|P) echo "Stake (POS) Installation Choosed" && sleep 0.5 && stake  ;;
+    p|P) echo && echo && echo "Stake (POS) Installation Choosed" && sleep 0.5 && stake  ;;
     m|M) masternode ;;
     *)
         echo "invalid option" ;;
@@ -49,16 +49,19 @@ esac
 }
 
 firstrun(){
-#mkdir $BCNAHOME/.bitcanna
-#touch $BCNAHOME/.bitcanna/bitcanna.conf
-#chmod 0660 $BCNAHOME/.bitcanna/bitcanna.conf
-#$BCNADIR/bitcannad --daemon 
-$BCNADIR/bitcanna-cli stop
-sleep 5
+echo "COPY the rpcuser=bitcannarpc and rpcpassword=xxxxxx......"
+$BCNADIR/bitcannad --daemon && sleep 6
+echo
+echo "NOW!! PASTE THE line of rpcuser=xxx"
+read RPCUSR
+echo "NOW!! PASTE THE line of rpcpassword=xxxxxxxx..."
+read RPCPWD
+echo $RPCUSR >> $BCNAHOME/.bitcanna/bitcanna.conf
+echo $RPCPWD >> $BCNAHOME/.bitcanna/bitcanna.conf
 chmod 777 $BCNAHOME/.bitcanna/masternode.conf
 rm $BCNAHOME/.bitcanna/masternode.conf
 echo "Connecting..."
-#$BCNADIR/bitcannad --daemon &
+$BCNADIR/bitcannad &
 read -n 1 -s -r -p "READ the RESULT ... Press any key to continue"
 echo "wait... little more..."
 sleep 10
@@ -69,7 +72,10 @@ mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
 $BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP
 $BCNADIR/bitcanna-cli dumpprivkey $WALLETADDRESS
 $BCNADIR/bitcanna-cli backupwallet dumpwallet wallet.dat
-echo "$walletpass" >> $BCNAHOME/BACKUP/password.txt
+echo "$WALLETADDRESS" >> $BCNAHOME/BACKUP/password.txt
+echo "$WALLETPASS" >> $BCNAHOME/BACKUP/password.txt
+echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
+echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
 tar -czvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
 chmod 500 $BCNAHOME/WalletBackup.tar.gz
 echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz" && echo
@@ -80,14 +86,13 @@ read -n 1 -s -r -p "Press any key to continue"
 }
 
 walletconf(){
-echo "Lets Generate your Address"
-.$BCNADIR/bitcanna-cli getnewaddress wallet.dat
-WALLETADDRESS='.$BCNADIR/bitcanna-cli getaddressesbyaccount wallet.dat'
+cd Bitcanna
 echo "My Wallet Address Is:"
+WALLETADDRESS='.bitcanna-cli getaccountaddress wallet.dat'
 echo $WALLETADDRESS
 echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
 read WALLETPASS
-.$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS
+./bitcanna-cli walletpassphrase "$WALLETPASS"
 }
 
 mess(){
@@ -103,9 +108,9 @@ echo
 }
 
 stake(){
-firstrun
+#firstrun
 #sync
-#walletconf
+walletconf
 #$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
 #backup
 read -n 1 -s -r -p "Press any key to continue" 
