@@ -3,10 +3,10 @@
 # CONTINUE...
 #
 
-BCNAUSER=bitcanna
-BCNAPKG=bcna-1.0.0-unix.zip
-BCNAHOME=/home/$BCNAUSER
-BCNADIR=$BCNAHOME/Bitcanna
+BCNAUSER="bitcanna"
+BCNAPKG="bcna-1.0.0-unix.zip"
+BCNAHOME="/home/$BCNAUSER"
+BCNADIR="$BCNAHOME/Bitcanna"
 STAKE=100
 
 echo "BitCanna Comunity Script by Hellresistor aKa domato "
@@ -89,12 +89,12 @@ echo "My Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
 read -s -p "ENCRYPT YOUR WALLET WITH PASSPHRASE: " WALLETPASS
-WLTPSSCMD="$BCNADIR/bitcanna-cli walletpassphrase \"$WALLETPASS\" 999999999 true"
 
-echo "$WLTPSSCMD"
-# W T F !? !? !? :\ what i mising here.. MYOPIA are strong here?!?!
-.$WLTPSSCMD
-#./Bitcanna/bitcanna-cli walletpassphrase $WALLETPASS 999999999 true
+### W T F !? !? !? :\ what i mising here.. MYOPIA are strong here?!?!
+
+WLTPSSCMD=$($BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 999999999 true)
+echo $WLTPSSCMD
+echo
 } 
 
 mess(){
