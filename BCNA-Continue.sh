@@ -95,6 +95,16 @@ read WALLETPASS
 ./bitcanna-cli walletpassphrase "$WALLETPASS"
 }
 
+walletconf(){
+echo "My Wallet Address Is:"
+WALLETADDRESS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+echo $WALLETADDRESS
+echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
+read WALLETPASS
+WLTPSSCMD=$($BCNADIR/bitcanna-cli walletpassphrase "$WALLETPASS")
+echo "$WLTPSSCMD"
+} 
+
 mess(){
 rm $BCNADIR/bcna_unix_29_07_19
 }
