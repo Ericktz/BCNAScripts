@@ -1,11 +1,6 @@
 #!/bin/bash
 # Script Contribution to BitCanna Community
-# To Ubuntu Server 18.04
-#
-# STATUS: Developing
-#
-# by DoMato aka hellresistor
-# Donate BCNA: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
+# CONTINUE...
 #
 
 BCNAUSER=bitcanna
@@ -14,95 +9,114 @@ BCNAHOME=/home/$BCNAUSER
 BCNADIR=$BCNAHOME/Bitcanna
 STAKE=100
 
-check(){
-echo "Checking as running as root user"
-sleep 1
-if [ "root" != "$USER" ]
-  then  sudo su -c "$0" root
-  exit
-fi
-}
-
-userad(){
-echo "Creating user to bitcanna and add to sudoers"
-# adduser $BCNAUSER --shell=/bin/bash
-# usermod -aG sudo $BCNAUSER
-echo "Soorrryy You need do it by hand" && echo && echo
-echo "!!!!!!!!!!!!!!!! COPY THIS LINE BELOW !!!!!!!!!!!!!!!!" 
-echo "SeCuRe if exist A <TAB> between $BCNAUSER-	-ALL=(ALL:ALL) ALL when pasting"
-echo && echo
-echo "$BCNAUSER	ALL=(ALL:ALL) ALL" && echo && echo
-echo "You need PASTE THAT above of this line: root	ALL=(ALL:ALL) ALL"
-read -n 1 -s -r -p "Press any key to continue to VISUDO"
-visudo
-}
-
-service(){
-cat <<EOF> /tmp/bitcannad.service
-[Unit]
-Description=BCNAs distributed currency daemon EDITED by hellresistor
-After=network.target
-[Service]
-User=$BCNAUSER
-Group=$BCNAUSER
-Type=forking
-PIDFile=$BCNAHOME/.bitcanna/bitcannad.pid
-ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNAHOME/.bitcanna/bitcannad.pid -conf=$BCNAHOME/.bitcanna/bitcanna.conf -datadir=$BCNAHOME/.bitcanna
-ExecStop=$BCNADIR/bitcanna-cli stop -conf=$BCNAHOME/.bitcanna/bitcanna.conf -datadir=$BCNAHOME/.bitcanna
-Restart=always
-PrivateTmp=true
-TimeoutStopSec=60s
-TimeoutStartSec=2s
-StartLimitInterval=120s
-StartLimitBurst=5
-[Install]
-WantedBy=multi-user.target
-EOF
-cp /tmp/bitcannad.service /lib/systemd/system/bitcannad.service
-systemctl enable bitcannad
-rm /tmp/bitcannad.service
-}
-
-bypass(){
-cp BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
-chown bitcanna /home/bitcanna/BCNA-Continue.sh
-chmod 777 /home/bitcanna/BCNA-Continue.sh
-echo && echo "Dont Forget" && echo && sleep 2
-echo "Next Login With - $BCNAUSER - user"
-## YES LAMME KID .... On future will be auto .. not time to that now =D
-echo "And run ./cont.sh"
+echo "BitCanna Comunity Script by Hellresistor aKa domato "
 echo
-read -n 1 -s -r -p "Press any key to REBOOT"
-echo "Rebooting..." && sleep 1 && reboot
-}
 
-bypass2(){
-## To later =-D
-cat <<FOE> $BCNAHOME/Continue.sh
-#!/bin/bash
 check(){
 echo "Checking as running as bitcanna user"
-sleep 1
-if [ "$BCNAUSER" != "\$USER" ]
-  then  sudo su -c "$0" $BCNAUSER
+sleep 0.5
+if [ "$BCNAUSER" != "$USER" ]
+  then  sudo su -c "$0" "$BCNAUSER"
   exit
 fi
 }
-check
-whoime
-FOE
 
-#chmod 777 $BCNAHOME/BCNA-Continue.sh
-#chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
-#echo "Run ./BCNA-Continue.sh"
+bcnadown(){
+# yyeeaahh.. I know.. i will do that work nicee pretty
+wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
+mkdir $BCNADIR
+unzip $BCNAHOME/$BCNAPKG -d $BCNADIR
+mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
+chmod -R 777 $BCNADIR
+rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
+}
+
+sync(){
+echo "WAIT TO SYNC..."
+## Failing not work... more time to dedicated a miscellinous
+tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
+[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
+}
+
+choice(){
+read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M) " cho;
+case $cho in
+    p|P) echo && echo && echo "Stake (POS) Installation Choosed" && sleep 0.5 && stake  ;;
+    m|M) masternode ;;
+    *)
+        echo "invalid option" ;;
+esac
+}
+
+firstrun(){
+echo "COPY the rpcuser=bitcannarpc and rpcpassword=xxxxxx......"
+$BCNADIR/bitcannad --daemon && sleep 6
 echo
-read -n 1 -s -r -p "Press any key to REBOOT"
-#echo "Rebooting..." && sleep 1 && reboot
+echo "NOW!! PASTE THE line of rpcuser=xxx"
+read RPCUSR
+echo "NOW!! PASTE THE line of rpcpassword=xxxxxxxx..."
+read RPCPWD
+echo $RPCUSR >> $BCNAHOME/.bitcanna/bitcanna.conf
+echo $RPCPWD >> $BCNAHOME/.bitcanna/bitcanna.conf
+chmod 777 $BCNAHOME/.bitcanna/masternode.conf
+rm $BCNAHOME/.bitcanna/masternode.conf
+echo "Connecting..."
+$BCNADIR/bitcannad &
+read -n 1 -s -r -p "READ the RESULT ... Press any key to continue"
+echo "wait... little more..."
+sleep 10
+}
+
+backup(){
+mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
+$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP
+$BCNADIR/bitcanna-cli dumpprivkey $WALLETADDRESS
+$BCNADIR/bitcanna-cli backupwallet dumpwallet wallet.dat
+echo "$WALLETADDRESS" >> $BCNAHOME/BACKUP/password.txt
+echo "$WALLETPASS" >> $BCNAHOME/BACKUP/password.txt
+echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
+echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
+tar -czvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
+chmod 500 $BCNAHOME/WalletBackup.tar.gz
+echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz" && echo
+echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"
+sleep 3
+cd $BCNAHOME && echo pwd && ls -a
+read -n 1 -s -r -p "Press any key to continue" 
+}
+
+walletconf(){
+cd Bitcanna
+echo "My Wallet Address Is:"
+WALLETADDRESS='.bitcanna-cli getaccountaddress wallet.dat'
+echo $WALLETADDRESS
+echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
+read WALLETPASS
+./bitcanna-cli walletpassphrase "$WALLETPASS"
+}
+
+mess(){
+rm $BCNADIR/bcna_unix_29_07_19
+}
+
+masternode(){
+echo
+#firstrun
+#sync
+#walletconf
+#backup
+}
+
+stake(){
+#firstrun
+#sync
+walletconf
+#$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
+#backup
+read -n 1 -s -r -p "Press any key to continue" 
 }
 
 #check
-#checkapt
-#userad
-#service
-bypass
-#bypass2
+#bcnadown
+choice
+#mess
