@@ -91,23 +91,12 @@ WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
 read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
 echo
-
-### W T F what i mising here  MYOPIA are strong here
-#ok
 WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
 $WLTPSSCMD
-# GGGGRRRRRR
-WLTUNLOCK=$"$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS true 0"
+WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
 $WLTUNLOCK
-
-# keep kalm... and smoke one.. or two.
-#WLTSTAKE=$"$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
-#$WLTSTAKE
-
-#olders...
-#WLTPSSCMD=$"$BCNADIR/bitcanna-cli walletpassphrase '$WALLETPASS' true"
-#echo "$WLTPSSCMD"
-#.$WLTPSSCMD
+WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
+$WLTSTAKE
 } 
 
 mess(){
