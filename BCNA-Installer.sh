@@ -72,24 +72,20 @@ chmod -R 770 $BCNAHOME/BACKUP && chown -R $BCNAUSER $BCNAHOME/BACKUP
 }
 
 bypass(){
- cp vars $BCNAHOME/vars
 cp BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
-chown bitcanna /home/bitcanna/BCNA-Continue.sh
 chmod 777 /home/bitcanna/BCNA-Continue.sh
- chmod 777 $BCNAHOME/vars
- chown $BCNAUSER $BCNAHOME/vars
- echo && echo "Dont Forget" && echo && sleep 2
- echo "Next Login With - $BCNAUSER - user"
+chown bitcanna /home/bitcanna/BCNA-Continue.sh
+echo && echo "Dont Forget" && echo && sleep 2
+echo "Next Login With - $BCNAUSER - user"
 ## YES LAMME KID .... On future will be auto .. not time to that now =D
- echo "And run ./cont.sh"
- ## nhhheee... Workin an other thing :P
- echo
- read -n 1 -s -r -p "Press any key to REBOOT"
- echo "Rebooting..." && sleep 1 && reboot
+echo "And run ./BCNA-Continue.sh"
+read -n 1 -s -r -p "Press any key to REBOOT"
+echo "Rebooting..." && sleep 1 && reboot
 }
 
 bypass2(){
-cat <<FOE> $BCNAHOME/Continue.sh
+## The fuutureee . E.T. wwwwooooooooooo
+cat <<FOE> $BCNAHOME/BCNA-Continue.sh
 #!/bin/bash
 check(){
 echo "Checking as running as bitcanna user"
@@ -103,9 +99,9 @@ check
 whoime
 FOE
 
-#chmod 777 $BCNAHOME/BCNA-Continue.sh
-#chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
-#echo "Run ./BCNA-Continue.sh"
+chmod 777 $BCNAHOME/BCNA-Continue.sh
+chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
+echo "Run ./BCNA-Continue.sh"
 echo
 read -n 1 -s -r -p "Press any key to REBOOT"
 #echo "Rebooting..." && sleep 1 && reboot
@@ -116,5 +112,5 @@ checkapt
 userad
 service
 bckprep
-#bypass
-bypass2
+bypass
+#bypass2
