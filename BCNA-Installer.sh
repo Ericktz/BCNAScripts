@@ -104,7 +104,8 @@ chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
 echo "Run ./BCNA-Continue.sh"
 echo
 read -n 1 -s -r -p "Press any key to REBOOT"
-#echo "Rebooting..." && sleep 1 && reboot
+rm $BCNAHOME/.bash_history
+echo "Rebooting..." && sleep 1 && reboot
 }
 
 check
