@@ -31,20 +31,19 @@ chmod -R 777 $BCNADIR
 rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
 }
 
-sync(){
-echo "WAIT TO SYNC..."
-## Failing not work... more time to dedicated a miscellinous
-tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
-[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
-}
+#sync(){
+#echo "WAIT TO SYNC..."
+### Failing not work... more time to dedicated a miscellinous
+#tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
+#[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
+#}
 
 choice(){
 read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M) " cho;
 case $cho in
     p|P) echo && echo && echo "Stake (POS) Installation Choosed" && sleep 0.5 && stake  ;;
-    m|M) masternode ;;
-    *)
-        echo "invalid option" ;;
+    m|M) echo && echo && echo "MasterNode (MN) Installation Choosed" && sleep 0.5 && masternode ;;
+    *) echo "invalid option" ;;
 esac
 }
 
@@ -86,23 +85,16 @@ read -n 1 -s -r -p "Press any key to continue"
 }
 
 walletconf(){
-cd Bitcanna
 echo "My Wallet Address Is:"
-WALLETADDRESS='.bitcanna-cli getaccountaddress wallet.dat'
-echo $WALLETADDRESS
-echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
-read WALLETPASS
-./bitcanna-cli walletpassphrase "$WALLETPASS"
-}
+WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+echo $WLTADRS
+read -s -p "ENCRYPT YOUR WALLET WITH PASSPHRASE: " WALLETPASS
+WLTPSSCMD="$BCNADIR/bitcanna-cli walletpassphrase \"$WALLETPASS\" 999999999 true"
 
-walletconf(){
-echo "My Wallet Address Is:"
-WALLETADDRESS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
-echo $WALLETADDRESS
-echo "ENCRYPT YOUR WALLET WITH PASSPHRASE"
-read WALLETPASS
-WLTPSSCMD=$($BCNADIR/bitcanna-cli walletpassphrase "$WALLETPASS")
 echo "$WLTPSSCMD"
+# W T F !? !? !? :\ what i mising here.. MYOPIA are strong here?!?!
+.$WLTPSSCMD
+#./Bitcanna/bitcanna-cli walletpassphrase $WALLETPASS 999999999 true
 } 
 
 mess(){
@@ -111,22 +103,22 @@ rm $BCNADIR/bcna_unix_29_07_19
 
 masternode(){
 echo
-#firstrun
+firstrun
 #sync
 #walletconf
 #backup
 }
 
 stake(){
-#firstrun
-#sync
+firstrun
+##sync
 walletconf
-#$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
-#backup
+$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
+backup
 read -n 1 -s -r -p "Press any key to continue" 
+mess
 }
 
-#check
-#bcnadown
+check
+bcnadown
 choice
-#mess
