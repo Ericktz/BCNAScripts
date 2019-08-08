@@ -89,16 +89,25 @@ walletconf(){
 echo "My Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
-read -s -p "ENCRYPT YOUR WALLET WITH PASSPHRASE: " WALLETPASS
+read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
+echo
 
 ### W T F what i mising here  MYOPIA are strong here
+#ok
+WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
+$WLTPSSCMD
+# GGGGRRRRRR
+WLTUNLOCK=$"$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS true 0"
+$WLTUNLOCK
 
-WLTPSSCMD=$"$BCNADIR/bitcanna-cli walletpassphrase '$WALLETPASS' true"
-echo
-echo "$WLTPSSCMD"
-echo
-.$WLTPSSCMD
-## ./BCNA-Continue.sh: line 100: ./home/bitcanna/Bitcanna/bitcanna-cli: No such file or directory ##
+# keep kalm... and smoke one.. or two.
+#WLTSTAKE=$"$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
+#$WLTSTAKE
+
+#olders...
+#WLTPSSCMD=$"$BCNADIR/bitcanna-cli walletpassphrase '$WALLETPASS' true"
+#echo "$WLTPSSCMD"
+#.$WLTPSSCMD
 } 
 
 mess(){
@@ -117,7 +126,6 @@ stake(){
 #firstrun
 #sync
 walletconf
-#$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE
 #backup
 read -n 1 -s -r -p "Press any key to continue" 
 }
