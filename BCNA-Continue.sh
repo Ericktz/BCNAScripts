@@ -34,8 +34,18 @@ rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
 sync(){
 echo "WAIT TO SYNC..."
 ## Failing not work... more time to dedicated a miscellinous
-tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
-[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
+#tail -f .bitcanna/debug.log | grep -q 'process=1' | read -t 5 dummyvar
+#if [ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
+echo "WAIT TO SYNC..."
+tail -n 0 -F /home/bitcanna/.bitcanna/debug.log | \
+while read -t 5 LINE
+do
+echo "$LINE" | grep -q "progress=0.032"
+if [ $? = 0 ]
+then
+echo -e "Wallet Synced" | echo "Wallet Syncing... w8"
+fi
+done
 }
 
 choice(){
