@@ -92,9 +92,12 @@ read -s -p "ENCRYPT YOUR WALLET WITH PASSPHRASE: " WALLETPASS
 
 ### W T F !? !? !? :\ what i mising here.. MYOPIA are strong here?!?!
 
-WLTPSSCMD=$($BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 999999999 true)
-echo $WLTPSSCMD
+WLTPSSCMD=$"$BCNADIR/bitcanna-cli walletpassphrase '$WALLETPASS' true"
 echo
+echo "$WLTPSSCMD"
+echo
+.$WLTPSSCMD
+## ./BCNA-Continue.sh: line 101: ./home/bitcanna/Bitcanna/bitcanna-cli: No such file or directory ##
 } 
 
 mess(){
