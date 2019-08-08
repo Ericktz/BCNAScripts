@@ -88,7 +88,26 @@ echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN S
 read -n 1 -s -r -p "Press any key to continue" 
 }
 
-walletconf(){
+walletposconf(){
+echo "My Wallet Address Is:"
+WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+echo $WLTADRS
+read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
+echo
+WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
+$WLTPSSCMD
+WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
+$WLTUNLOCK
+WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
+$WLTSTAKE
+}
+
+walletmnconf(){
+echo "creatinh new Address for MASTERNODE"
+NEWWLTADRS=$BCNADIR/bitcanna-cli getnewaddress “MN1”
+echo $NEWWLTADRS
+#$NEWWLTADRS
+
 echo "My Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
@@ -110,14 +129,14 @@ rm -rf $BCNAHOME/BACKUP
 masternode(){
 firstrun
 #sync
-walletconf
+walletmnconf
 backup
 }
 
 stake(){
 firstrun
 #sync
-walletconf
+walletposconf
 backup
 }
 
