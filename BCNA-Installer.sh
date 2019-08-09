@@ -31,11 +31,10 @@ EOF
 echo "Continue this Script are Accepting you are the only responsible"
 read -n 1 -s -r -p "Press any key to Executing this Script" 
 }
-BCNAUSER=bitcanna
 BCNAPKG=bcna-1.0.0-unix.zip
 BCNAHOME=/home/$BCNAUSER
+BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
-STAKE=100
 check(){
 clear
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
@@ -91,8 +90,8 @@ After=network.target
 User=$BCNAUSER
 Group=$BCNAUSER
 Type=forking
-PIDFile=$BCNAHOME/.bitcanna/bitcannad.pid
-ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNAHOME/.bitcanna/bitcannad.pid -conf=$BCNAHOME/.bitcanna/bitcanna.conf -datadir=$BCNAHOME/.bitcanna
+PIDFile=$BCNACONF/bitcannad.pid
+ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNACONF/bitcannad.pid -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONF
 ExecStop=$BCNADIR/bitcanna-cli stop
 Restart=always
 PrivateTmp=true
