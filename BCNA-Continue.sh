@@ -179,7 +179,7 @@ echo "more bitcanna.conf configs..."
 echo "externalip=${VPSIP}" >> $BCNAHOME/.bitcanna/bitcanna.conf
 echo "port=12888" >> $BCNAHOME/.bitcanna/bitcanna.conf
 read -s "Number of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node)" IDMN
-cat <<EOF>
+cat <<EOF
 # Example result:
 0 MN1 72.46.79.228:12888 6CsM56RjQbL4vdLuRCaM-fvdzYK 109e49adb637ed-d206c3cd33329 1
 Nº Alias	IP:Port		step 7			    step 10		  step 10
