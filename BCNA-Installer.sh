@@ -59,13 +59,6 @@ cp /tmp/bitcannad.service /lib/systemd/system/bitcannad.service
 systemctl enable bitcannad.service
 rm /tmp/bitcannad.service
 }
-bckprep(){
-mkdir "$BCNAHOME/BACKUP"
-## && chmod 770 $BCNAHOME/BACKUP && chown $BCNAUSER $BCNAHOME/BACKUP
-echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
-echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
-chmod -R 770 $BCNAHOME/BACKUP && chown -R $BCNAUSER $BCNAHOME/BACKUP
-}
 bypass(){
 cp $HOME/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
 chmod 777 $BCNAHOME/BCNA-Continue.sh
@@ -78,8 +71,6 @@ read -n 1 -s -r -p "Press any key to REBOOT"
 echo "Rebooting..." && sleep 1 && reboot
 }
 check
-checkapt
 userad
 service
-bckprep
 bypass
