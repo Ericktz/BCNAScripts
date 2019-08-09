@@ -135,6 +135,7 @@ echo "let the baby rest a little xD" && sleep 1
 $BCNADIR/bitcannad &
 sleep 9
 syncbasic
+read -n 1 -s -r -p "After SYNCED!! Press any key to continue" 
 echo "My Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
