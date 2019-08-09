@@ -1,34 +1,59 @@
 #!/bin/bash
-# Script Contribution to BitCanna Community
-# CONTINUE...
-#
-
-BCNAUSER="bitcanna"
-BCNAPKG="bcna-1.0.0-unix.zip"
-BCNAHOME="/home/$BCNAUSER"
-BCNADIR="$BCNAHOME/Bitcanna"
+intro{
+cat<< EOF
+##################################################################################
+##                   Script Contribution to BitCanna Community                  ##
+##                           To Ubuntu 18.04 LTS Server                         ##
+##################################################################################
+##                                                                              ##
+##                               STEP 2 and LAST                                ##
+##                                                                              ##
+##################################################################################
+##                                                                              ##
+##      Project Status: CETI                                                    ##
+##                                                                              ##
+##  by DoMato aka hellresistor                                                  ##
+##  Support donating Bitcanna                                                   ##
+##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
+##                                                                              ##
+################################################################################## 
+##################################################################################
+##                                                                              ##
+##  HAVE IN MIND!! EVERY TIME DO YOUR OWN BACKUPS BEFORE USING THIS SCRIPT      ##
+##            I have NO responsability about system corruption!                 ##
+##                     Use this Script at your own risk!                        ##
+##                                                                              ##
+##################################################################################
+EOF
+echo "Continue this Script are Accepting you are the only responsible"
+read -n 1 -s -r -p "Press any key to Executing this Script" 
+}
+BCNAPKG=bcna-1.0.0-unix.zip
+BCNAHOME=/home/$BCNAUSER
+BCNACONF=$BCNAHOME/.bitcanna
+BCNADIR=$BCNAHOME/Bitcanna
 STAKE="100"
-
-echo "BitCanna Comunity Script by Hellresistor aKa domato "
-echo
-
 check(){
-echo "Checking as running as bitcanna user"
+echo "###########################################" && echo "## Checking If script is running as $BCNAUSER ##" && echo "###########################################" && sleep 1
 sleep 0.5
-if [ "$BCNAUSER" != "$USER" ]
-  then  sudo su -c "$0" "$BCNAUSER"
+if [ "$BCNAUSER" != \"$USER\" ]
+  then  sudo su -c \"$0\" "$BCNAUSER"
   exit
 fi
+echo "#########################################" && echo "## You are $BCNAUSER ! Will Continue! wait.. ##" && echo "#########################################" && sleep 2
 }
-
 bcnadown(){
-# yyeeaahh.. I know.. i will do that work nicee pretty
+clear
+echo "###############################################################"
+echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##"
+echo "###############################################################"
+# yyeeaahh.. I know.. i will do that work nicee pretty 
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
-mkdir $BCNADIR
-unzip $BCNAHOME/$BCNAPKG -d $BCNADIR
-mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
-chmod -R 777 $BCNADIR
-rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
+chmod -R 777 $BCNADIR && rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
+echo "###########################################"
+echo "## Downloaded and Extracted to: $BCNADIR ##"
+echo "###########################################" && sleep 1
 }
 
 sync(){
@@ -41,7 +66,6 @@ then
  echo "Wait... Wallet are syncing" 
 fi
 # ; ./home/bitcanna/Bitcanna/bitcanna-cli getinfo
-
 ## Other way ...
 # tail -n 0 -F /home/bitcanna/.bitcanna/debug.log | while read dummyvar
 # do
@@ -54,34 +78,41 @@ fi
 ## Getting loop of ' ./BCNA-Continue.sh: line 43: [: too many arguments '
 # much info inside file
 echo "Continuou"
-
 }
-
 choice(){
-read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M) " cho;
-case $cho in
-    p|P) echo && echo && echo "Stake (POS) Installation Choosed" && sleep 0.5 && stake  ;;
-    m|M) masternode ;;
-    *)
-        echo "invalid option" ;;
+clear
+echo "#######################################" && echo "## BitCanna Wallet Installation Menu ##" && echo "#######################################"
+read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M): " choiz;
+case $choiz in
+    p|P) echo "########################################" && echo "## Selected Stake - POS Configuration ##" && echo "########################################" && sleep 0.5 && stake  ;;
+    m|M) echo "############################################" && echo "## Selected MasterNode - MN Configuration ##" && echo "############################################" && sleep 0.5 && masternode ;;
+    *) echo "####################" && echo "## Invalid Option ##" && echo "####################" && sleep 0.5 ;;
 esac
 }
-
 firstrun(){
-echo "COPY the rpcuser=bitcannarpc and rpcpassword=xxxxxx......"
-$BCNADIR/bitcannad --daemon && sleep 6
-echo
-echo "NOW!! PASTE THE line of rpcuser=xxx"
-read RPCUSR
-echo "NOW!! PASTE THE line of rpcpassword=xxxxxxxx..."
-read RPCPWD
-echo $RPCUSR >> $BCNAHOME/.bitcanna/bitcanna.conf
-echo $RPCPWD >> $BCNAHOME/.bitcanna/bitcanna.conf
-chmod 777 $BCNAHOME/.bitcanna/masternode.conf
-rm $BCNAHOME/.bitcanna/masternode.conf
+clear
+echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################"
+sleep 0.5 && $BCNADIR/bitcannad & && sleep 10
+cat<<EIF
+##########################################
+## COPY the Returned values (example):  ##
+##        rpcuser=criptouser            ##
+##        rpcpassword=abcdefg           ##
+##########################################
+##########################################
+## PASTE the line of rpcuser=criptouser ##
+##########################################
+EIF
+read RPCUSR && echo "###########################################" && echo "## PASTE the line of rpcpassword=abcdefg ##"
+echo "###########################################" && read RPCPWD && echo $RPCUSR >> $BCNACONF/bitcanna.conf && echo $RPCPWD >> $BCNACONF/bitcanna.conf
+chmod 770 $BCNACONF/masternode.conf && rm $BCNACONF/masternode.conf && echo "#################################" && echo "## Initial Configurations Done ##" && echo "#################################"
 }
 
 backup(){
+clear
+echo "###########################"
+echo "## Backuping Wallet Info ##"
+echo "###########################"
 mkdir $BCNAHOME/BACKUP && chmod 770 $BCNAHOME/BACKUP
 echo "$RPCUSER" >> $BCNAHOME/BACKUP/wallet.txt
 echo "$RPCPWD" >> $BCNAHOME/BACKUP/wallet.txt
@@ -101,6 +132,10 @@ tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
 chmod 500 $BCNAHOME/WalletBackup.tar.gz
 echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz" && echo
 echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"
+echo "#########################"
+echo "## Backups done in directory: 
+echo "## $BCNAHOME  ##"
+echo "#########################################"
 read -n 1 -s -r -p "Press any key to continue" 
 }
 
