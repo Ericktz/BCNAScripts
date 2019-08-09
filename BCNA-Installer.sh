@@ -60,7 +60,7 @@ systemctl enable bitcannad.service
 rm /tmp/bitcannad.service
 }
 bypass(){
-cp $HOME/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
+cp $HOME/BCNAScripts/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
 chmod 777 $BCNAHOME/BCNA-Continue.sh
 chown bitcanna $BCNAHOME/BCNA-Continue.sh
 echo && echo "Dont Forget" && echo && sleep 2
