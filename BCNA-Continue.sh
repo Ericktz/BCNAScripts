@@ -9,21 +9,6 @@ cat<< EOF
 ##                               STEP 2 and LAST                                ##
 ##                                                                              ##
 ##################################################################################
-##                                                                              ##
-##      Project Status: CETI                                                    ##
-##                                                                              ##
-##  by DoMato aka hellresistor                                                  ##
-##  Support donating Bitcanna                                                   ##
-##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
-##                                                                              ##
-################################################################################## 
-##################################################################################
-##                                                                              ##
-##  HAVE IN MIND!! EVERY TIME DO YOUR OWN BACKUPS BEFORE USING THIS SCRIPT      ##
-##            I have NO responsability about system corruption!                 ##
-##                     Use this Script at your own risk!                        ##
-##                                                                              ##
-##################################################################################
 EOF
 echo "Continue this Script are Accepting you are the only responsible"
 read -n 1 -s -r -p "Press any key to Executing this Script" 
@@ -44,16 +29,12 @@ echo "#########################################" && echo "## You are $BCNAUSER !
 }
 bcnadown(){
 clear
-echo "###############################################################"
-echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##"
-echo "###############################################################"
+echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
 # yyeeaahh.. I know.. i will do that work nicee pretty 
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
 mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
 chmod -R 777 $BCNADIR && rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
-echo "###########################################"
-echo "## Downloaded and Extracted to: $BCNADIR ##"
-echo "###########################################" && sleep 1
+echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 
 sync(){
@@ -105,62 +86,90 @@ cat<<EIF
 EIF
 read RPCUSR && echo "###########################################" && echo "## PASTE the line of rpcpassword=abcdefg ##"
 echo "###########################################" && read RPCPWD && echo $RPCUSR >> $BCNACONF/bitcanna.conf && echo $RPCPWD >> $BCNACONF/bitcanna.conf
-chmod 770 $BCNACONF/masternode.conf && rm $BCNACONF/masternode.conf && echo "#################################" && echo "## Initial Configurations Done ##" && echo "#################################"
+rm $BCNACONF/masternode.conf && echo "#################################" && echo "## Initial Configurations Done ##" && echo "#################################"
 }
-
 backup(){
 clear
-echo "###########################"
-echo "## Backuping Wallet Info ##"
-echo "###########################"
+echo "###########################" && echo "## Backuping Wallet Info ##" && echo "###########################"
 mkdir $BCNAHOME/BACKUP && chmod 770 $BCNAHOME/BACKUP
-echo "$RPCUSER" >> $BCNAHOME/BACKUP/wallet.txt
-echo "$RPCPWD" >> $BCNAHOME/BACKUP/wallet.txt
 BCKWLT=$"$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat"
 $BCKWLT
-echo "Dont be lazy... iTS TO SURE YOU KNOWS YOUR PASSWORD"
-read -s -p "PASSPHRASE FOR YOUR WALLET: " WALLETPASS
-WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false"
-$WLTUNLOCK
-WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+#echo "Dont be lazy... iTS TO SURE YOU KNOWS YOUR PASSWORD"
+#read -s -p "PASSPHRASE FOR YOUR WALLET: " WALLETPASS
+#WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false"
+#$WLTUNLOCK
+#WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
-echo "Address: $WLTADRS" >> $BCNAHOME/BACKUP/wallet.txt
-echo "Password: $WALLETPASS" >> $BCNAHOME/BACKUP/wallet.txt
-echo "Dump: $BCNADUMP" >> $BCNAHOME/BACKUP/wallet.txt
-sleep 0.5
-tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP
-chmod 500 $BCNAHOME/WalletBackup.tar.gz
-echo && echo "WALLET BACKUPED ON: $BCNAHOME/WalletBackup.tar.gz" && echo
-echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN SCRIPT FINISH!!!!!!"
-echo "#########################"
-echo "## Backups done in directory: 
-echo "## $BCNAHOME  ##"
-echo "#########################################"
-read -n 1 -s -r -p "Press any key to continue" 
+cat<<EOF>$BCNAHOME/BACKUP/walletinfo.txt
+Address: $WLTADRS
+Password: $WALLETPASS
+Dump: $BCNADUMP
+$RPCUSER
+$RPCPWD
+EOF
+tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP && chmod 500 $BCNAHOME/WalletBackup.tar.gz
+cat<<EOF
+############################################################
+## Info Wallet Backuped in: $BCNAHOME/WalletBackup.tar.gz ##
+## !!!PLEASE!!! SAVE THIS FILE ON MANY DEVICES ON SECURE  ##
+############################################################
+EOF
+read -n 1 -s -r -p "Press any key to Finish" 
 }
 
 cryptwallet(){
-## No Reference on Guides about Encrypt ##
-##    Maybe cause problems? 
-## ohohoh PROTECT YOUR SERVER AND CONNECTION xD
-echo "lets encrypt your wallet"
-read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
-echo
+clear
+cat<<ETF
+########################################################
+## No Reference on Guides about Encrypt on MasterNode ##
+##              Maybe cause problems?                 ##
+##               PROTECT YOUR Server                  ##
+########################################################
+ETF
+read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
 WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
-$WLTPSSCMD
-WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
-$WLTUNLOCK
-WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
-$WLTSTAKE
+$WLTPSSCMD && sleep 5
+if [ "$choiz" == "p" || "$choiz" == "P" ]
+ then
+  echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
+  WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
+  $WLTUNLOCK
+  WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
+  $WLTSTAKE
+  echo "##############" && echo "## Staking! ##" && echo "##############" && sleep 0.5
+ fi
 }
 
 syncbasic(){
-echo "PLEASE WAIT TO FULL SYNCRONIZATION!!!"
-echo "Can check opening other session and run"
-echo "tail -f $BCNAHOME/.bitcanna/debug.log"
-echo "AND search to parameter: progress=1"
-echo "1 , means 100% sync.."
-read -n 1 -s -r -p "After SYNCED!! Press any key to continue" 
+clear
+cat<<OFT
+##############################################
+##      __   __     _____   ______          ##
+##     /__/\/__/\  /_____/\/_____/\         ##
+##     \  \ \: \ \_\:::_:\ \:::_ \ \        ##
+##      \::\_\::\/_/\  _\:\|\:\ \ \ \       ##
+##       \_:::   __\/ /::_/__\:\ \ \ \      ##
+##            \::\ \  \:\____/\:\_\ \ \     ##      
+##             \__\/   \_____\/\_____\/     ##
+##   T I M E                                ##
+##############################################
+## !!!PLEASE WAIT TO FULL SYNCRONIZATION!!! ##
+## Can check opening other session and run: ##
+##                                          ##
+## tail -f $BCNAHOME/.bitcanna/debug.log    ##
+##                                          ##
+## AND search&wait to parameter: progress=1 ##
+##############################################
+##     (1) means 100% of Syncronization     ##
+##############################################
+OFT
+read -n 1 -s -r -p "After SYNCED!! Press any key to continue (3)" 
+echo "####################" && echo "## You SURE ?!?!? ##" && echo "####################"
+read -n 1 -s -r -p "After SYNCED!! Press any key to continue (2)"
+echo "################################" && echo "## Wait the Time what It NEED ##" && echo "################################"
+read -n 1 -s -r -p "After SYNCED!! Press any key to continue (1)"
+echo "#########################################" && echo "## OK! OK! OK! I know.. Its ANNOYING!! ##" && echo "#########################################"
+read -n 1 -s -r -p "OK! ARE SYNCED!! Press any key to continue (OYEAH!!)" 
 }
 
 walletposconf(){
@@ -235,6 +244,7 @@ mess(){
 rm $BCNADIR/bcna_unix_29_07_19
 rm -rf $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
+rm $BCNAHOME/$BCNAPKG
 }
 
 masternode(){
@@ -255,3 +265,27 @@ check
 bcnadown
 choice
 mess
+cat<<FOH
+################################################################################################################
+##   ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄   ##
+##  ▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░▌      ▐░▌▐░░▌      ▐░▌▐░░░░░░░░░░░▌  ##
+##  ▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌░▌     ▐░▌▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀█░▌  ##
+##  ▐░▌       ▐░▌     ▐░▌          ▐░▌     ▐░▌          ▐░▌       ▐░▌▐░▌▐░▌    ▐░▌▐░▌▐░▌    ▐░▌▐░▌       ▐░▌  ##
+##  ▐░█▄▄▄▄▄▄▄█░▌     ▐░▌          ▐░▌     ▐░▌          ▐░█▄▄▄▄▄▄▄█░▌▐░▌ ▐░▌   ▐░▌▐░▌ ▐░▌   ▐░▌▐░█▄▄▄▄▄▄▄█░▌  ##
+##  ▐░░░░░░░░░░▌      ▐░▌          ▐░▌     ▐░▌          ▐░░░░░░░░░░░▌▐░▌  ▐░▌  ▐░▌▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌  ##
+##  ▐░█▀▀▀▀▀▀▀█░▌     ▐░▌          ▐░▌     ▐░▌          ▐░█▀▀▀▀▀▀▀█░▌▐░▌   ▐░▌ ▐░▌▐░▌   ▐░▌ ▐░▌▐░█▀▀▀▀▀▀▀█░▌  ##
+##  ▐░▌       ▐░▌     ▐░▌          ▐░▌     ▐░▌          ▐░▌       ▐░▌▐░▌    ▐░▌▐░▌▐░▌    ▐░▌▐░▌▐░▌       ▐░▌  ##
+##  ▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄█░█▄▄▄▄      ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌▐░▌     ▐░▐░▌▐░▌     ▐░▐░▌▐░▌       ▐░▌  ##
+##  ▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░▌      ▐░░▌▐░▌      ▐░░▌▐░▌       ▐░▌  ##
+##   ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀        ▀▀  ▀        ▀▀  ▀         ▀   ##
+################################################################################################################
+               ##################################################################################
+               ##                                                                              ##
+               ##      Project Status: CETI                                                    ##
+               ##                                                                              ##
+               ##  by DoMato aka hellresistor                                                  ##
+               ##  Support donating Bitcanna                                                   ##
+               ##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
+               ##                                                                              ##
+               ##################################################################################
+FOH
