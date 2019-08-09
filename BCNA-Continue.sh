@@ -141,6 +141,7 @@ cryptwallet
 
 walletmnconf(){
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
+read -s "Set Yous MasterNode Alias (usually: MN1): " MNALIAS
 echo "Connecting..."
 echo "wait... more... ~10sec.."
 echo "let the baby rest a little xD" && sleep 1
@@ -151,12 +152,12 @@ echo "Generate your MasterNode Private Key (Need It Later Step-12)"
 MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
 echo $MNGENK
 #$MNGENK
-echo "creating new Address for MASTERNODE- MN0"
-NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress \“MN0\”"
+echo "creating new Address for MASTERNODE - $MNALIAS"
+NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress \“$MNALIAS\”"
 echo $NEWWLTADRS
 #$NEWWLTADRS
 echo "TIME TO SEND YOUR COINS TO YOUR MN0 wallet address (check Official Bitcanna.io Claim Guide)"
-echo "My MN0 Wallet Address Is:"
+echo "My $MNALIAS Wallet Address Is:"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
 echo "Please wait at least 16+ confirmations of trasaction"
