@@ -15,9 +15,7 @@ Script includes:
 $ apt update && apt upgrade -y && apt install -y git unzip
 
 # Run:
- git clone https://github.com/hellresistor/BCNAScripts.git
- chmod +x -R BCNAScripts
- ./BCNAScripts/BCNA-Installer.sh
+ git clone https://github.com/hellresistor/BCNAScripts.git && chmod +x -R BCNAScripts && ./BCNAScripts/BCNA-Installer.sh
 
 # Support donating:
 BCNA:  B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
