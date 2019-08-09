@@ -82,7 +82,6 @@ echo "And run ./BCNA-Continue.sh"
 read -n 1 -s -r -p "Press any key to REBOOT"
 echo "Rebooting..." && sleep 1 && reboot
 }
-
 bypass2(){
 ## The fuutureee . E.T. wwwwooooooooooo
 cat <<FOE> $BCNAHOME/BCNA-Continue.sh
@@ -98,7 +97,6 @@ fi
 check
 whoime
 FOE
-
 chmod 777 $BCNAHOME/BCNA-Continue.sh
 chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
 echo "Run ./BCNA-Continue.sh"
