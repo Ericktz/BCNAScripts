@@ -83,6 +83,8 @@ rm $BCNAHOME/.bitcanna/masternode.conf
 
 backup(){
 mkdir $BCNAHOME/BACKUP && chmod 770 $BCNAHOME/BACKUP
+echo "$RPCUSER" >> $BCNAHOME/BACKUP/wallet.txt
+echo "$RPCPWD" >> $BCNAHOME/BACKUP/wallet.txt
 BCKWLT=$"$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat"
 $BCKWLT
 echo "Dont be lazy... iTS TO SURE YOU KNOWS YOUR PASSWORD"
@@ -91,7 +93,7 @@ WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false"
 $WLTUNLOCK
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
-echo "Address: $WLTADRS" > $BCNAHOME/BACKUP/wallet.txt
+echo "Address: $WLTADRS" >> $BCNAHOME/BACKUP/wallet.txt
 echo "Password: $WALLETPASS" >> $BCNAHOME/BACKUP/wallet.txt
 echo "Dump: $BCNADUMP" >> $BCNAHOME/BACKUP/wallet.txt
 sleep 0.5
