@@ -32,10 +32,29 @@ rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
 }
 
 sync(){
+## Working on this .. dont get the mach from file .. missing syntax or like that 
 echo "WAIT TO SYNC..."
-## Failing not work... more time to dedicated a miscellinous
-tail -f .bitcanna/debug.log | grep --line-buffered 'process=1' | read -t 15 dummyvar
-[ $dummyvar -eq 0 ]  && echo 'Bitcanna Wallet Fully Synced!!!' || echo 'Wait... Wallet are syncing' ; Bitcanna/bitcanna-cli getinfo
+tail -n 0 -F .bitcanna/debug.log | grep "progress=0.032010" | read -t 5 dummyvar
+if [ $dummyvar -eq 0 ] 
+ echo "Bitcanna Wallet Fully Synced!!!"
+then
+ echo "Wait... Wallet are syncing" 
+fi
+# ; ./home/bitcanna/Bitcanna/bitcanna-cli getinfo
+
+## Other way ...
+# tail -n 0 -F /home/bitcanna/.bitcanna/debug.log | while read dummyvar
+# do
+# echo "$dummyvar" | grep "progress=0.032"
+# if [ $dummyvar = 0 ]
+# then
+# echo "Wallet Synced" || echo "Wallet Syncing... w8" 
+# fi
+# done
+## Getting loop of ' ./BCNA-Continue.sh: line 43: [: too many arguments '
+# much info inside file
+echo "Continuou"
+
 }
 
 choice(){
@@ -60,17 +79,6 @@ echo $RPCUSR >> $BCNAHOME/.bitcanna/bitcanna.conf
 echo $RPCPWD >> $BCNAHOME/.bitcanna/bitcanna.conf
 chmod 777 $BCNAHOME/.bitcanna/masternode.conf
 rm $BCNAHOME/.bitcanna/masternode.conf
-echo "Connecting..."
-echo "wait... more... ~10sec.."
-echo "let the baby rest a little xD" && sleep 1
-$BCNADIR/bitcannad &
-sleep 9
-echo "PLEASE WAIT TO FULL SYNCRONIZATION!!!"
-echo "Can check opening other session and run"
-echo "tail -f $BCNAHOME/.bitcanna/debug.log"
-echo "AND search to parameter: progress=1"
-echo "1 , means 100% sync.."
-read -n 1 -s -r -p "After SYNCED!! Press any key to continue" 
 }
 
 backup(){
@@ -94,10 +102,11 @@ echo "!!!!!PLEASE!!!!!SAVE THIS FILE ON MANY DEVICES ON SECURE PLACES!!!!!WHEN S
 read -n 1 -s -r -p "Press any key to continue" 
 }
 
-walletconf(){
-echo "My Wallet Address Is:"
-WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
-echo $WLTADRS
+cryptwallet(){
+## No Reference on Guides about Encrypt ##
+##    Maybe cause problems? 
+## ohohoh PROTECT YOUR SERVER AND CONNECTION xD
+echo "lets encrypt your wallet"
 read -s -p "PASSPHRASE TO/FOR YOUR WALLET: " WALLETPASS
 echo
 WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
@@ -106,6 +115,81 @@ WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
 $WLTUNLOCK
 WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
 $WLTSTAKE
+}
+
+syncbasic(){
+echo "PLEASE WAIT TO FULL SYNCRONIZATION!!!"
+echo "Can check opening other session and run"
+echo "tail -f $BCNAHOME/.bitcanna/debug.log"
+echo "AND search to parameter: progress=1"
+echo "1 , means 100% sync.."
+read -n 1 -s -r -p "After SYNCED!! Press any key to continue" 
+}
+
+walletposconf(){
+echo "Connecting..."
+echo "wait... more... ~10sec.."
+echo "let the baby rest a little xD" && sleep 1
+$BCNADIR/bitcannad &
+sleep 9
+syncbasic
+echo "My Wallet Address Is:"
+WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+echo $WLTADRS
+cryptwallet
+}
+
+walletmnconf(){
+echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
+echo "Connecting..."
+echo "wait... more... ~10sec.."
+echo "let the baby rest a little xD" && sleep 1
+$BCNADIR/bitcannad &
+sleep 9
+syncbasic
+echo "Generate your MasterNode Private Key (Need It Later Step-12)"
+MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
+echo $MNGENK
+#$MNGENK
+echo "creating new Address for MASTERNODE- MN0"
+NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress \“MN0\”"
+echo $NEWWLTADRS
+#$NEWWLTADRS
+echo "TIME TO SEND YOUR COINS TO YOUR MN0 wallet address (check Official Bitcanna.io Claim Guide)"
+echo "My MN0 Wallet Address Is:"
+WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+echo $WLTADRS
+echo "Please wait at least 16+ confirmations of trasaction"
+echo
+read -n 1 -s -r -p "After 16+ confirmations, Press any key to continue to lists"
+./$BCNAHOME/bitcanna-cli listtransactions
+echo "Copy respectiv the txID?!?!?"
+read -s "Copy respectiv transfer txID?!?!?" TXID
+echo "Lets Find the collateral output tx and index"
+./$BCNADIR/bitcanna-cli masternode outputs
+read -s "Set the long part (tx) string" MNTX
+read -s "Set the short part (id) string" MNID
+killall bitcannad && sleep 10
+echo "Get VPS IP..."
+VPSIP="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+echo "more bitcanna.conf configs..."
+echo "externalip=${VPSIP}" >> $BCNAHOME/.bitcanna/bitcanna.conf
+echo "port=12888" >> $BCNAHOME/.bitcanna/bitcanna.conf
+read -s "Number of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node)" IDMN
+cat <<EOF>
+# Example result:
+0 MN1 72.46.79.228:12888 6CsM56RjQbL4vdLuRCaM-fvdzYK 109e49adb637ed-d206c3cd33329 1
+Nº Alias	IP:Port		step 7			    step 10		  step 10
+#nano ~/.bitcanna/masternode.conf
+EOF
+sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNAHOME/.bitcanna/masternode.conf
+cat  $BCNAHOME/.bitcanna/masternode.conf
+sleep 1
+echo "Run Bitcanna Wallet"
+.$BCNAHOME/bitcannad --maxconnections=1000 &
+echo "Activate MasterNode"
+.$BCNAHOME/bitcanna-cli masternode start-many
+cryptwallet
 }
 
 mess(){
@@ -117,14 +201,14 @@ rm $BCNAHOME/.bash_history
 masternode(){
 firstrun
 #sync
-walletconf
+walletmnconf
 backup
 }
 
 stake(){
 firstrun
 #sync
-walletconf
+walletposconf
 backup
 }
 
