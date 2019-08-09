@@ -2,18 +2,17 @@
 # Script Contribution to BitCanna Community
 # To Ubuntu Server 18.04
 #
-# STATUS: Developing
+# STATUS: BETA
 #
 # by DoMato aka hellresistor
-# Donate BCNA: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
+# Support donating Bitcanna
+# BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
 #
-
 BCNAUSER=bitcanna
 BCNAPKG=bcna-1.0.0-unix.zip
 BCNAHOME=/home/$BCNAUSER
 BCNADIR=$BCNAHOME/Bitcanna
 STAKE=100
-
 check(){
 echo "Checking as running as root user"
 sleep 1
@@ -22,7 +21,6 @@ if [ "root" != "$USER" ]
   exit
 fi
 }
-
 userad(){
 echo "Creating user to bitcanna and add to sudoers"
 adduser $BCNAUSER --shell=/bin/bash
@@ -36,7 +34,6 @@ echo "You need PASTE THAT above of this line: root	ALL=(ALL:ALL) ALL"
 read -n 1 -s -r -p "Press any key to continue to VISUDO"
 visudo
 }
-
 service(){
 cat <<EOF> /tmp/bitcannad.service
 [Unit]
@@ -62,7 +59,6 @@ cp /tmp/bitcannad.service /lib/systemd/system/bitcannad.service
 systemctl enable bitcannad.service
 rm /tmp/bitcannad.service
 }
-
 bckprep(){
 mkdir "$BCNAHOME/BACKUP"
 ## && chmod 770 $BCNAHOME/BACKUP && chown $BCNAUSER $BCNAHOME/BACKUP
@@ -70,11 +66,10 @@ echo "$RPCUSER" >> $BCNAHOME/BACKUP/rpc.txt
 echo "$RPCPWD" >> $BCNAHOME/BACKUP/rpc.txt
 chmod -R 770 $BCNAHOME/BACKUP && chown -R $BCNAUSER $BCNAHOME/BACKUP
 }
-
 bypass(){
-cp BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
-chmod 777 /home/bitcanna/BCNA-Continue.sh
-chown bitcanna /home/bitcanna/BCNA-Continue.sh
+cp $HOME/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
+chmod 777 $BCNAHOME/BCNA-Continue.sh
+chown bitcanna $BCNAHOME/BCNA-Continue.sh
 echo && echo "Dont Forget" && echo && sleep 2
 echo "Next Login With - $BCNAUSER - user"
 ## YES LAMME KID .... On future will be auto .. not time to that now =D
@@ -82,34 +77,9 @@ echo "And run ./BCNA-Continue.sh"
 read -n 1 -s -r -p "Press any key to REBOOT"
 echo "Rebooting..." && sleep 1 && reboot
 }
-bypass2(){
-## The fuutureee . E.T. wwwwooooooooooo
-cat <<FOE> $BCNAHOME/BCNA-Continue.sh
-#!/bin/bash
-check(){
-echo "Checking as running as bitcanna user"
-sleep 1
-if [ "$BCNAUSER" != "\$USER" ]
-  then  sudo su -c "$0" $BCNAUSER
-  exit
-fi
-}
-check
-whoime
-FOE
-chmod 777 $BCNAHOME/BCNA-Continue.sh
-chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
-echo "Run ./BCNA-Continue.sh"
-echo
-read -n 1 -s -r -p "Press any key to REBOOT"
-rm .bash_history
-echo "Rebooting..." && sleep 1 && reboot
-}
-
 check
 checkapt
 userad
 service
 bckprep
 bypass
-#bypass2
