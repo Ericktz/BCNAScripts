@@ -30,7 +30,6 @@ echo "#########################################" && echo "## You are $BCNAUSER !
 bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
-# yyeeaahh.. I know.. i will do that work nicee pretty 
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
 mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
 chmod -R 777 $BCNADIR && rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
@@ -38,7 +37,7 @@ echo "###########################################" && echo "## Downloaded and Ex
 }
 
 sync(){
-## Working on this .. dont get the mach from file .. missing syntax or like that 
+## Working on this .. dont get the match from file .. missing syntax or like that 
 echo "WAIT TO SYNC..."
 tail -n 0 -F .bitcanna/debug.log | grep "progress=0.032010" | read -t 5 dummyvar
 if [ $dummyvar -eq 0 ] 
@@ -92,6 +91,10 @@ backup(){
 clear
 echo "###########################" && echo "## Backuping Wallet Info ##" && echo "###########################"
 mkdir $BCNAHOME/BACKUP && chmod 770 $BCNAHOME/BACKUP
+if [ "$choiz" == "m" || "$choiz" == "M" ]
+ then
+  cp $BCNACONF/masternode.conf $BCNAHOME/BACKUP/masternode.conf
+fi
 BCKWLT=$"$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat"
 $BCKWLT
 #echo "Dont be lazy... iTS TO SURE YOU KNOWS YOUR PASSWORD"
@@ -100,6 +103,7 @@ $BCKWLT
 #$WLTUNLOCK
 #WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
+
 cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: $WLTADRS
 Password: $WALLETPASS
@@ -107,6 +111,10 @@ Dump: $BCNADUMP
 $RPCUSER
 $RPCPWD
 EOF
+if [ "$choiz" == "m" || "$choiz" == "M" ]
+ then
+  cp $BCNACONF/masternode.conf $BCNAHOME/BACKUP/masternode.conf
+fi
 tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP && chmod 500 $BCNAHOME/WalletBackup.tar.gz
 cat<<EOF
 ############################################################
@@ -172,20 +180,19 @@ read -n 1 -s -r -p "OK! ARE SYNCED!! Press any key to continue (OYEAH!!)"
 }
 
 walletposconf(){
-clear && echo "## Connecting ... ## && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
+echo "staking=1" >> $BCNAHOME/.bitcanna/bitcanna.conf
+clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
 clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
-echo "################################################################################"
-echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurrations COMPLETED! ##"
-echo "################################################################################"
-sleep 1
+echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurrations COMPLETED! ##" && echo "################################################################################" && sleep 1
 }
 
 walletmnconf(){
 #### Next Step Work
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
-read -s "Set Your MasterNode Alias (usually: MN1): " MNALIAS
-clear && echo "## Connecting ... ## && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
+read -s "Set ID of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node, .....)" IDMN
+read -s "Set Your MasterNode wallet Alias (usually: MN0): " MNALIAS
+clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
 echo "##########################################" && echo "## Generate your MasterNode Private Key ##" && echo "##########################################"
 MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
 echo $MNGENK
@@ -193,47 +200,51 @@ echo $MNGENK
 echo "####################################################" && echo "## Creating NEW Address to MASTERNODE -> $MNALIAS ##" && echo "####################################################"
 NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress \“$MNALIAS\”"
 echo $NEWWLTADRS
-#$NEWWLTADRS
-echo "######################################################################"
-echo "## TIME TO SEND YOUR 100K COINS TO YOUR \"$MNALIAS\" wallet address ##"
-echo "##            (check Official Bitcanna.io Claim Guide)"             ##"
-echo "######################################################################"
-echo "## My \$MNALIAS Wallet Address Is: ##"
-echo "#####################################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
-echo $WLTADRS
-echo "##########################################################"
-echo "## Please wait at least 16+ confirmations of trasaction ##"
-echo "##########################################################"
-read -n 1 -s -r -p "## After 16+ confirmations, Press any key to continue ##"
+cat<<EST
+######################################################################
+## TIME TO SEND YOUR 100K COINS TO YOUR \"$MNALIAS\" wallet address ##
+##            (check Official Bitcanna.io Claim Guide)              ##
+######################################################################
+## My \$MNALIAS Wallet Address Is: $WLTADRS ##
+######################################################################
+EST
+echo "##########################################################" && echo "## Please wait at least 16+ confirmations of trasaction ##" && echo "##########################################################"
+read -n 1 -s -r -p "`echo -e '########################################################\n## After 16+ confirmations, Press any key to continue ##\n########################################################\n '`" 
+                    ###############################################            
 read -n 1 -s -r -p "## Sure? 16 Conf.? Press any key to continue ##"
-
+clear
+echo "#############################################"
+echo "## IDENTIFY YOUR TRANSACTION ID - TxID !!! ##"
+echo "#############################################"
 ./$BCNAHOME/bitcanna-cli listtransactions
-echo "Copy respectiv the txID?!?!?"
-read -s "Copy respectiv transfer txID?!?!?" TXID
-echo "Lets Find the collateral output tx and index"
+read -p "`echo -e '\n##############################\n## Copy IDENTIFIED TxId !!! ##\n##############################\n: '`" TXID
+sleep 0.5 && clear
+echo "##################################################"
+echo "## Lets Find the collateral Output TX and INDEX ##"
+echo "##################################################"
 ./$BCNADIR/bitcanna-cli masternode outputs
-read -s "Set the long part (tx) string" MNTX
-read -s "Set the short part (id) string" MNID
+echo "######################################"
+echo "## Copy/Paste the Requested Info!!! ##"
+echo "######################################"
+read -p "`echo -e '\n###################################\n## Set the Long part (Tx) string ##\n###################################\n: '`" MNTX
+read -p "`echo -e '\n####################################\n## Set the Short part (Id) string ##\n####################################\n: '`" MNID
+sleep 0.5
 killall bitcannad && sleep 10
-echo "Get VPS IP..."
+echo "#####################################"
+echo "## Getting Your Public/External IP ##"
+echo "#####################################"
 VPSIP="$(dig +short myip.opendns.com @resolver1.opendns.com)"
-echo "more bitcanna.conf configs..."
-echo "externalip=${VPSIP}" >> $BCNAHOME/.bitcanna/bitcanna.conf
-echo "port=12888" >> $BCNAHOME/.bitcanna/bitcanna.conf
-read -s "Number of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node)" IDMN
-cat <<EOF
-# Example result:
-0 MN1 72.46.79.228:12888 6CsM56RjQbL4vdLuRCaM-fvdzYK 109e49adb637ed-d206c3cd33329 1
-Nº Alias	IP:Port		step 7			    step 10		  step 10
-#nano ~/.bitcanna/masternode.conf
-EOF
-sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNAHOME/.bitcanna/masternode.conf
-cat  $BCNAHOME/.bitcanna/masternode.conf
-sleep 1
-echo "Run Bitcanna Wallet"
+echo "externalip=${VPSIP}" >> $BCNACONF/bitcanna.conf
+echo "port=12888" >> $BCNACONF/bitcanna.conf
+sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNACONF/masternode.conf
+cat  $BCNACONF/masternode.conf
+read -n 1 -s -r -p "`echo -e '\n#############################################################\n## Are you Verified The Results? Press any key to continue ##\n#############################################################\n '`" 
+echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "#########################"
 .$BCNAHOME/bitcannad --maxconnections=1000 &
-echo "Activate MasterNode"
+echo "###############################"
+echo "## Activating MasterNode ... ##"
+echo "###############################"
 .$BCNAHOME/bitcanna-cli masternode start-many
 cryptwallet
 }
