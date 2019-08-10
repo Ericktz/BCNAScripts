@@ -211,40 +211,25 @@ cat<<EST
 EST
 echo "##########################################################" && echo "## Please wait at least 16+ confirmations of trasaction ##" && echo "##########################################################"
 read -n 1 -s -r -p "`echo -e '########################################################\n## After 16+ confirmations, Press any key to continue ##\n########################################################\n '`" 
-                    ###############################################            
-read -n 1 -s -r -p "## Sure? 16 Conf.? Press any key to continue ##"
+read -n 1 -s -r -p "`echo -e '###############################################\n## Sure? 16 Conf.? Press any key to continue ##\n############################################### \n'`"
 clear
-echo "#############################################"
-echo "## IDENTIFY YOUR TRANSACTION ID - TxID !!! ##"
-echo "#############################################"
+echo "#############################################" && echo "## IDENTIFY YOUR TRANSACTION ID - TxID !!! ##" && echo "#############################################"
 ./$BCNAHOME/bitcanna-cli listtransactions
 read -p "`echo -e '\n##############################\n## Copy IDENTIFIED TxId !!! ##\n##############################\n: '`" TXID
-sleep 0.5 && clear
-echo "##################################################"
-echo "## Lets Find the collateral Output TX and INDEX ##"
-echo "##################################################"
+sleep 0.5 && clear && echo "##################################################" && echo "## Lets Find the collateral Output TX and INDEX ##" && echo "##################################################"
 ./$BCNADIR/bitcanna-cli masternode outputs
-echo "######################################"
-echo "## Copy/Paste the Requested Info!!! ##"
-echo "######################################"
+echo "######################################" && echo "## Copy/Paste the Requested Info!!! ##" && echo "######################################"
 read -p "`echo -e '\n###################################\n## Set the Long part (Tx) string ##\n###################################\n: '`" MNTX
 read -p "`echo -e '\n####################################\n## Set the Short part (Id) string ##\n####################################\n: '`" MNID
-sleep 0.5
-killall bitcannad && sleep 10
-echo "#####################################"
-echo "## Getting Your Public/External IP ##"
-echo "#####################################"
+sleep 0.5 && killall bitcannad && sleep 10
+echo "#####################################" && echo "## Getting Your Public/External IP ##" && echo "#####################################"
 VPSIP="$(dig +short myip.opendns.com @resolver1.opendns.com)"
-echo "externalip=${VPSIP}" >> $BCNACONF/bitcanna.conf
-echo "port=12888" >> $BCNACONF/bitcanna.conf
-sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNACONF/masternode.conf
-cat  $BCNACONF/masternode.conf
+echo "externalip=${VPSIP}" >> $BCNACONF/bitcanna.conf && echo "port=12888" >> $BCNACONF/bitcanna.conf
+sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNACONF/masternode.conf && cat  $BCNACONF/masternode.conf
 read -n 1 -s -r -p "`echo -e '\n#############################################################\n## Are you Verified The Results? Press any key to continue ##\n#############################################################\n '`" 
 echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "#########################"
 .$BCNAHOME/bitcannad --maxconnections=1000 &
-echo "###############################"
-echo "## Activating MasterNode ... ##"
-echo "###############################"
+echo "###############################" && echo "## Activating MasterNode ... ##" && echo "###############################"
 .$BCNAHOME/bitcanna-cli masternode start-many
 cryptwallet
 }
