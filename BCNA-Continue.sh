@@ -118,7 +118,6 @@ read -n 1 -s -r -p "Press any key to Finish"
 }
 
 cryptwallet(){
-clear
 cat<<ETF
 ########################################################
 ## No Reference on Guides about Encrypt on MasterNode ##
@@ -173,17 +172,13 @@ read -n 1 -s -r -p "OK! ARE SYNCED!! Press any key to continue (OYEAH!!)"
 }
 
 walletposconf(){
-echo "Connecting..."
-echo "wait... more... ~10sec.."
-echo "let the baby rest a little xD" && sleep 1
-$BCNADIR/bitcannad &
-sleep 9
-syncbasic
-read -n 1 -s -r -p "After SYNCED!! Press any key to continue" 
-echo "My Wallet Address Is:"
-WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
-echo $WLTADRS
-cryptwallet
+clear && echo "## Connecting ... ## && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
+clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
+WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
+echo "################################################################################"
+echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurrations COMPLETED! ##"
+echo "################################################################################"
+sleep 1
 }
 
 walletmnconf(){
@@ -241,6 +236,7 @@ cryptwallet
 }
 
 mess(){
+echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
 rm $BCNADIR/bcna_unix_29_07_19
 rm -rf $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
@@ -265,6 +261,7 @@ check
 bcnadown
 choice
 mess
+clear
 cat<<FOH
 ################################################################################################################
 ##   ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄   ##
@@ -289,3 +286,4 @@ cat<<FOH
                ##                                                                              ##
                ##################################################################################
 FOH
+sleep 5 && exit
