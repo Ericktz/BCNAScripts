@@ -74,7 +74,7 @@ firstrun(){
 clear
 echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################"
 sleep 0.5 && $BCNADIR/bitcannad & && sleep 10
-cat<<EIF
+cat <<EIF
 ##########################################
 ## COPY the Returned values (example):  ##
 ##        rpcuser=criptouser            ##
@@ -100,7 +100,7 @@ $BCKWLT
 #$WLTUNLOCK
 #WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
-cat<<EOF > $BCNAHOME/BACKUP/walletinfo.txt
+cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: $WLTADRS
 Password: $WALLETPASS
 Dump: $BCNADUMP
@@ -182,29 +182,32 @@ sleep 1
 }
 
 walletmnconf(){
+#### Next Step Work
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
-read -s "Set Yous MasterNode Alias (usually: MN1): " MNALIAS
-echo "Connecting..."
-echo "wait... more... ~10sec.."
-echo "let the baby rest a little xD" && sleep 1
-$BCNADIR/bitcannad &
-sleep 9
-syncbasic
-echo "Generate your MasterNode Private Key (Need It Later Step-12)"
+read -s "Set Your MasterNode Alias (usually: MN1): " MNALIAS
+clear && echo "## Connecting ... ## && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
+echo "##########################################" && echo "## Generate your MasterNode Private Key ##" && echo "##########################################"
 MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
 echo $MNGENK
 #$MNGENK
-echo "creating new Address for MASTERNODE - $MNALIAS"
+echo "####################################################" && echo "## Creating NEW Address to MASTERNODE -> $MNALIAS ##" && echo "####################################################"
 NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress \“$MNALIAS\”"
 echo $NEWWLTADRS
 #$NEWWLTADRS
-echo "TIME TO SEND YOUR COINS TO YOUR MN0 wallet address (check Official Bitcanna.io Claim Guide)"
-echo "My $MNALIAS Wallet Address Is:"
+echo "######################################################################"
+echo "## TIME TO SEND YOUR 100K COINS TO YOUR \"$MNALIAS\" wallet address ##"
+echo "##            (check Official Bitcanna.io Claim Guide)"             ##"
+echo "######################################################################"
+echo "## My \$MNALIAS Wallet Address Is: ##"
+echo "#####################################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 echo $WLTADRS
-echo "Please wait at least 16+ confirmations of trasaction"
-echo
-read -n 1 -s -r -p "After 16+ confirmations, Press any key to continue to lists"
+echo "##########################################################"
+echo "## Please wait at least 16+ confirmations of trasaction ##"
+echo "##########################################################"
+read -n 1 -s -r -p "## After 16+ confirmations, Press any key to continue ##"
+read -n 1 -s -r -p "## Sure? 16 Conf.? Press any key to continue ##"
+
 ./$BCNAHOME/bitcanna-cli listtransactions
 echo "Copy respectiv the txID?!?!?"
 read -s "Copy respectiv transfer txID?!?!?" TXID
