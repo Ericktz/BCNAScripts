@@ -100,7 +100,7 @@ $BCKWLT
 #$WLTUNLOCK
 #WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
-cat<<EOF>$BCNAHOME/BACKUP/walletinfo.txt
+cat<<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: $WLTADRS
 Password: $WALLETPASS
 Dump: $BCNADUMP
