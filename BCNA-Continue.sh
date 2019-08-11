@@ -21,8 +21,8 @@ STAKE="100"
 check(){
 echo "###########################################" && echo "## Checking If script is running as $BCNAUSER ##" && echo "###########################################" && sleep 1
 sleep 0.5
-if [ "$BCNAUSER" != \"$USER\" ]
-  then  sudo su -c \"$0\" "$BCNAUSER"
+if [ "$BCNAUSER" != "$USER" ]
+  then  sudo su -c "$0" "$BCNAUSER"
   exit
 fi
 echo "#########################################" && echo "## You are $BCNAUSER ! Will Continue! wait.. ##" && echo "#########################################" && sleep 2
@@ -37,27 +37,34 @@ echo "###########################################" && echo "## Downloaded and Ex
 }
 
 sync(){
-## Working on this .. dont get the match from file .. missing syntax or like that 
-echo "WAIT TO SYNC..."
-tail -n 0 -F .bitcanna/debug.log | grep "progress=0.032010" | read -t 5 dummyvar
-if [ $dummyvar -eq 0 ] 
- echo "Bitcanna Wallet Fully Synced!!!"
-then
- echo "Wait... Wallet are syncing" 
-fi
-# ; ./home/bitcanna/Bitcanna/bitcanna-cli getinfo
-## Other way ...
-# tail -n 0 -F /home/bitcanna/.bitcanna/debug.log | while read dummyvar
-# do
-# echo "$dummyvar" | grep "progress=0.032"
-# if [ $dummyvar = 0 ]
-# then
-# echo "Wallet Synced" || echo "Wallet Syncing... w8" 
-# fi
-# done
-## Getting loop of ' ./BCNA-Continue.sh: line 43: [: too many arguments '
-# much info inside file
-echo "Continuou"
+diff_t=276
+diff_t=6 ; while [ $diff_t -gt 5 ]
+do 
+ clear
+ cat<<OFT
+##############################################
+##      __   __     _____   ______          ##
+##     /__/\/__/\  /_____/\/_____/\         ##
+##     \  \ \: \ \_\:::_:\ \:::_ \ \        ##
+##      \::\_\::\/_/\  _\:\|\:\ \ \ \       ##
+##       \_:::   __\/ /::_/__\:\ \ \ \      ##
+##            \::\ \  \:\____/\:\_\ \ \     ##
+##             \__\/   \_____\/\_____\/     ##
+##   T I M E                                ##
+##############################################
+## !!!PLEASE WAIT TO FULL SYNCRONIZATION!!! ##
+##############################################
+OFT
+ BLKCNT=$($BCNADIR/bitcanna-cli getblockcount)
+ BLKHSH=$($BCNADIR/bitcanna-cli getblockhash $BLKCNT)
+ t=$($BCNADIR/bitcanna-cli getblock "$BLKHSH" | grep '"time"' | awk -F ":" '{print $2}' | sed -e 's/,$//g')
+ cur_t=$(date +%s)
+ diff_t=$[$cur_t - $t]
+ echo "#############################################"
+ echo -n "Syncing... Wait more: "
+ echo $diff_t | awk '{printf "%d days, %d:%d:%d\n",$1/(60*60*24),$1/(60*60)%24,$1%(60*60)/60,$1%60}'
+ sleep 5
+done
 }
 choice(){
 clear
@@ -103,7 +110,6 @@ $BCKWLT
 #$WLTUNLOCK
 #WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
-
 cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: $WLTADRS
 Password: $WALLETPASS
@@ -146,67 +152,37 @@ if [ "$choiz" == "p" || "$choiz" == "P" ]
   echo "##############" && echo "## Staking! ##" && echo "##############" && sleep 0.5
  fi
 }
-
-syncbasic(){
-clear
-cat<<OFT
-##############################################
-##      __   __     _____   ______          ##
-##     /__/\/__/\  /_____/\/_____/\         ##
-##     \  \ \: \ \_\:::_:\ \:::_ \ \        ##
-##      \::\_\::\/_/\  _\:\|\:\ \ \ \       ##
-##       \_:::   __\/ /::_/__\:\ \ \ \      ##
-##            \::\ \  \:\____/\:\_\ \ \     ##      
-##             \__\/   \_____\/\_____\/     ##
-##   T I M E                                ##
-##############################################
-## !!!PLEASE WAIT TO FULL SYNCRONIZATION!!! ##
-## Can check opening other session and run: ##
-##                                          ##
-## tail -f $BCNAHOME/.bitcanna/debug.log    ##
-##                                          ##
-## AND search&wait to parameter: progress=1 ##
-##############################################
-##     (1) means 100% of Syncronization     ##
-##############################################
-OFT
-read -n 1 -s -r -p "After SYNCED!! Press any key to continue (3)" 
-echo "####################" && echo "## You SURE ?!?!? ##" && echo "####################"
-read -n 1 -s -r -p "After SYNCED!! Press any key to continue (2)"
-echo "################################" && echo "## Wait the Time what It NEED ##" && echo "################################"
-read -n 1 -s -r -p "After SYNCED!! Press any key to continue (1)"
-echo "#########################################" && echo "## OK! OK! OK! I know.. Its ANNOYING!! ##" && echo "#########################################"
-read -n 1 -s -r -p "OK! ARE SYNCED!! Press any key to continue (OYEAH!!)" 
-}
-
 walletposconf(){
 echo "staking=1" >> $BCNAHOME/.bitcanna/bitcanna.conf
-clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
+clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad & 
+sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
+sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!!" ##" && echo "#########################################################"
 clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
 echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurrations COMPLETED! ##" && echo "################################################################################" && sleep 1
 }
-
 walletmnconf(){
 #### Next Step Work
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
 read -s "Set ID of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node, .....)" IDMN
 read -s "Set Your MasterNode wallet Alias (usually: MN0): " MNALIAS
-clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad & && sleep 9 && syncbasic
+clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad &
+sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
+sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!!" ##" && echo "#########################################################"
 echo "##########################################" && echo "## Generate your MasterNode Private Key ##" && echo "##########################################"
 MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
 echo $MNGENK
 #$MNGENK
 echo "####################################################" && echo "## Creating NEW Address to MASTERNODE -> $MNALIAS ##" && echo "####################################################"
-NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress \“$MNALIAS\”"
+NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress “$MNALIAS”"
 echo $NEWWLTADRS
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 cat<<EST
 ######################################################################
-## TIME TO SEND YOUR 100K COINS TO YOUR \"$MNALIAS\" wallet address ##
+## TIME TO SEND YOUR 100K COINS TO YOUR "$MNALIAS" wallet address ##
 ##            (check Official Bitcanna.io Claim Guide)              ##
 ######################################################################
-## My \$MNALIAS Wallet Address Is: $WLTADRS ##
+## My $MNALIAS Wallet Address Is: $WLTADRS ##
 ######################################################################
 EST
 echo "##########################################################" && echo "## Please wait at least 16+ confirmations of trasaction ##" && echo "##########################################################"
@@ -233,7 +209,6 @@ echo "###############################" && echo "## Activating MasterNode ... ##"
 .$BCNAHOME/bitcanna-cli masternode start-many
 cryptwallet
 }
-
 mess(){
 echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
 rm $BCNADIR/bcna_unix_29_07_19
@@ -241,21 +216,16 @@ rm -rf $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
 }
-
 masternode(){
 firstrun
-#sync
 walletmnconf
 backup
 }
-
 stake(){
 firstrun
-#sync
 walletposconf
 backup
 }
-
 check
 bcnadown
 choice
