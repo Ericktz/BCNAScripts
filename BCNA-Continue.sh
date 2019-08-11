@@ -78,8 +78,9 @@ esac
 }
 firstrun(){
 clear
-echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################"
-sleep 0.5 && $BCNADIR/bitcannad & && sleep 10
+echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################" && sleep 0.5
+$BCNADIR/bitcannad &
+sleep 10
 cat <<EIF
 ##########################################
 ## COPY the Returned values (example):  ##
