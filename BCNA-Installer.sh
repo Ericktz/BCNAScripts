@@ -1,40 +1,101 @@
 #!/bin/bash
-# Script Contribution to BitCanna Community
-# To Ubuntu Server 18.04
-#
-# STATUS: BETA
-#
-# by DoMato aka hellresistor
-# Support donating Bitcanna
-# BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
-#
-BCNAUSER=bitcanna
+intro{
+cat<< EOF
+##################################################################################
+##                   Script Contribution to BitCanna Community                  ##
+##                           To Ubuntu 18.04 LTS Server                         ##
+##################################################################################
+## Executing this script you can Install and Configure your Bitcanna Wallet to: ##
+##                                                                              ##
+##          - Stake (Proof-Of-Stake)                                            ##
+##                                                                              ##
+##          - MN    (Master-Node)                                               ##
+##                                                                              ##
+##################################################################################
+##                                                                              ##
+##      Project Status: CETI                                                    ##
+##                                                                              ##
+##  by DoMato aka hellresistor                                                  ##
+##  Support donating Bitcanna                                                   ##
+##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
+##                                                                              ##
+################################################################################## 
+##################################################################################
+##                                                                              ##
+##  HAVE IN MIND!! EVERY TIME DO YOUR OWN BACKUPS BEFORE USING THIS SCRIPT      ##
+##            I have NO responsability about system corruption!                 ##
+##                     Use this Script at your own risk!                        ##
+##                                                                              ##
+##################################################################################
+EOF
+echo "Continue this Script are Accepting you are the only responsible"
+read -n 1 -s -r -p "Press any key to Executing this Script"
+################################################################################################################
+##   ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄   ##
+##  ▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░▌      ▐░▌▐░░▌      ▐░▌▐░░░░░░░░░░░▌  ##
+##  ▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░▌░▌     ▐░▌▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀█░▌  ##
+##  ▐░▌       ▐░▌     ▐░▌          ▐░▌     ▐░▌          ▐░▌       ▐░▌▐░▌▐░▌    ▐░▌▐░▌▐░▌    ▐░▌▐░▌       ▐░▌  ##
+##  ▐░█▄▄▄▄▄▄▄█░▌     ▐░▌          ▐░▌     ▐░▌          ▐░█▄▄▄▄▄▄▄█░▌▐░▌ ▐░▌   ▐░▌▐░▌ ▐░▌   ▐░▌▐░█▄▄▄▄▄▄▄█░▌  ##
+##  ▐░░░░░░░░░░▌      ▐░▌          ▐░▌     ▐░▌          ▐░░░░░░░░░░░▌▐░▌  ▐░▌  ▐░▌▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌  ##
+##  ▐░█▀▀▀▀▀▀▀█░▌     ▐░▌          ▐░▌     ▐░▌          ▐░█▀▀▀▀▀▀▀█░▌▐░▌   ▐░▌ ▐░▌▐░▌   ▐░▌ ▐░▌▐░█▀▀▀▀▀▀▀█░▌  ##
+##  ▐░▌       ▐░▌     ▐░▌          ▐░▌     ▐░▌          ▐░▌       ▐░▌▐░▌    ▐░▌▐░▌▐░▌    ▐░▌▐░▌▐░▌       ▐░▌  ##
+##  ▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄█░█▄▄▄▄      ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌▐░▌     ▐░▐░▌▐░▌     ▐░▐░▌▐░▌       ▐░▌  ##
+##  ▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░▌      ▐░░▌▐░▌      ▐░░▌▐░▌       ▐░▌  ##
+##   ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀        ▀▀  ▀        ▀▀  ▀         ▀   ##
+################################################################################################################
+sleep 2
+}
 BCNAPKG=bcna-1.0.0-unix.zip
 BCNAHOME=/home/$BCNAUSER
+BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
-STAKE=100
 check(){
-echo "Checking as running as root user"
-sleep 1
+clear
+echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
 if [ "root" != "$USER" ]
   then  sudo su -c "$0" root
-  exit
+  else 
 fi
+echo "#########################################" && echo "## You are Root! Will Continue! wait.. ##" && echo "#########################################" && sleep 2
+}
+getinfo(){
+echo "#######################################" && echo "## Some questions to do before start ##"  && echo "#######################################"
+echo "##########################################################" && read -s "## What is New User to BCNA Wallet? (default: bitcanna) ##" BCNAUSER && echo "##########################################################"
 }
 userad(){
-echo "Creating user to bitcanna and add to sudoers"
-adduser $BCNAUSER --shell=/bin/bash
+clear
+echo "##################################################" && echo "## Creating user to bitcanna and add to sudoers ##" && echo "##################################################"
+if [ "$BCNAUSER" == "bitcanna" ]
+ then
+  adduser bitcanna --shell=/bin/bash
+ else
+  adduser $BCNAUSER --shell=/bin/bash
+fi
 usermod -aG sudo $BCNAUSER
-echo "Soorrryy You need do it by hand" && echo && echo
-echo "!!!!!!!!!!!!!!!! COPY THIS LINE BELOW !!!!!!!!!!!!!!!!" 
-echo "SeCuRe if exist A <TAB> between $BCNAUSER-	-ALL=(ALL:ALL) ALL when pasting"
-echo && echo
-echo "$BCNAUSER	ALL=(ALL:ALL) ALL" && echo && echo
-echo "You need PASTE THAT above of this line: root	ALL=(ALL:ALL) ALL"
-read -n 1 -s -r -p "Press any key to continue to VISUDO"
-visudo
+cat <<ETF
+##########################################################
+##        Adding created user to SUDOERS list           ##
+##########################################################
+##           Sorry! You need do it by hand              ##
+##            Make sure WILL BE like this:              ##
+##########################################################
+##########################################################
+##   root	ALL=(ALL:ALL) ALL                             ##
+##   $BCNAUSER	ALL=(ALL:ALL) ALL                       ## 
+##########################################################
+## MAKE SURE IS A <TAB-SPACE> BETWEEN $BCNAUSER and ALL ##
+##########################################################
+## Copy this line to easy things a little bit           ##
+## $BCNAUSER	 ALL=(ALL:ALL) ALL                        ##
+## You need PASTE below of line: root	ALL=(ALL:ALL) ALL ##
+##########################################################
+ETF
+read -n 1 -s -r -p "Press any key to continue to VISUDO" && visudo
+echo "##################################################" && echo "## User $BCNAUSER Created and Permissions Added ##" && echo "##################################################" && sleep 2
 }
 service(){
+clear
+echo "###############################" && echo "## Creating bitcanna Service ##" && echo "###############################"
 cat <<EOF> /tmp/bitcannad.service
 [Unit]
 Description=BCNAs distributed currency daemon EDITED by hellresistor
@@ -43,8 +104,8 @@ After=network.target
 User=$BCNAUSER
 Group=$BCNAUSER
 Type=forking
-PIDFile=$BCNAHOME/.bitcanna/bitcannad.pid
-ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNAHOME/.bitcanna/bitcannad.pid -conf=$BCNAHOME/.bitcanna/bitcanna.conf -datadir=$BCNAHOME/.bitcanna
+PIDFile=$BCNACONF/bitcannad.pid
+ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNACONF/bitcannad.pid -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONF
 ExecStop=$BCNADIR/bitcanna-cli stop
 Restart=always
 PrivateTmp=true
@@ -55,22 +116,30 @@ StartLimitBurst=5
 [Install]
 WantedBy=multi-user.target
 EOF
-cp /tmp/bitcannad.service /lib/systemd/system/bitcannad.service
-systemctl enable bitcannad.service
-rm /tmp/bitcannad.service
+cp /tmp/bitcannad.service /lib/systemd/system/bitcannad.service && systemctl enable bitcannad.service && rm /tmp/bitcannad.service
+echo "##########################################" && echo "## BitCanna Service (bitcannad.service) ##" && echo "##########################################" && sleep 2
 }
 bypass(){
-cp $HOME/BCNAScripts/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh
-chmod 777 $BCNAHOME/BCNA-Continue.sh
-chown bitcanna $BCNAHOME/BCNA-Continue.sh
-echo && echo "Dont Forget" && echo && sleep 2
-echo "Next Login With - $BCNAUSER - user"
-## YES LAMME KID .... On future will be auto .. not time to that now =D
-echo "And run ./BCNA-Continue.sh"
-read -n 1 -s -r -p "Press any key to REBOOT"
-echo "Rebooting..." && sleep 1 && reboot
+clear
+echo "##########################################" && echo "## Preparing to Next and Important STEP ##" && echo "##########################################"
+cp $HOME/BCNAScripts/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh && chmod 777 $BCNAHOME/BCNA-Continue.sh && chown bitcanna $BCNAHOME/BCNA-Continue.sh
+cat<<ETF
+###################################################
+## System ready for BitCanna Wallet installation ##
+###################################################
+##            !!!! Dont Forget !!!!              ##
+##       Next Login With User: $BCNAUSER         ##
+##     And run: .$BCNAHOME/BCNA-Continue.sh"     ##
+###################################################
+ETF
+read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 1 && reboot
 }
+cont(){
+echo "Reserved to Join"
+}
+intro
 check
+getinfo
 userad
 service
 bypass
