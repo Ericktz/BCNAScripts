@@ -23,8 +23,7 @@ bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
-chmod -R 770 $BCNADIR && rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR 
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 
@@ -91,18 +90,18 @@ rm $BCNACONF/masternode.conf && echo "#################################" && echo
 backup(){
 clear
 echo "###########################" && echo "## Backuping Wallet Info ##" && echo "###########################"
-mkdir $BCNAHOME/BACKUP && chmod 770 $BCNAHOME/BACKUP
-if [ "$choiz" == "m" || "$choiz" == "M" ]
- then
-  cp $BCNACONF/masternode.conf $BCNAHOME/BACKUP/masternode.conf
-fi
-BCKWLT=$"$BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat"
-$BCKWLT
-#echo "Dont be lazy... iTS TO SURE YOU KNOWS YOUR PASSWORD"
-#read -s -p "PASSPHRASE FOR YOUR WALLET: " WALLETPASS
-#WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false"
-#$WLTUNLOCK
-#WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
+mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP &&
+cat<<EOF 
+#########################################################
+## To Do This you need set Unlock wallet and NOT stake ##
+## 						       ##
+##            Write your wallet password               ##
+#########################################################
+ 
+EOF
+read -s -p "PASSPHRASE OF YOUR WALLET: " WALLETPASS
+WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 false"
+$WLTUNLOCK
 BCNADUMP=$($BCNADIR/bitcanna-cli dumpprivkey "$WLTADRS")
 cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: $WLTADRS
@@ -111,18 +110,21 @@ Dump: $BCNADUMP
 $RPCUSER
 $RPCPWD
 EOF
-if [ "$choiz" == "m" || "$choiz" == "M" ]
+BCKWLT=$($BCNADIR/bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat)
+$BCKWLT
+if [ "$choiz" == "m" ] || [ "$choiz" == "M" ]
  then
   cp $BCNACONF/masternode.conf $BCNAHOME/BACKUP/masternode.conf
 fi
+echo "#########################" && echo "## Compacting Files .. ##" && echo "#########################"
 tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP && chmod 500 $BCNAHOME/WalletBackup.tar.gz
 cat<<EOF
-############################################################
+#################################################################
 ## Info Wallet Backuped in: $BCNAHOME/WalletBackup.tar.gz ##
-## !!!PLEASE!!! SAVE THIS FILE ON MANY DEVICES ON SECURE  ##
-############################################################
+##							       ##
+## !!!PLEASE!!! SAVE THIS FILE ON MANY DEVICES ON SECURE       ##
+#################################################################
 EOF
-read -n 1 -s -r -p "Press any key to Finish" 
 }
 cryptwallet(){
 cat<<ETF
@@ -211,9 +213,10 @@ cryptwallet
 mess(){
 echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
 rm $BCNADIR/bcna_unix_29_07_19
-rm -rf $BCNAHOME/BACKUP
+rm -R -f $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
+echo "##############################" && echo "## Clean garbage and tracks ##" && echo "##############################"
 }
 masternode(){
 firstrun
