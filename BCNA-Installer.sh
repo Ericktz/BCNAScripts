@@ -17,7 +17,7 @@ cat<< EOF
 ##                                                                              ##
 ##################################################################################
 ##                                                                              ##
-##      Project Status: CETI                                                    ##
+##      Project Status: FINAL V1.9                                              ##
 ##                                                                              ##
 ##  by DoMato aka hellresistor                                                  ##
 ##  Support donating Bitcanna                                                   ##
