@@ -130,7 +130,7 @@ cat<<ETF
 ###################################################
 ##            !!!! Dont Forget !!!!              ##
 ##       Next Login With User: $BCNAUSER         ##
-##     And run: .$BCNAHOME/BCNA-Continue.sh"     ##
+##         And run: ./BCNA-Continue.sh"          ##
 ###################################################
 ETF
 read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 1 && reboot
