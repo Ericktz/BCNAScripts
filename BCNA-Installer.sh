@@ -48,9 +48,6 @@ EIF
 sleep 2
 }
 BCNAPKG=bcna-1.0.0-unix.zip
-BCNAHOME=/home/$BCNAUSER
-BCNACONF=$BCNAHOME/.bitcanna
-BCNADIR=$BCNAHOME/Bitcanna
 check(){
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
 if [ "root" != "$USER" ]
@@ -62,6 +59,9 @@ fi
 getinfo(){
 echo "#######################################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "#######################################"
 read -p"`echo -e '##########################################################\n## What is New User to BCNA Wallet? (default. bitcanna):  '`" BCNAUSER 
+BCNAHOME=/home/$BCNAUSER
+BCNACONF=$BCNAHOME/.bitcanna
+BCNADIR=$BCNAHOME/Bitcanna
 }
 userad(){
 clear
