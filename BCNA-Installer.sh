@@ -1,5 +1,6 @@
 #!/bin/bash
-intro{
+clear
+intro(){
 cat<< EOF
 ##################################################################################
 ##                   Script Contribution to BitCanna Community                  ##
@@ -50,7 +51,6 @@ BCNAHOME=/home/$BCNAUSER
 BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
 check(){
-clear
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
 if [ "root" != "$USER" ]
   then  sudo su -c "$0" root
