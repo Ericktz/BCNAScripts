@@ -87,6 +87,7 @@ read RPCUSR && echo "###########################################" && echo "## PA
 echo "###########################################" && read RPCPWD && echo $RPCUSR >> $BCNACONF/bitcanna.conf && echo $RPCPWD >> $BCNACONF/bitcanna.conf
 rm $BCNACONF/masternode.conf && echo "#################################" && echo "## Initial Configurations Done ##" && echo "#################################"
 }
+### Taking care this...
 backup(){
 clear
 echo "###########################" && echo "## Backuping Wallet Info ##" && echo "###########################"
@@ -123,7 +124,6 @@ cat<<EOF
 EOF
 read -n 1 -s -r -p "Press any key to Finish" 
 }
-
 cryptwallet(){
 cat<<ETF
 ########################################################
@@ -133,16 +133,19 @@ cat<<ETF
 ########################################################
 ETF
 read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
-WLTPSSCMD=$"$BCNADIR/bitcanna-cli encryptwallet $WALLETPASS"
-$WLTPSSCMD && sleep 5
-if [ "$choiz" == "p" || "$choiz" == "P" ]
+WLTPSSCMD=$($BCNADIR/bitcanna-cli encryptwallet $WALLETPASS)
+$WLTPSSCMD
+sleep 15
+read -n 1 -s -r -p "Press any key to Finish" 
+if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
  then
   echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
   WLTUNLOCK="$BCNADIR/bitcanna-cli walletpassphrase $WALLETPASS 0 true"
   $WLTUNLOCK
+  echo "##############" && echo "## Unlocked to Stake! ##" && echo "##############" && sleep 3 
   WLTSTAKE="$BCNADIR/bitcanna-cli setstakesplitthreshold $STAKE"
   $WLTSTAKE
-  echo "##############" && echo "## Staking! ##" && echo "##############" && sleep 0.5
+  echo "##############" && echo "## Staking with $STAKE ! ##" && echo "##############" && sleep 3
  fi
 }
 walletposconf(){
@@ -153,7 +156,7 @@ sleep 10 && sync && echo "#############################" && echo "## Lets Check 
 sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!! ##" && echo "#########################################################"
 clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
-echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurrations COMPLETED! ##" && echo "################################################################################" && sleep 1
+echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurations COMPLETED! ##" && echo "################################################################################" && sleep 3
 }
 walletmnconf(){
 #### Next Step Work
@@ -163,13 +166,13 @@ read -s "Set Your MasterNode wallet Alias (usually: MN0): " MNALIAS
 clear && echo "## Connecting ... ##"
 $BCNADIR/bitcannad -daemon 
 sleep 10 && sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
-sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!!" ##" && echo "#########################################################"
+sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!! ##" && echo "#########################################################"
 echo "##########################################" && echo "## Generate your MasterNode Private Key ##" && echo "##########################################"
 MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
 echo $MNGENK
 #$MNGENK
 echo "####################################################" && echo "## Creating NEW Address to MASTERNODE -> $MNALIAS ##" && echo "####################################################"
-NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress “$MNALIAS”"
+NEWWLTADRS="$BCNADIR/bitcanna-cli getnewaddress $MNALIAS"
 echo $NEWWLTADRS
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat)
 cat<<EST
