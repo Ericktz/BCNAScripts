@@ -54,9 +54,9 @@ check(){
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
 if [ "root" != "$USER" ]
   then  sudo su -c "$0" root
-  else 
+  else
+  echo "#########################################" && echo "## You are Root! Will Continue! wait.. ##" && echo "#########################################" && sleep 2
 fi
-echo "#########################################" && echo "## You are Root! Will Continue! wait.. ##" && echo "#########################################" && sleep 2
 }
 getinfo(){
 echo "#######################################" && echo "## Some questions to do before start ##"  && echo "#######################################"
