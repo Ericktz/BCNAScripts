@@ -1,5 +1,6 @@
 #!/bin/bash
-intro{
+clear
+intro(){
 cat<< EOF
 ##################################################################################
 ##                   Script Contribution to BitCanna Community                  ##
@@ -14,25 +15,16 @@ echo "Continue this Script are Accepting you are the only responsible"
 read -n 1 -s -r -p "Press any key to Executing this Script" 
 }
 BCNAPKG=bcna-1.0.0-unix.zip
-BCNAHOME=/home/$BCNAUSER
+BCNAHOME=$HOME
 BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
 STAKE="100"
-check(){
-echo "###########################################" && echo "## Checking If script is running as $BCNAUSER ##" && echo "###########################################" && sleep 1
-sleep 0.5
-if [ "$BCNAUSER" != "$USER" ]
-  then  sudo su -c "$0" "$BCNAUSER"
-  exit
-fi
-echo "#########################################" && echo "## You are $BCNAUSER ! Will Continue! wait.. ##" && echo "#########################################" && sleep 2
-}
 bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
 mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR
-chmod -R 777 $BCNADIR && rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
+chmod -R 770 $BCNADIR && rm -rf $BCNADIR/*/ && rm $BCNAHOME/$BCNAPKG
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 
@@ -79,7 +71,7 @@ esac
 firstrun(){
 clear
 echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################" && sleep 0.5
-$BCNADIR/bitcannad &
+$BCNADIR/bitcannad -daemon
 sleep 10
 cat <<EIF
 ##########################################
