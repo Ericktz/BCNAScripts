@@ -23,7 +23,7 @@ bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR 
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR sudo cp $BCNADIR/bitcannad /usr/local/bin/bitcannad && sudo chmod +x /usr/local/bin/bitcannad && sudo cp $BCNADIR/bitcanna-cli /usr/local/bin/bitcanna-cli && sudo chmod +x /usr/local/bin/bitcanna-cli
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 
@@ -159,6 +159,16 @@ sync && echo "#########################################################" && echo
 clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
 echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurations COMPLETED! ##" && echo "################################################################################" && sleep 3
+cat<<EST
+####################################################
+## TIME TO SEND SOME COINS TO YOUR wallet address ##
+##    (check Official Bitcanna.io Claim Guide)    ##
+####################################################
+## My Wallet Address Is:                          ##
+$WLTADRS
+####################################################
+EST
+
 }
 walletmnconf(){
 #### Next Step Work
@@ -182,7 +192,8 @@ cat<<EST
 ## TIME TO SEND YOUR 100K COINS TO YOUR "$MNALIAS" wallet address ##
 ##            (check Official Bitcanna.io Claim Guide)              ##
 ######################################################################
-## My $MNALIAS Wallet Address Is: $WLTADRS ##
+## My $MNALIAS Wallet Address Is:                                   ##
+$WLTADRS
 ######################################################################
 EST
 echo "##########################################################" && echo "## Please wait at least 16+ confirmations of trasaction ##" && echo "##########################################################"
@@ -205,7 +216,7 @@ echo "externalip=${VPSIP}" >> $BCNACONF/bitcanna.conf && echo "port=12888" >> $B
 sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNACONF/masternode.conf && cat  $BCNACONF/masternode.conf
 read -n 1 -s -r -p "`echo -e '\n#############################################################\n## Are you Verified The Results? Press any key to continue ##\n#############################################################\n '`" 
 echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "#########################"
-.$BCNAHOME/bitcannad --maxconnections=1000 &
+.$BCNAHOME/bitcannad --maxconnections=1000 -daemon
 echo "###############################" && echo "## Activating MasterNode ... ##" && echo "###############################"
 .$BCNAHOME/bitcanna-cli masternode start-many
 cryptwallet
@@ -228,10 +239,38 @@ firstrun
 walletposconf
 backup
 }
+final(){
+bitcanna-cli stop
+sleep 5
+if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
+then
+bitcannad -daemon
+sleep 10
+bitcanna-cli walletpassphrase $WALLETPASS 0 true 
+sleep 3
+bitcanna-cli getstakingstatus
+cat<<EOF
+#############################################################
+## Proof Of Stake Finished and Running!! Now Can LogOut! ####
+#############################################################
+EOF
+else
+bitcannad --maxconnections=1000 -daemon
+sleep 10
+bitcanna-cli masternode start-many
+sleep 1
+cat<<EOF
+#######################################################
+## MasterNode Finished and Running!! Now Can LogOut! ##
+#######################################################
+EOF
+fi
+}
 check
 bcnadown
 choice
 mess
+final
 clear
 cat<<FOH
 
