@@ -88,16 +88,14 @@ rm $BCNACONF/masternode.conf && echo "#################################" && echo
 backup(){
 clear
 echo "###########################" && echo "## Backuping Wallet Info ##" && echo "###########################"
-mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP &&
+mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
 cat<<EOF 
 #########################################################
 ## To Do This you need set Unlock wallet and NOT stake ##
 ## 						       ##
 ##            Write your wallet password               ##
 #########################################################
- 
 EOF
-read -s -p "PASSPHRASE OF YOUR WALLET: " WALLETPASS
 WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 false"
 $WLTUNLOCK
 BCNADUMP=$(bitcanna-cli dumpprivkey "$WLTADRS")
@@ -159,7 +157,8 @@ bitcannad -daemon
 sleep 10 && sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
 sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!! ##" && echo "#########################################################"
 clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
-WLTADRS=$(bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
+WLTADRS=$(bitcanna-cli getaccountaddress wallet.dat)
+echo $WLTADRS && cryptwallet
 echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurations COMPLETED! ##" && echo "################################################################################" && sleep 3
 cat<<EST
 ####################################################
@@ -170,6 +169,7 @@ cat<<EST
 $WLTADRS
 ####################################################
 EST
+read -n 1 -s -r -p "Press any key to Continue this Script"
 }
 walletmnconf(){
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
