@@ -176,10 +176,7 @@ read -p "## Set ID of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 
 echo "#########################################################################################"
 read -p "## Set Your MasterNode wallet Alias (usually: MN0): " MNALIAS
 echo "#########################################################################################"
-clear && 
-echo "####################"
-echo "## Connecting ... ##"
-echo "####################"
+clear && echo "####################" && echo "## Connecting ... ##" && echo "####################"
 bitcannad -daemon 
 sleep 10 && sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
 sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!! ##" && echo "#########################################################"
