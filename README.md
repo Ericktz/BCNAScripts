@@ -1,7 +1,7 @@
 # BCNA Scripts
 Bitcanna Community Contribution script
 
-STATUS: Ceti
+STATUS: FINAL V1.9
 
 Script to:
 - Ubuntu 18.04 LTS Server
