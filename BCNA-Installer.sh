@@ -1,5 +1,8 @@
 #!/bin/bash
 clear
+BCNAPKG=bcna-1.0.0-unix.zip
+BCNASRCZIP="https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG"
+
 intro(){
 cat<< EOF
 ##################################################################################
@@ -47,7 +50,6 @@ cat<< EIF
 EIF
 sleep 2
 }
-BCNAPKG=bcna-1.0.0-unix.zip
 check(){
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
 if [ "root" != "$USER" ]
@@ -94,6 +96,13 @@ ETF
 read -n 1 -s -r -p "Press any key to continue to VISUDO" && visudo
 echo "##################################################" && echo "## User $BCNAUSER Created and Permissions Added ##" && echo "##################################################" && sleep 2
 }
+bcnadown(){
+clear
+echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
+wget -P $BCNAHOME $BCNASRCZIP
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp $BCNADIR/bitcannad /usr/local/bin/bitcannad && chmod +x /usr/local/bin/bitcannad && cp $BCNADIR/bitcanna-cli /usr/local/bin/bitcanna-cli && chmod +x /usr/local/bin/bitcanna-cli
+echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
+}
 service(){
 clear
 echo "###############################" && echo "## Creating bitcanna Service ##" && echo "###############################"
@@ -138,9 +147,18 @@ read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 1 &
 cont(){
 echo "Reserved to Join"
 }
+mess(){
+clear && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
+rm $BCNADIR/bcna_unix_29_07_19
+rm $BCNAHOME/.bash_history
+rm $BCNAHOME/$BCNAPKG
+echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
+}
 intro
 check
 getinfo
 userad
+bcnadown
 service
 bypass
+mess
