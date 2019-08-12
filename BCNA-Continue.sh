@@ -23,7 +23,7 @@ bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
 wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR sudo cp $BCNADIR/bitcannad /usr/local/bin/bitcannad && sudo chmod +x /usr/local/bin/bitcannad && sudo cp $BCNADIR/bitcanna-cli /usr/local/bin/bitcanna-cli && sudo chmod +x /usr/local/bin/bitcanna-cli
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR && sudo cp $BCNADIR/bitcannad /usr/local/bin/bitcannad && sudo chmod +x /usr/local/bin/bitcannad && sudo cp $BCNADIR/bitcanna-cli /usr/local/bin/bitcanna-cli && sudo chmod +x /usr/local/bin/bitcanna-cli
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 
@@ -98,7 +98,7 @@ cat<<EOF
  
 EOF
 read -s -p "PASSPHRASE OF YOUR WALLET: " WALLETPASS
-WLTUNLOCK="bitcanna-cli walletpassphrase $WALLETPASS 0 false"
+WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 false"
 $WLTUNLOCK
 BCNADUMP=$(bitcanna-cli dumpprivkey "$WLTADRS")
 cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
@@ -133,24 +133,28 @@ cat<<ETF
 ########################################################
 ETF
 read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
-WLTPSSCMD=$(bitcanna-cli encryptwallet $WALLETPASS)
+WLTPSSCMD=$"bitcanna-cli encryptwallet $WALLETPASS"
 $WLTPSSCMD
+sleep 5
+bitcannad -daemon
 sleep 15
-read -n 1 -s -r -p "Press any key to Finish" 
+read -s -p "PASSPHRASE OF YOUR WALLET: " WALLETPASS
+WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 false"
+$WLTUNLOCK
 if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
  then
-  echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
-  WLTUNLOCK="bitcanna-cli walletpassphrase $WALLETPASS 0 true"
+ clean && sleep 1 && echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
+  WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 true"
   $WLTUNLOCK
   echo "##############" && echo "## Unlocked to Stake! ##" && echo "##############" && sleep 3 
-  WLTSTAKE="bitcanna-cli setstakesplitthreshold $STAKE"
+  WLTSTAKE=$"bitcanna-cli setstakesplitthreshold $STAKE"
   $WLTSTAKE
   echo "##############" && echo "## Staking with $STAKE ! ##" && echo "##############" && sleep 3
  fi
 }
 walletposconf(){
 echo "staking=1" >> $BCNACONF/bitcanna.conf
-clear && echo "## Connecting ... ##"
+clear && echo "####################" && echo "## Connecting ... ##" && echo "####################"
 bitcannad -daemon 
 sleep 10 && sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
 sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!! ##" && echo "#########################################################"
@@ -166,10 +170,8 @@ cat<<EST
 $WLTADRS
 ####################################################
 EST
-
 }
 walletmnconf(){
-#### Next Step Work
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
 echo "#########################################################################################"
 read -p "## Set ID of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node, .....): " IDMN
@@ -196,7 +198,7 @@ cat<<EST
 $WLTADRS
 ######################################################################
 EST
-echo "##########################################################" && echo "## Please wait at least 16+ confirmations of trasaction ##" && echo "##########################################################"
+read -n 1 -s -r -p "`echo -e '##########################################################\n## Please wait at least 16+ confirmations of trasaction ##\n##########################################################\n '`"
 read -n 1 -s -r -p "`echo -e '########################################################\n## After 16+ confirmations, Press any key to continue ##\n########################################################\n '`" 
 read -n 1 -s -r -p "`echo -e '###############################################\n## Sure? 16 Conf.? Press any key to continue ##\n############################################### \n'`"
 clear
@@ -213,16 +215,16 @@ sleep 10
 echo "#####################################" && echo "## Getting Your Public/External IP ##" && echo "#####################################"
 VPSIP="$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')"
 echo "externalip=$VPSIP" >> $BCNACONF/bitcanna.conf && echo "port=12888" >> $BCNACONF/bitcanna.conf
-sed "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" $BCNACONF/masternode.conf && cat $BCNACONF/masternode.conf
+echo "$IDMN $MNALIAS $VPSIP:12888 $MNGENK $MNTX $MNID" > $BCNACONF/masternode.conf && cat $BCNACONF/masternode.conf
 read -n 1 -s -r -p "`echo -e '\n#############################################################\n## Are you Verified The Results? Press any key to continue ##\n#############################################################\n '`" 
 echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "#########################"
 bitcannad --maxconnections=1000 -daemon
 sleep 10 && echo "###############################" && echo "## Activating MasterNode ... ##" && echo "###############################"
 bitcanna-cli masternode start-many
-cryptwallet
+sleep 2 && cryptwallet
 }
 mess(){
-echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
+clear && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
 rm $BCNADIR/bcna_unix_29_07_19
 rm -R -f $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
@@ -240,6 +242,7 @@ walletposconf
 backup
 }
 final(){
+clear
 bitcanna-cli stop
 sleep 5
 if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
