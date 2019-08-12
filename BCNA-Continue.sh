@@ -19,14 +19,6 @@ BCNAHOME=$HOME
 BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
 STAKE="100"
-bcnadown(){
-clear
-echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
-wget -P $BCNAHOME https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR && sudo cp $BCNADIR/bitcannad /usr/local/bin/bitcannad && sudo chmod +x /usr/local/bin/bitcannad && sudo cp $BCNADIR/bitcanna-cli /usr/local/bin/bitcanna-cli && sudo chmod +x /usr/local/bin/bitcanna-cli
-echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
-}
-
 sync(){
 diff_t=420 ; while [ $diff_t -gt 5 ]
 do 
@@ -276,7 +268,6 @@ EOF
 sleep 5
 fi
 }
-bcnadown
 choice
 mess
 final
