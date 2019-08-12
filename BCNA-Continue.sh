@@ -147,8 +147,9 @@ if [ "$choiz" == "p" || "$choiz" == "P" ]
 }
 walletposconf(){
 echo "staking=1" >> $BCNAHOME/.bitcanna/bitcanna.conf
-clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad & 
-sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
+clear && echo "## Connecting ... ##"
+$BCNADIR/bitcannad -daemon 
+sleep 10 && sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
 sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!!" ##" && echo "#########################################################"
 clear && echo "###########################" && echo "## My Wallet Address Is: ##" && echo "###########################"
 WLTADRS=$($BCNADIR/bitcanna-cli getaccountaddress wallet.dat) && echo $WLTADRS && cryptwallet
@@ -159,8 +160,9 @@ walletmnconf(){
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
 read -s "Set ID of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node, .....)" IDMN
 read -s "Set Your MasterNode wallet Alias (usually: MN0): " MNALIAS
-clear && echo "## Connecting ... ##" && sleep 0.4 && $BCNADIR/bitcannad &
-sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
+clear && echo "## Connecting ... ##"
+$BCNADIR/bitcannad -daemon 
+sleep 10 && sync && echo "#############################" && echo "## Lets Check again ....!! ##" && echo "#############################" && sleep 5
 sync && echo "#########################################################" && echo "## YES!! REALLY! Bitcanna Wallet Fully Syncronized!!!" ##" && echo "#########################################################"
 echo "##########################################" && echo "## Generate your MasterNode Private Key ##" && echo "##########################################"
 MNGENK=".$BCNADIR/bitcanna-cli masternode genkey"
@@ -190,7 +192,8 @@ sleep 0.5 && clear && echo "##################################################" 
 echo "######################################" && echo "## Copy/Paste the Requested Info!!! ##" && echo "######################################"
 read -p "`echo -e '\n###################################\n## Set the Long part (Tx) string ##\n###################################\n: '`" MNTX
 read -p "`echo -e '\n####################################\n## Set the Short part (Id) string ##\n####################################\n: '`" MNID
-sleep 0.5 && killall bitcannad && sleep 10
+killall bitcannad
+sleep 10
 echo "#####################################" && echo "## Getting Your Public/External IP ##" && echo "#####################################"
 VPSIP="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 echo "externalip=${VPSIP}" >> $BCNACONF/bitcanna.conf && echo "port=12888" >> $BCNACONF/bitcanna.conf
