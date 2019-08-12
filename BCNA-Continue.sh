@@ -121,7 +121,6 @@ $WLTPSSCMD
 sleep 5
 bitcannad -daemon
 sleep 15
-read -s -p "PASSPHRASE OF YOUR WALLET: " WALLETPASS
 WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 false"
 $WLTUNLOCK
 if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
