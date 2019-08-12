@@ -227,7 +227,7 @@ rm $BCNADIR/bcna_unix_29_07_19
 rm -R -f $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
-echo "##############################" && echo "## Clean garbage and tracks ##" && echo "##############################"
+echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################"
 }
 masternode(){
 firstrun
@@ -266,7 +266,6 @@ cat<<EOF
 EOF
 fi
 }
-check
 bcnadown
 choice
 mess
