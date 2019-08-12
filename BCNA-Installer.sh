@@ -123,7 +123,7 @@ echo "##########################################" && echo "## BitCanna Service (
 bypass(){
 clear
 echo "##########################################" && echo "## Preparing to Next and Important STEP ##" && echo "##########################################"
-cp $HOME/BCNAScripts/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh && chmod 777 $BCNAHOME/BCNA-Continue.sh && chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
+cp $HOME/BCNAScripts/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh && chmod 700 $BCNAHOME/BCNA-Continue.sh && chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
 cat<<ETF
 ###################################################
 ## System ready for BitCanna Wallet installation ##
