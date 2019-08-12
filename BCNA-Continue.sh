@@ -74,14 +74,14 @@ sleep 10
 cat <<EIF
 ##########################################
 ## COPY the Returned values (example):  ##
-##        rpcuser=criptouser            ##
-##        rpcpassword=abcdefg           ##
+##        rpcuser=xxxxxxxxxx            ##
+##        rpcpassword=yyyyyyy           ##
 ##########################################
 ##########################################
-## PASTE the line of rpcuser=criptouser ##
+## PASTE the line of rpcuser=xxxxxxxxxx ##
 ##########################################
 EIF
-read RPCUSR && echo "###########################################" && echo "## PASTE the line of rpcpassword=abcdefg ##"
+read RPCUSR && echo "###########################################" && echo "## PASTE the line of rpcpassword=yyyyyyy ##"
 echo "###########################################" && read RPCPWD && echo $RPCUSR >> $BCNACONF/bitcanna.conf && echo $RPCPWD >> $BCNACONF/bitcanna.conf
 rm $BCNACONF/masternode.conf && echo "#################################" && echo "## Initial Configurations Done ##" && echo "#################################"
 }
@@ -123,13 +123,6 @@ cat<<EOF
 EOF
 }
 cryptwallet(){
-cat<<ETF
-########################################################
-## No Reference on Guides about Encrypt on MasterNode ##
-##              Maybe cause problems?                 ##
-##               PROTECT YOUR Server                  ##
-########################################################
-ETF
 read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
 WLTPSSCMD=$"bitcanna-cli encryptwallet $WALLETPASS"
 $WLTPSSCMD
@@ -141,7 +134,7 @@ WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 false"
 $WLTUNLOCK
 if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
  then
- clean && sleep 1 && echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
+ clear && sleep 1 && echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
   WLTUNLOCK=$"bitcanna-cli walletpassphrase $WALLETPASS 0 true"
   $WLTUNLOCK
   echo "##############" && echo "## Unlocked to Stake! ##" && echo "##############" && sleep 3 
@@ -221,7 +214,19 @@ echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "##
 bitcannad --maxconnections=1000 -daemon
 sleep 10 && echo "###############################" && echo "## Activating MasterNode ... ##" && echo "###############################"
 bitcanna-cli masternode start-many
-sleep 2 && cryptwallet
+sleep 2 
+cat<<ETF
+########################################################
+## No Reference on Guides about Encrypt on MasterNode ##
+##              Maybe cause problems?                 ##
+##               PROTECT YOUR Server                  ##
+########################################################
+ETF
+read -p "You want Encrypt MasterNode Wallet? (y/n)" CRYPSN
+if [ "$CRYPSN" == "y" ]
+then
+cryptwallet
+fi
 }
 mess(){
 clear && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
@@ -229,7 +234,7 @@ rm $BCNADIR/bcna_unix_29_07_19
 rm -R -f $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
-echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################"
+echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 masternode(){
 firstrun
@@ -250,23 +255,25 @@ then
 bitcannad -daemon
 sleep 10
 bitcanna-cli walletpassphrase $WALLETPASS 0 true 
-sleep 3
+sleep 3 && clear
 bitcanna-cli getstakingstatus
 cat<<EOF
 #############################################################
 ## Proof Of Stake Finished and Running!! Now Can LogOut! ####
 #############################################################
 EOF
+sleep 5
 else
 bitcannad --maxconnections=1000 -daemon
 sleep 10
 bitcanna-cli masternode start-many
-sleep 1
+sleep 2
 cat<<EOF
 #######################################################
 ## MasterNode Finished and Running!! Now Can LogOut! ##
 #######################################################
 EOF
+sleep 5
 fi
 }
 bcnadown
