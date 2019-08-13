@@ -1,8 +1,10 @@
 #!/bin/bash
+### Bitcanna Team!!
+## Compile next Version the Programas directly into .ZIP no into folder
+### Pleaaasseee :P
+EXTRACTEDPKG=bcna_unix_29_07_19
+##################################
 clear
-BCNAPKG=bcna-1.0.0-unix.zip
-BCNASRCZIP="https://github.com/BitCannaGlobal/BCNA/releases/download/1.0.0/$BCNAPKG"
-
 intro(){
 cat<< EOF
 ##################################################################################
@@ -99,8 +101,11 @@ echo "##################################################" && echo "## User $BCNA
 bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
-wget -P $BCNAHOME $BCNASRCZIP
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNADIR && mv $BCNADIR/bcna_unix_29_07_19/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp $BCNADIR/bitcannad /usr/local/bin/bitcannad && chmod +x /usr/local/bin/bitcannad && cp $BCNADIR/bitcanna-cli /usr/local/bin/bitcanna-cli && chmod +x /usr/local/bin/bitcanna-cli
+BCNAREP="https://github.com/BitCannaGlobal/BCNA/releases/download"
+GETLAST=$(curl --silent "https://api.github.com/repos/BitCannaGlobal/BCNA/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+BCNAPKG="bcna-$GETLAST-unix.zip"
+wget -P $BCNAHOME $BCNAREP/$GETLAST/$BCNAPKG
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG && cp $EXTRACTEDPKG/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp bcna_unix_29_07_19/* /usr/local/bin && chmod +x /usr/local/bin/bitcanna*
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 service(){
@@ -149,8 +154,8 @@ echo "Reserved to Join"
 }
 mess(){
 clear && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
-rm $BCNADIR/bcna_unix_29_07_19
-rm $BCNAHOME/.bash_history
+rm $HOME/bcna_unix_29_07_19
+rm $HOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
