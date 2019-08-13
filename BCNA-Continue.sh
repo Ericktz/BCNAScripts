@@ -14,7 +14,6 @@ EOF
 echo "Continue this Script are Accepting you are the only responsible"
 read -n 1 -s -r -p "Press any key to Executing this Script" 
 }
-BCNAPKG=bcna-1.0.0-unix.zip
 BCNAHOME=$HOME
 BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
@@ -224,7 +223,6 @@ clear && echo "#########################" && echo "## Cleaning the things ##" &&
 rm $BCNADIR/bcna_unix_29_07_19
 rm -R -f $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
-rm $BCNAHOME/$BCNAPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 masternode(){
