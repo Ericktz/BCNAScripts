@@ -17,7 +17,7 @@ cat<< EOF
 ##                                                                              ##
 ##################################################################################
 ##                                                                              ##
-##      Project Status: FINAL V1.9                                              ##
+##      Project Status: V1.9.8                                                  ##
 ##                                                                              ##
 ##  by DoMato aka hellresistor                                                  ##
 ##  Support donating Bitcanna                                                   ##
