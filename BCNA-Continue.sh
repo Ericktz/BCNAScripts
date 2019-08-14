@@ -94,7 +94,7 @@ cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: $WLTADRS
 Password: $WALLETPASS
 Dump: $BCNADUMP
-$RPCUSER
+$RPCUSR
 $RPCPWD
 EOF
 BCKWLT=$(bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat)
