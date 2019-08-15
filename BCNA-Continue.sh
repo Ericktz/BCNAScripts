@@ -15,10 +15,13 @@ EOF
 echo "Continuing with Configuration..."
 read -n 1 -s -r -p "Press any key to Executing this Script" 
 }
-BCNAHOME=$HOME
-BCNACONF=$BCNAHOME/.bitcanna
-BCNADIR=$BCNAHOME/Bitcanna
-STAKE="100"
+choice(){
+if [ "$choiz" == "m" ] || [ "$choiz" == "M" ]
+then 
+ echo "############################################" && echo "## Selected MasterNode - MN Configuration ##" && echo "############################################" && sleep 0.5 && masternode
+else
+ echo "########################################" && echo "## Have been Selected FullNode - POS Configuration ##" && echo "########################################" && sleep 0.5 && stake
+}
 sync(){
 diff_t=420 ; while [ $diff_t -gt 5 ]
 do 
@@ -119,9 +122,9 @@ if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
   WLTUNLOCK=\$"bitcanna-cli walletpassphrase \$WALLETPASS 0 true"
   \$WLTUNLOCK
   echo "##############" && echo "## Unlocked to Stake! ##" && echo "##############" && sleep 3 
-  WLTSTAKE=\$"bitcanna-cli setstakesplitthreshold \$STAKE"
+  WLTSTAKE=\$"bitcanna-cli setstakesplitthreshold $STAKE"
   \$WLTSTAKE
-  echo "##############" && echo "## Staking with \$STAKE ! ##" && echo "##############" && sleep 3
+  echo "##############" && echo "## Staking with $STAKE ! ##" && echo "##############" && sleep 3
  fi
 }
 walletposconf(){
@@ -188,8 +191,8 @@ read -p "`echo -e '\n####################################\n## Set the Short part
 pkill bitcannad
 sleep 10
 echo "#####################################" && echo "## Getting Your Public/External IP ##" && echo "#####################################"
-VPSIP="\$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')"
-echo "externalip=\$VPSIP" >> $BCNACONF/bitcanna.conf && echo "port=12888" >> $BCNACONF/bitcanna.conf
+VPSIP="\$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split(\$2,a," ");print a[1]}')"
+echo "externalip=\$VPSIP" >> $BCNACONF/bitcanna.conf && echo "port=$BCNAPORT" >> $BCNACONF/bitcanna.conf
 echo "\$IDMN \$MNALIAS \$VPSIP:12888 \$MNGENK \$MNTX \$MNID" > $BCNACONF/masternode.conf && cat $BCNACONF/masternode.conf
 read -n 1 -s -r -p "`echo -e '\n#############################################################\n## Are you Verified The Results? Press any key to continue ##\n#############################################################\n '`" 
 echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "#########################"
@@ -231,6 +234,7 @@ backup
 final(){
 clear
 bitcanna-cli stop
+
 sleep 5
 if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
 then
@@ -257,6 +261,7 @@ EOF
 fi
 sleep 5
 }
+choice
 mess
 final
 clear
