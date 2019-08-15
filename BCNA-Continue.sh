@@ -16,11 +16,13 @@ echo "Continuing with Configuration..."
 read -n 1 -s -r -p "Press any key to Executing this Script" 
 }
 choice(){
+clear
 if [ "$choiz" == "m" ] || [ "$choiz" == "M" ]
 then 
- echo "############################################" && echo "## Selected MasterNode - MN Configuration ##" && echo "############################################" && sleep 0.5 && masternode
+ echo "######################################################" && echo "## Have been Selected MasterNode - MN Configuration ##" && echo "######################################################" && sleep 5 && masternode
 else
- echo "########################################" && echo "## Have been Selected FullNode - POS Configuration ##" && echo "########################################" && sleep 0.5 && stake
+ echo "#####################################################" && echo "## Have been Selected FullNode - POS Configuration ##" && echo "#####################################################" && sleep 5 && stake
+fi
 }
 sync(){
 diff_t=420 ; while [ $diff_t -gt 5 ]
