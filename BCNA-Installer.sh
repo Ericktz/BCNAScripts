@@ -83,6 +83,9 @@ getinfo(){
 echo "#######################################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "#######################################"
 read -p"`echo -e '##########################################################\n## What is New User to BCNA Wallet? (default. bitcanna):  '`" BCNAUSER 
 varys
+echo "#####################################" && echo "## Getting Public/External IP SRV ##" && echo "#####################################"
+VPSIP="\$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split(\$2,a," ");print a[1]}')"
+echo "##############################" && echo "## IP Its: $VPSIP ##" && echo "##############################" && sleep 2
 }
 userad(){
 clear
@@ -179,6 +182,25 @@ rm $HOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
+fwll(){
+clean
+echo "#####################################################" && echo "## Openning Port $BCNAPORT on Firewall (iptables)" ##" && echo "##            WILL FLASH ACTUAL RULES              ##" && echo "#####################################################" && sleep 5
+ systemctl enable iptables
+ systemctl disable iptables6
+ systemctl stop iptables6
+ iptables -F
+ iptables -P INPUT DROP
+ iptables -P FORWARD DROP
+ iptables -P OUTPUT ACCEPT
+ iptables -A INPUT -i lo -j ACCEPT
+ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+ iptables -A INPUT -p tcp --dport $BCNAPORT -j LOG --log-level 7 --log-prefix "Accept $BCNAPORT HTTP"
+ iptables -A INPUT -p tcp -d $VPSIP --dport $BCNAPORT -j ACCEPT 
+ iptables -A INPUT -d $VPSIP -j LOG --log-level 7 --log-prefix "Default Deny"
+ iptables -A INPUT -j DROP 
+ iptables-save
+ systemctl restart iptables
+}
 intro
 check
 choi
@@ -186,5 +208,6 @@ getinfo
 userad
 bcnadown
 service
+fwll
 bypass
 mess
