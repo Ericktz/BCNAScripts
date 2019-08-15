@@ -1,9 +1,18 @@
 #!/bin/bash
 ### Bitcanna Team!!
-## Compile next Version the Programas directly into .ZIP no into folder
+# Compile next Version the Programs directly into .ZIP no into folder
 ### Pleaaasseee :P
+####################################
 EXTRACTEDPKG=bcna_unix_29_07_19
-##################################
+####################################
+varys(){
+BCNAHOME=/home/$BCNAUSER
+BCNACONF=$BCNAHOME/.bitcanna
+BCNADIR=$BCNAHOME/Bitcanna
+BCNAPORT="12888"
+STAKE="100"    #<-- Can ChangeIt!! Sure yourself You Know What Are You Doing!!
+}
+####################################
 clear
 intro(){
 cat<< EOF
@@ -56,6 +65,11 @@ choi(){
 clear
 echo "#######################################" && echo "## BitCanna Wallet Installation Menu ##" && echo "#######################################"
 read -n 1 -p "Would you like Configure, Full Node (P.O.Stake) or MasterNode (MN)? (P/M): " choiz;
+case $choiz in
+    p|P) echo ;;
+    m|M) echo ;;
+    *) echo "####################" && echo "## Really??? Missed!? ##" && echo "####################" && sleep 0.5 ;;
+ esac
 }
 check(){
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
@@ -68,9 +82,7 @@ fi
 getinfo(){
 echo "#######################################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "#######################################"
 read -p"`echo -e '##########################################################\n## What is New User to BCNA Wallet? (default. bitcanna):  '`" BCNAUSER 
-BCNAHOME=/home/$BCNAUSER
-BCNACONF=$BCNAHOME/.bitcanna
-BCNADIR=$BCNAHOME/Bitcanna
+varys
 }
 userad(){
 clear
