@@ -52,6 +52,16 @@ cat<< EIF
 EIF
 sleep 2
 }
+choice(){
+clear
+echo "#######################################" && echo "## BitCanna Wallet Installation Menu ##" && echo "#######################################"
+read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M): " choiz;
+case $choiz in
+    p|P) echo "########################################" && echo "## Selected Stake - POS Configuration ##" && echo "########################################" && sleep 0.5 && stake  ;;
+    m|M) echo "############################################" && echo "## Selected MasterNode - MN Configuration ##" && echo "############################################" && sleep 0.5 && masternode ;;
+    *) echo "####################" && echo "## Invalid Option ##" && echo "####################" && sleep 0.5 ;;
+esac
+}
 check(){
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
 if [ "root" != "$USER" ]
@@ -115,7 +125,15 @@ User=$BCNAUSER
 Group=$BCNAUSER
 Type=forking
 PIDFile=$BCNACONF/bitcannad.pid
-ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNACONF/bitcannad.pid -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONF
+EOF
+if [ "$choiz" == "m" ] || [ "$choiz" == "M" ]
+ then
+  echo "ExecStart=$BCNADIR/bitcannad --maxconnections=1000 -daemon -pid=$BCNACONF/bitcannad.pid -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONF" >> /tmp/bitcannad.service
+  echo "ExecStartPost=$BCNADIR/bitcanna-cli masternode start-many" >> /tmp/bitcannad.service
+ else
+  echo "ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNACONF/bitcannad.pid -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONF" >> /tmp/bitcannad.service
+fi
+cat <<EOF>> /tmp/bitcannad.service
 ExecStop=$BCNADIR/bitcanna-cli stop
 Restart=always
 PrivateTmp=true
@@ -155,6 +173,7 @@ rm $BCNAHOME/$BCNAPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 intro
+choice
 check
 getinfo
 userad
