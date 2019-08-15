@@ -70,12 +70,7 @@ BCNADIR=$BCNAHOME/Bitcanna
 userad(){
 clear
 echo "##################################################" && echo "## Creating user to bitcanna and add to sudoers ##" && echo "##################################################"
-if [ "$BCNAUSER" == "bitcanna" ]
- then
-  adduser bitcanna --shell=/bin/bash
- else
-  adduser $BCNAUSER --shell=/bin/bash
-fi
+adduser $BCNAUSER --shell=/bin/bash
 usermod -aG sudo $BCNAUSER
 cat <<ETF
 ##########################################################
@@ -136,15 +131,19 @@ echo "##########################################" && echo "## BitCanna Service (
 }
 bypass(){
 clear
-echo "##########################################" && echo "## Preparing to Next and Important STEP ##" && echo "##########################################"
-cp $HOME/BCNAScripts/BCNA-Continue.sh $BCNAHOME/BCNA-Continue.sh && chmod 700 $BCNAHOME/BCNA-Continue.sh && chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
+echo "##########################################" && echo "## Preparing Script to Continue with $BCNAUSER ##" && echo "##########################################"
+cat<<FOH > $BCNAHOME/BCNA-Continue.sh
+ echo "$BCNADIR" 
+ echo "The $BCNAUSER \$BCNAUSER Script step 2"
+ echo "\$BCNADIR"
+FOH
+chmod 700 $BCNAHOME/BCNA-Continue.sh && chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
 cat<<ETF
 ###################################################
 ## System ready for BitCanna Wallet installation ##
 ###################################################
-##            !!!! Dont Forget !!!!              ##
-##       Next Login With User: $BCNAUSER         ##
-##         And run: ./BCNA-Continue.sh"          ##
+##      !!!! Dont Forget To Continue !!!!        ##
+##      Next Login, With User: $BCNAUSER         ##
 ###################################################
 ETF
 read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 1 && reboot
