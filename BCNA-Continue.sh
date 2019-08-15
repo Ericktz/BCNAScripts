@@ -224,6 +224,7 @@ clear && echo "#########################" && echo "## Cleaning the things ##" &&
 rm $BCNADIR/bcna_unix_29_07_19
 rm -R -f $BCNAHOME/BACKUP
 rm $BCNAHOME/.bash_history
+sed -i "/BCNA-Installer2.sh/d" $BCNAHOME/.bashrc
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 masternode(){
