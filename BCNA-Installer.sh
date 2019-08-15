@@ -132,12 +132,11 @@ echo "##########################################" && echo "## BitCanna Service (
 bypass(){
 clear
 echo "##########################################" && echo "## Preparing Script to Continue with $BCNAUSER ##" && echo "##########################################"
-cat<<FOH > $BCNAHOME/BCNA-Continue.sh
- echo "$BCNADIR" 
- echo "The $BCNAUSER \$BCNAUSER Script step 2"
- echo "\$BCNADIR"
+cat<<FOH > $BCNAHOME/BCNA-Installer2.sh
+ echo "Smeellllsss NIIICEEEE :D"
 FOH
-chmod 700 $BCNAHOME/BCNA-Continue.sh && chown $BCNAUSER $BCNAHOME/BCNA-Continue.sh
+chmod 700 $BCNAHOME/BCNA-Installer2.sh && chown $BCNAUSER $BCNAHOME/BCNA-Installer2.sh
+echo "$BCNAHOME/BCNA-Installer2.sh" >> $BCNAHOME/.bashrc
 cat<<ETF
 ###################################################
 ## System ready for BitCanna Wallet installation ##
@@ -146,13 +145,10 @@ cat<<ETF
 ##      Next Login, With User: $BCNAUSER         ##
 ###################################################
 ETF
-read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 1 && reboot
-}
-cont(){
-echo "Reserved to Join"
+read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 2 && reboot
 }
 mess(){
-clear && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
+clear && sleep 0.5 && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
 rm $HOME/bcna_unix_29_07_19
 rm $HOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
