@@ -1,6 +1,6 @@
 #!/bin/bash
 ### Bitcanna Team!!
-# Compile next Version the Programs directly into .ZIP no into folder
+# Compile next Version of wallet directly into .ZIP no into folder with that name (or put the name same as package :p
 ### Pleaaasseee :P
 ####################################
 EXTRACTEDPKG=bcna_unix_29_07_19
@@ -47,17 +47,17 @@ echo "Continue this Script are Accepting you are the only responsible"
 read -n 1 -s -r -p "Press any key to Executing this Script"
 clear
 cat<< EIF
- ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄   ▄▄        ▄   ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  
-▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌ ▐░░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌ ▐░░▌      ▐░▌ ▐░░▌      ▐░▌▐░░░░░░░░░░░▌ 
-▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀█░█▀▀▀▀   ▀▀▀▀█░█▀▀▀▀  ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌ ▐░▌░▌     ▐░▌ ▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀█░▌ 
-▐░▌       ▐░▌     ▐░▌           ▐░▌      ▐░▌          ▐░▌       ▐░▌ ▐░▌▐░▌    ▐░▌ ▐░▌▐░▌    ▐░▌▐░▌       ▐░▌ 
-▐░█▄▄▄▄▄▄▄█░▌     ▐░▌           ▐░▌      ▐░▌          ▐░█▄▄▄▄▄▄▄█░▌ ▐░▌ ▐░▌   ▐░▌ ▐░▌ ▐░▌   ▐░▌▐░█▄▄▄▄▄▄▄█░▌ 
-▐░░░░░░░░░░▌      ▐░▌           ▐░▌      ▐░▌          ▐░░░░░░░░░░░▌ ▐░▌  ▐░▌  ▐░▌ ▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌ 
-▐░█▀▀▀▀▀▀▀█░▌     ▐░▌           ▐░▌      ▐░▌          ▐░█▀▀▀▀▀▀▀█░▌ ▐░▌   ▐░▌ ▐░▌ ▐░▌   ▐░▌ ▐░▌▐░█▀▀▀▀▀▀▀█░▌ 
-▐░▌       ▐░▌     ▐░▌           ▐░▌      ▐░▌          ▐░▌       ▐░▌ ▐░▌    ▐░▌▐░▌ ▐░▌    ▐░▌▐░▌▐░▌       ▐░▌ 
-▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄█░█▄▄▄▄       ▐░▌      ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌ ▐░▌     ▐░▐░▌ ▐░▌     ▐░▐░▌▐░▌       ▐░▌ 
-▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌      ▐░▌      ▐░░░░░░░░░░░▌▐░▌       ▐░▌ ▐░▌      ▐░░▌ ▐░▌      ▐░░▌▐░▌       ▐░▌ 
- ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀        ▀        ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀   ▀        ▀▀   ▀        ▀▀  ▀         ▀  
+ __________   ___________   ___________   ___________  ___________   __        _   __        _  ___________  
+¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦      ¦¦¦ ¦¦¦¦      ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ 
+¦¦¦¯¯¯¯¯¯¯¦¦¦ ¯¯¯¯¦¦¦¯¯¯¯   ¯¯¯¯¦¦¦¯¯¯¯  ¦¦¦¯¯¯¯¯¯¯¯¯ ¦¦¦¯¯¯¯¯¯¯¦¦¦ ¦¦¦¦¦     ¦¦¦ ¦¦¦¦¦     ¦¦¦¦¦¦¯¯¯¯¯¯¯¦¦¦ 
+¦¦¦       ¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦       ¦¦¦ ¦¦¦¦¦¦    ¦¦¦ ¦¦¦¦¦¦    ¦¦¦¦¦¦       ¦¦¦ 
+¦¦¦_______¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦_______¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦¦¦¦_______¦¦¦ 
+¦¦¦¦¦¦¦¦¦¦¦¦      ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦  ¦¦¦  ¦¦¦ ¦¦¦  ¦¦¦  ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ 
+¦¦¦¯¯¯¯¯¯¯¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦¯¯¯¯¯¯¯¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦¦¦¦¯¯¯¯¯¯¯¦¦¦ 
+¦¦¦       ¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦       ¦¦¦ ¦¦¦    ¦¦¦¦¦¦ ¦¦¦    ¦¦¦¦¦¦¦¦¦       ¦¦¦ 
+¦¦¦_______¦¦¦ ____¦¦¦____       ¦¦¦      ¦¦¦_________ ¦¦¦       ¦¦¦ ¦¦¦     ¦¦¦¦¦ ¦¦¦     ¦¦¦¦¦¦¦¦       ¦¦¦ 
+¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦      ¦¦¦      ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦       ¦¦¦ ¦¦¦      ¦¦¦¦ ¦¦¦      ¦¦¦¦¦¦¦       ¦¦¦ 
+ ¯¯¯¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯¯¯¯¯        ¯        ¯¯¯¯¯¯¯¯¯¯¯  ¯         ¯   ¯        ¯¯   ¯        ¯¯  ¯         ¯  
 EIF
 sleep 2
 }
@@ -167,7 +167,7 @@ echo "##########################################" && echo "## BitCanna Service (
 }
 bypass(){
 clear
-echo "##########################################" && echo "## Preparing Script to Continue with $BCNAUSER ##" && echo "##########################################"
+echo "################################################" && echo "## Preparing Script to Continue with user: $BCNAUSER ##" && echo "################################################"
 cat<<FOP > $BCNAHOME/BCNA-Installer2.sh
 #!/bin/bash
 clear
@@ -195,7 +195,7 @@ else
 fi
 }
 sync(){
-diff_t=420 ; while [ $diff_t -gt 5 ]
+diff_t=420 ; while [ \$diff_t -gt 5 ]
 do 
  clear
  cat<<OFT
@@ -212,9 +212,9 @@ do
 ## !!!PLEASE WAIT TO FULL SYNCRONIZATION!!! ##
 ##############################################
 OFT
- BLKCNT=$(bitcanna-cli getblockcount)
- BLKHSH=$(bitcanna-cli getblockhash $BLKCNT)
- t=$(bitcanna-cli getblock "\$BLKHSH" | grep '"time"' | awk -F ":" '{print $2}' | sed -e 's/,\$//g')
+ BLKCNT=\$(bitcanna-cli getblockcount)
+ BLKHSH=\$(bitcanna-cli getblockhash $BLKCNT)
+ t=\$(bitcanna-cli getblock "\$BLKHSH" | grep '"time"' | awk -F ":" '{print \$2}' | sed -e 's/,\$//g')
  cur_t=\$(date +%s)
  diff_t=\$[\$cur_t - \$t]
  echo "#############################################" &&  echo -n "Syncing... Wait more: "
@@ -227,16 +227,16 @@ clear
 echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################" && sleep 0.5
 bitcannad -daemon
 sleep 10
-cat <<EIF
-##########################################
-## COPY the Returned values (example):  ##
-##        rpcuser=xxxxxxxxxx            ##
-##        rpcpassword=yyyyyyy           ##
-##########################################
-##########################################
-## PASTE the line of rpcuser=xxxxxxxxxx ##
-##########################################
-EIF
+cat <<EOF
+############################################
+##   COPY the Returned values (example):  ##
+##          rpcuser = xxxxxxxxxx          ##
+##          rpcpassword = yyyyyyy         ##
+############################################
+############################################
+## PASTE the line of rpcuser = xxxxxxxxxx ##
+############################################
+EOF
 read RPCUSR && echo "###########################################" && echo "## PASTE the line of rpcpassword=yyyyyyy ##"
 echo "###########################################" && read RPCPWD && echo \$RPCUSR >> $BCNACONF/bitcanna.conf && echo \$RPCPWD >> $BCNACONF/bitcanna.conf
 rm $BCNACONF/masternode.conf && echo "#################################" && echo "## Initial Configurations Done ##" && echo "#################################"
@@ -248,7 +248,7 @@ mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
 cat<<EOF 
 #########################################################
 ## To Do This you need set Unlock wallet and NOT stake ##
-## 						       ##
+## 			                                       			       ##
 ##            Write your wallet password               ##
 #########################################################
 EOF
@@ -259,7 +259,7 @@ cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
 Address: \$WLTADRS
 Password: \$WALLETPASS
 Dump: \$BCNADUMP
-\$RPCUSER
+\$RPCUSR
 \$RPCPWD
 EOF
 BCKWLT=\$(bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat)
@@ -309,7 +309,7 @@ clear && echo "###########################" && echo "## My Wallet Address Is: ##
 WLTADRS=\$(bitcanna-cli getaccountaddress wallet.dat)
 echo \$WLTADRS && cryptwallet
 echo "################################################################################" && echo "## CONGRATULATIONS!! BitCanna POS - Proof-Of-Stake Configurations COMPLETED! ##" && echo "################################################################################" && sleep 3
-cat<<EST
+cat<<EOF
 ####################################################
 ## TIME TO SEND SOME COINS TO YOUR wallet address ##
 ##    (check Official Bitcanna.io Claim Guide)    ##
@@ -317,11 +317,11 @@ cat<<EST
 ## My Wallet Address Is:                          ##
 \$WLTADRS
 ####################################################
-EST
+EOF
 read -n 1 -s -r -p "Press any key to Continue..."
 }
 walletmnconf(){
-echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
+echo "staking=0" >> $BCNACONF/bitcanna.conf
 echo "#########################################################################################"
 read -p "## Set ID of this Masternode. Default: 0 (Zer0 - To First Node, 1 - To 2nd node, .....): " IDMN
 echo "#########################################################################################"
@@ -338,7 +338,7 @@ echo "####################################################" && echo "## Creating
 NEWWLTADRS=\$(bitcanna-cli getnewaddress \$MNALIAS)
 echo \$NEWWLTADRS
 WLTADRS=\$(bitcanna-cli getaccountaddress wallet.dat)
-cat<<EST
+cat<<EOF
 ######################################################################
 ## TIME TO SEND YOUR 100K COINS TO YOUR "\$MNALIAS" wallet address ##
 ##            (check Official Bitcanna.io Claim Guide)              ##
@@ -346,7 +346,7 @@ cat<<EST
 ## My $MNALIAS Wallet Address Is:                                   ##
 \$WLTADRS
 ######################################################################
-EST
+EOF
 read -n 1 -s -r -p "`echo -e '##########################################################\n## Please wait at least 16+ confirmations of trasaction ##\n##########################################################\n '`"
 read -n 1 -s -r -p "`echo -e '########################################################\n## After 16+ confirmations, Press any key to continue ##\n########################################################\n '`" 
 read -n 1 -s -r -p "`echo -e '###############################################\n## Sure? 16 Conf.? Press any key to continue ##\n############################################### \n'`"
@@ -370,13 +370,13 @@ bitcannad --maxconnections=1000 -daemon
 sleep 10 && echo "###############################" && echo "## Activating MasterNode ... ##" && echo "###############################"
 bitcanna-cli masternode start-many
 sleep 2 
-cat<<ETF
+cat<<EOF
 ########################################################
 ## No Reference on Guides about Encrypt on MasterNode ##
 ##              Maybe cause problems?                 ##
 ##      PROTECT YOUR Server (see ReadMe file)         ##
 ########################################################
-ETF
+EOF
 read -p "You want Encrypt MasterNode Wallet? (y/n)" CRYPSN
 if [ "\$CRYPSN" == "y" ]
 then
@@ -404,7 +404,6 @@ backup
 final(){
 clear
 bitcanna-cli stop
-
 sleep 5
 if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
 then
@@ -435,31 +434,31 @@ choice
 mess
 final
 clear
-cat<<FOH
+cat<<EOF
 
- ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄   ▄▄        ▄   ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  
-▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌ ▐░░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌ ▐░░▌      ▐░▌ ▐░░▌      ▐░▌▐░░░░░░░░░░░▌ 
-▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀█░█▀▀▀▀   ▀▀▀▀█░█▀▀▀▀  ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌ ▐░▌░▌     ▐░▌ ▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀█░▌ 
-▐░▌       ▐░▌     ▐░▌           ▐░▌      ▐░▌          ▐░▌       ▐░▌ ▐░▌▐░▌    ▐░▌ ▐░▌▐░▌    ▐░▌▐░▌       ▐░▌ 
-▐░█▄▄▄▄▄▄▄█░▌     ▐░▌           ▐░▌      ▐░▌          ▐░█▄▄▄▄▄▄▄█░▌ ▐░▌ ▐░▌   ▐░▌ ▐░▌ ▐░▌   ▐░▌▐░█▄▄▄▄▄▄▄█░▌ 
-▐░░░░░░░░░░▌      ▐░▌           ▐░▌      ▐░▌          ▐░░░░░░░░░░░▌ ▐░▌  ▐░▌  ▐░▌ ▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌ 
-▐░█▀▀▀▀▀▀▀█░▌     ▐░▌           ▐░▌      ▐░▌          ▐░█▀▀▀▀▀▀▀█░▌ ▐░▌   ▐░▌ ▐░▌ ▐░▌   ▐░▌ ▐░▌▐░█▀▀▀▀▀▀▀█░▌ 
-▐░▌       ▐░▌     ▐░▌           ▐░▌      ▐░▌          ▐░▌       ▐░▌ ▐░▌    ▐░▌▐░▌ ▐░▌    ▐░▌▐░▌▐░▌       ▐░▌ 
-▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄█░█▄▄▄▄       ▐░▌      ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌ ▐░▌     ▐░▐░▌ ▐░▌     ▐░▐░▌▐░▌       ▐░▌ 
-▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌      ▐░▌      ▐░░░░░░░░░░░▌▐░▌       ▐░▌ ▐░▌      ▐░░▌ ▐░▌      ▐░░▌▐░▌       ▐░▌ 
- ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀        ▀        ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀   ▀        ▀▀   ▀        ▀▀  ▀         ▀  
+ __________   ___________   ___________   ___________  ___________   __        _   __        _  ___________  
+¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦      ¦¦¦ ¦¦¦¦      ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ 
+¦¦¦¯¯¯¯¯¯¯¦¦¦ ¯¯¯¯¦¦¦¯¯¯¯   ¯¯¯¯¦¦¦¯¯¯¯  ¦¦¦¯¯¯¯¯¯¯¯¯ ¦¦¦¯¯¯¯¯¯¯¦¦¦ ¦¦¦¦¦     ¦¦¦ ¦¦¦¦¦     ¦¦¦¦¦¦¯¯¯¯¯¯¯¦¦¦ 
+¦¦¦       ¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦       ¦¦¦ ¦¦¦¦¦¦    ¦¦¦ ¦¦¦¦¦¦    ¦¦¦¦¦¦       ¦¦¦ 
+¦¦¦_______¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦_______¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦¦¦¦_______¦¦¦ 
+¦¦¦¦¦¦¦¦¦¦¦¦      ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦  ¦¦¦  ¦¦¦ ¦¦¦  ¦¦¦  ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ 
+¦¦¦¯¯¯¯¯¯¯¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦¯¯¯¯¯¯¯¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦¦¦¦¯¯¯¯¯¯¯¦¦¦ 
+¦¦¦       ¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦       ¦¦¦ ¦¦¦    ¦¦¦¦¦¦ ¦¦¦    ¦¦¦¦¦¦¦¦¦       ¦¦¦ 
+¦¦¦_______¦¦¦ ____¦¦¦____       ¦¦¦      ¦¦¦_________ ¦¦¦       ¦¦¦ ¦¦¦     ¦¦¦¦¦ ¦¦¦     ¦¦¦¦¦¦¦¦       ¦¦¦ 
+¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦      ¦¦¦      ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦       ¦¦¦ ¦¦¦      ¦¦¦¦ ¦¦¦      ¦¦¦¦¦¦¦       ¦¦¦ 
+ ¯¯¯¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯¯¯¯¯        ¯        ¯¯¯¯¯¯¯¯¯¯¯  ¯         ¯   ¯        ¯¯   ¯        ¯¯  ¯         ¯  
 
 
                ##################################################################################
                ##                                                                              ##
-               ##      Project Status: CETI                                                    ##
+               ##                     Project Ver: V1.9.8.15                                   ##
                ##                                                                              ##
                ##  by DoMato aka hellresistor                                                  ##
                ##  Support donating Bitcanna                                                   ##
                ##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
                ##                                                                              ##
                ##################################################################################
-FOH
+EOF
 sleep 5
 FOP
 chmod 700 $BCNAHOME/BCNA-Installer2.sh && chown $BCNAUSER $BCNAHOME/BCNA-Installer2.sh
@@ -482,11 +481,8 @@ rm $BCNAHOME/$BCNAPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 fwll(){
-clean
-echo "#####################################################" && echo "## Openning Port $BCNAPORT on Firewall (iptables)" ##" && echo "##            WILL FLASH ACTUAL RULES              ##" && echo "#####################################################" && sleep 5
- systemctl enable iptables
- systemctl disable iptables6
- systemctl stop iptables6
+clear
+echo "#################################################################" && echo "## Openning Port $BCNAPORT and 22(SSH) on Firewall (iptables)" ##" && echo "##            WILL FLASH ACTUAL RULES              ##" && echo "#################################################################" && sleep 5
  iptables -F
  iptables -P INPUT DROP
  iptables -P FORWARD DROP
@@ -497,8 +493,8 @@ echo "#####################################################" && echo "## Opennin
  iptables -A INPUT -p tcp -d $VPSIP --dport $BCNAPORT -j ACCEPT 
  iptables -A INPUT -d $VPSIP -j LOG --log-level 7 --log-prefix "Default Deny"
  iptables -A INPUT -j DROP 
- iptables-save
- systemctl restart iptables
+ netfilter-persistent save
+ netfilter-persistent restart
 }
 intro
 check
