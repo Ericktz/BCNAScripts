@@ -63,8 +63,16 @@ sleep 2
 }
 choi(){
 clear
-echo "#######################################" && echo "## BitCanna Wallet Installation Menu ##" && echo "#######################################"
-read -n 1 -p "Would you like Configure, Full Node (P.O.Stake) or MasterNode (MN)? (P/M): " choiz;
+cat<<EOF
+#######################################
+## BitCanna Wallet Installation Menu ##
+#######################################
+## Would you like Install/Configure) ##
+##   P --> Full Node (P.O.Stake)     ##
+##   M --> MasterNode (MN)?          ##
+#######################################
+EOF
+read -n 1 -p "(P/M): " choiz;
 case $choiz in
     p|P) echo ;;
     m|M) echo ;;
@@ -84,8 +92,8 @@ echo "#######################################" && echo "## Some questions to do 
 read -p"`echo -e '##########################################################\n## What is New User to BCNA Wallet? (default. bitcanna):  '`" BCNAUSER 
 varys
 echo "#####################################" && echo "## Getting Public/External IP SRV ##" && echo "#####################################"
-VPSIP="\$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split(\$2,a," ");print a[1]}')"
-echo "##############################" && echo "## IP Its: $VPSIP ##" && echo "##############################" && sleep 2
+VPSIP="$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')"
+echo "############################" && echo "## IP Its: $VPSIP ##" && echo "############################" && sleep 2
 }
 userad(){
 clear
