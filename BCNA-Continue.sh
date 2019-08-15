@@ -3,16 +3,16 @@
 clear
 intro(){
 cat<< EOF
-##################################################################################
-##                   Script Contribution to BitCanna Community                  ##
-##                           To Ubuntu 18.04 LTS Server                         ##
-##################################################################################
-##                                                                              ##
-##                               STEP 2 and LAST                                ##
-##                                                                              ##
-##################################################################################
+################################################################
+##         Script Contribution to BitCanna Community          ##
+##                 To Ubuntu 18.04 LTS Server                 ##
+################################################################
+##                                                            ##
+##                Logged As $BCNAUSER Session                 ##
+##                                                            ##
+################################################################
 EOF
-echo "Continue this Script are Accepting you are the only responsible"
+echo "Continuing with Configuration..."
 read -n 1 -s -r -p "Press any key to Executing this Script" 
 }
 BCNAHOME=$HOME
@@ -42,8 +42,7 @@ OFT
  t=$(bitcanna-cli getblock "\$BLKHSH" | grep '"time"' | awk -F ":" '{print $2}' | sed -e 's/,\$//g')
  cur_t=\$(date +%s)
  diff_t=\$[\$cur_t - \$t]
- echo "#############################################"
- echo -n "Syncing... Wait more: "
+ echo "#############################################" &&  echo -n "Syncing... Wait more: "
  echo \$diff_t | awk '{printf "%d days, %d:%d:%d\n",\$1/(60*60*24),\$1/(60*60)%24,\$1%(60*60)/60,\$1%60}'
  sleep 5
 done
@@ -108,11 +107,12 @@ echo "#########################" && echo "## Compacting Files .. ##" && echo "##
 tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP && chmod 500 $BCNAHOME/WalletBackup.tar.gz
 cat<<EOF
 #################################################################
-## Info Wallet Backuped in: $BCNAHOME/WalletBackup.tar.gz ##
-##							       ##
-## !!!PLEASE!!! SAVE THIS FILE ON MANY DEVICES ON SECURE       ##
+## Info Wallet Backuped in: $BCNAHOME/WalletBackup.tar.gz 
+##						                !!!PLEASE!!!	                          ##
+##        SAVE THIS FILE ON MANY DEVICES ON SECURE             ##
 #################################################################
 EOF
+sleep 5
 }
 cryptwallet(){
 read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
@@ -153,7 +153,7 @@ cat<<EST
 \$WLTADRS
 ####################################################
 EST
-read -n 1 -s -r -p "Press any key to Continue this Script"
+read -n 1 -s -r -p "Press any key to Continue..."
 }
 walletmnconf(){
 echo "staking=0" >> $BCNAHOME/.bitcanna/bitcanna.conf
@@ -185,6 +185,7 @@ EST
 read -n 1 -s -r -p "`echo -e '##########################################################\n## Please wait at least 16+ confirmations of trasaction ##\n##########################################################\n '`"
 read -n 1 -s -r -p "`echo -e '########################################################\n## After 16+ confirmations, Press any key to continue ##\n########################################################\n '`" 
 read -n 1 -s -r -p "`echo -e '###############################################\n## Sure? 16 Conf.? Press any key to continue ##\n############################################### \n'`"
+read -n 1 -s -r -p "`echo -e '###############################################\n## OK! OK! Anoying Right? Only SURE as OK!!! ##\n############################################### \n'`"
 clear
 echo "#############################################" && echo "## IDENTIFY YOUR TRANSACTION ID - TxID !!! ##" && echo "#############################################"
 bitcanna-cli listtransactions
@@ -210,7 +211,7 @@ cat<<ETF
 ########################################################
 ## No Reference on Guides about Encrypt on MasterNode ##
 ##              Maybe cause problems?                 ##
-##               PROTECT YOUR Server                  ##
+##      PROTECT YOUR Server (see ReadMe file)         ##
 ########################################################
 ETF
 read -p "You want Encrypt MasterNode Wallet? (y/n)" CRYPSN
@@ -253,19 +254,18 @@ cat<<EOF
 ## Proof Of Stake Finished and Running!! Now Can LogOut! ####
 #############################################################
 EOF
-sleep 5
 else
 bitcannad --maxconnections=1000 -daemon
 sleep 10
 bitcanna-cli masternode start-many
 sleep 2
 cat<<EOF
-#######################################################
-## MasterNode Finished and Running!! Now Can LogOut! ##
-#######################################################
+#########################################################
+## MasterNode Finished and Running!! Now Can LogOut... ##
+#########################################################
 EOF
-sleep 5
 fi
+sleep 5
 }
 choice
 mess
@@ -296,4 +296,4 @@ cat<<FOH
                ##                                                                              ##
                ##################################################################################
 FOH
-sleep 5 && exit
+sleep 5
