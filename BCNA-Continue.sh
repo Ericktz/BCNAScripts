@@ -190,10 +190,8 @@ read -p "`echo -e '\n###################################\n## Set the Long part (
 read -p "`echo -e '\n####################################\n## Set the Short part (Id) string ##\n####################################\n: '`" MNID
 pkill bitcannad
 sleep 10
-echo "#####################################" && echo "## Getting Your Public/External IP ##" && echo "#####################################"
-VPSIP="\$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split(\$2,a," ");print a[1]}')"
-echo "externalip=\$VPSIP" >> $BCNACONF/bitcanna.conf && echo "port=$BCNAPORT" >> $BCNACONF/bitcanna.conf
-echo "\$IDMN \$MNALIAS \$VPSIP:12888 \$MNGENK \$MNTX \$MNID" > $BCNACONF/masternode.conf && cat $BCNACONF/masternode.conf
+echo "externalip=$VPSIP" >> $BCNACONF/bitcanna.conf && echo "port=$BCNAPORT" >> $BCNACONF/bitcanna.conf
+echo "\$IDMN \$MNALIAS $VPSIP:$BCNAPORT \$MNGENK \$MNTX \$MNID" > $BCNACONF/masternode.conf && cat $BCNACONF/masternode.conf
 read -n 1 -s -r -p "`echo -e '\n#############################################################\n## Are you Verified The Results? Press any key to continue ##\n#############################################################\n '`" 
 echo "#########################" && echo "## Run Bitcanna Wallet ##" && echo "#########################"
 bitcannad --maxconnections=1000 -daemon
