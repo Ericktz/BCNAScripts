@@ -47,16 +47,6 @@ OFT
  sleep 5
 done
 }
-choice(){
-clear
-echo "#######################################" && echo "## BitCanna Wallet Installation Menu ##" && echo "#######################################"
-read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M): " choiz;
-case \$choiz in
-    p|P) echo "########################################" && echo "## Selected Stake - POS Configuration ##" && echo "########################################" && sleep 0.5 && stake  ;;
-    m|M) echo "############################################" && echo "## Selected MasterNode - MN Configuration ##" && echo "############################################" && sleep 0.5 && masternode ;;
-    *) echo "####################" && echo "## Invalid Option ##" && echo "####################" && sleep 0.5 ;;
-esac
-}
 firstrun(){
 clear
 echo "######################################" && echo "## Lets Initiate configurations ... ##" && echo "######################################" && sleep 0.5
@@ -99,7 +89,7 @@ Dump: \$BCNADUMP
 EOF
 BCKWLT=\$(bitcanna-cli backupwallet $BCNAHOME/BACKUP/wallet.dat)
 \$BCKWLT
-if [ "\$choiz" == "m" ] || [ "\$choiz" == "M" ]
+if [ "$choiz" == "m" ] || [ "$choiz" == "M" ]
  then
   cp $BCNACONF/masternode.conf $BCNAHOME/BACKUP/masternode.conf
 fi
@@ -123,7 +113,7 @@ bitcannad -daemon
 sleep 15
 WLTUNLOCK=\$"bitcanna-cli walletpassphrase \$WALLETPASS 0 false"
 \$WLTUNLOCK
-if [ "\$choiz" == "p" ] || [ "\$choiz" == "P" ]
+if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
  then
  clear && sleep 1 && echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
   WLTUNLOCK=\$"bitcanna-cli walletpassphrase \$WALLETPASS 0 true"
@@ -242,7 +232,7 @@ final(){
 clear
 bitcanna-cli stop
 sleep 5
-if [ "\$choiz" == "p" ] || [ "\$choiz" == "P" ]
+if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
 then
 bitcannad -daemon
 sleep 10
@@ -267,7 +257,6 @@ EOF
 fi
 sleep 5
 }
-choice
 mess
 final
 clear
