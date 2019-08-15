@@ -28,7 +28,7 @@ cat<< EOF
 ##                                                                              ##
 ##################################################################################
 ##                                                                              ##
-##      Project Status: V1.9.8                                                  ##
+##      Project Ver: V1.9.8.15                                                  ##
 ##                                                                              ##
 ##  by DoMato aka hellresistor                                                  ##
 ##  Support donating Bitcanna                                                   ##
@@ -40,7 +40,7 @@ cat<< EOF
 ##  HAVE IN MIND!! EVERY TIME DO YOUR OWN BACKUPS BEFORE USING THIS SCRIPT      ##
 ##            I have NO responsability about system corruption!                 ##
 ##                     Use this Script at your own risk!                        ##
-##                                                                              ##
+##                   (leave feedback, issues, suggestions)                      ##
 ##################################################################################
 EOF
 echo "Continue this Script are Accepting you are the only responsible"
@@ -169,8 +169,7 @@ bypass(){
 clear
 echo "##########################################" && echo "## Preparing Script to Continue with $BCNAUSER ##" && echo "##########################################"
 cat<<FOP > $BCNAHOME/BCNA-Installer2.sh
- #!/bin/bash
-#### PREPARED TO JOIN WITH BCNA_INSTALLER.SH
+#!/bin/bash
 clear
 intro(){
 cat<< EOF
