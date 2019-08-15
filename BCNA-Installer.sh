@@ -52,15 +52,10 @@ cat<< EIF
 EIF
 sleep 2
 }
-choice(){
+choi(){
 clear
 echo "#######################################" && echo "## BitCanna Wallet Installation Menu ##" && echo "#######################################"
-read -n 1 -p "Would you like Configure STAKE (POS) or MasterNode (MN)? (P/M): " choiz;
-case $choiz in
-    p|P) echo "########################################" && echo "## Selected Stake - POS Configuration ##" && echo "########################################" && sleep 0.5 && stake  ;;
-    m|M) echo "############################################" && echo "## Selected MasterNode - MN Configuration ##" && echo "############################################" && sleep 0.5 && masternode ;;
-    *) echo "####################" && echo "## Invalid Option ##" && echo "####################" && sleep 0.5 ;;
-esac
+read -n 1 -p "Would you like Configure, Full Node (P.O.Stake) or MasterNode (MN)? (P/M): " choiz;
 }
 check(){
 echo "###########################################" && echo "## Checking If script is running as root ##" && echo "###########################################" && sleep 1
@@ -173,8 +168,8 @@ rm $BCNAHOME/$BCNAPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 intro
-choice
 check
+choi
 getinfo
 userad
 bcnadown
