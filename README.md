@@ -11,9 +11,10 @@ BCNA_Install.sh -> Run as ROOT USER to preparing the system to receive Bitcanna 
 BCNA_Continue.sh -> Will only used with User created! When you choose you like SetUp a BitCanna Full Node (PoS) or MasterNode (MN)
 (*) In time will be joined into one file only.
 
-# !!!!ATTETION!!!!!
+# !!!!ATTENTION!!!!!
 To Run the MasterNode YOU NEED AT LEAST 100K (100.000) of BCNA (BitCanna Coins)!!
-Please Read the BitCanna WhitePaper at https://www.bitcanna.io/whitepaper/
+Please, Read the BitCanna WhitePaper at https://www.bitcanna.io/whitepaper/
+Please, Protect your SERVER! Can use this script to Hardening Server (https://github.com/konstruktoid/hardening.git) or Do an Server Audit with Lynis (https://github.com/CISOfy/lynis.git). PS: This Scripts are in development/Update/Upgrade every time. Sure you have know what are you doing!
 
 # STATUS: *V1.9.8*
 
