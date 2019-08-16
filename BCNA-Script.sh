@@ -477,7 +477,7 @@ fwll(){
 clear
 echo "##############################" && echo "## Openning Port $BCNAPORT" ##" && echo "##  WILL FLASH ACTUAL RULES   ##" && echo "##############################" && sleep 5
 #Lets do It SBasic ....
-iptables -A INPUT -p tcp --dport $BCNAPORT
+iptables -A INPUT -p tcp -m tcp --dport $BCNAPORT -j ACCEPT
 iptables -L -n
 iptables-save | sudo tee /etc/sysconfig/iptables
 read -n 1 -s -r -p "`echo -e '#########################################################################\n## PLEASE ITS APLLIED BASIC OPEN TO: 22, localhost and $BCNAPORT Ports ##\n##        And LAST BLOCK ALL!! Adapt your best firewall rules!!        ##\n#########################################################################\n Press any Key To Continue...'`"
