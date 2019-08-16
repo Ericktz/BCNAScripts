@@ -17,22 +17,23 @@ clear
 intro(){
 cat<< EOF
 ##################################################################################
-##                   Script Contribution to BitCanna Community                  ##
-##                           To Ubuntu 18.04 LTS Server                         ##
-##################################################################################
-## Executing this script you can Install and Configure your Bitcanna Wallet to: ##
-##                                                                              ##
-##          - Stake (Proof-Of-Stake)                                            ##
-##                                                                              ##
-##          - MN    (Master-Node)                                               ##
-##                                                                              ##
-##################################################################################
-##                                                                              ##
-##      Project Ver: V1.9.8.15                                                  ##
-##                                                                              ##
-##  by DoMato aka hellresistor                                                  ##
-##  Support donating Bitcanna                                                   ##
-##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
+jjt                                  Script Contribution to BitCanna Community  ##
+jjjj                                         To Ubuntu 18.04 LTS Server         ##
+jjjjj                              ###############################################
+jjjjj                                Executing this script you can Install and  ##
+jjjjj   tjtj          jjjjjj             Configure your Bitcanna Wallet to:     ##
+jjjjj jjjjjjjjj     jjjjjjjjjj                                                  ##
+jjjtj jjjjjjjjjj   tjjjjjjtjjjj               - Stake (Proof-Of-Stake)          ##
+jjjjjjjj    jjjjjijjjj      tjjj              - MN    (Master-Node)             ##
+jjjjij        jjj jijjj                                                         ##
+jjjjij         jjjjjj               ###############################################
+jjjjjj         jjjjjj                                                           ##
+jjtjjj         jjjjtj                          Project Ver: V1.9.8.15           ##
+jjjjjj         jjjjj j                                                          ##
+jjjjjjjj      jjjjjjjjjj,    tjjj           by DoMato aka hellresistor          ##
+  jjjjjjjjjjjjjtjj jjjjjjjjjjjjj            Support donating Bitcanna           ##
+   jjjjjjjjjjj jjj tjjjjjjjjjij                                                 ##
+     jjjjjjjjj       jjjjijjjj        BCNA: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL  ##
 ##                                                                              ##
 ################################################################################## 
 ##################################################################################
@@ -45,28 +46,6 @@ cat<< EOF
 EOF
 echo "Continue this Script are Accepting you are the only responsible"
 read -n 1 -s -r -p "Press any key to Executing this Script"
-clear
-cat<< EIF
-     jjjt 
-     jjjjj 
-     jjjjjj 
-     jjjjjj  
-     jjijjj   tjtj         jjjjjj
-     jjjjjj jjjjjjjjj    jjjjjjjjjj
-     jjjtjj jjjjjjjjjj  tjjjjjjtjjjj
-     jjjjjjjjjjijjjjjj tjjjjjjjjjjj 
-     jjjjjjjj    jjjjjijjjj    jj 
-     jjjjij        jjj jijjj 
-     jjjjij         jjjjjj 
-     jjjjjj         jjjjjj 
-     jjtjjjj        jjjjtj 
-     jjjjj:j        jjjjj j  
-     jjjjjjjjj     jjjjjjjjjj,    jj 
-       jjjjjjjjjjjjjtjj jjjjjjjjjjj  
-        jjjjjjjjjjj jjj tjjjjjjjjjij 
-          jjjjjjjjj       jjjjijj    
-                                                 
-EIF
 sleep 2
 }
 choi(){
@@ -444,28 +423,27 @@ final
 clear
 cat<<EOF
 
- __________   ___________   ___________   ___________  ___________   __        _   __        _  ___________  
-¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦      ¦¦¦ ¦¦¦¦      ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ 
-¦¦¦¯¯¯¯¯¯¯¦¦¦ ¯¯¯¯¦¦¦¯¯¯¯   ¯¯¯¯¦¦¦¯¯¯¯  ¦¦¦¯¯¯¯¯¯¯¯¯ ¦¦¦¯¯¯¯¯¯¯¦¦¦ ¦¦¦¦¦     ¦¦¦ ¦¦¦¦¦     ¦¦¦¦¦¦¯¯¯¯¯¯¯¦¦¦ 
-¦¦¦       ¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦       ¦¦¦ ¦¦¦¦¦¦    ¦¦¦ ¦¦¦¦¦¦    ¦¦¦¦¦¦       ¦¦¦ 
-¦¦¦_______¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦_______¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦¦¦¦_______¦¦¦ 
-¦¦¦¦¦¦¦¦¦¦¦¦      ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦  ¦¦¦  ¦¦¦ ¦¦¦  ¦¦¦  ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦ 
-¦¦¦¯¯¯¯¯¯¯¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦¯¯¯¯¯¯¯¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦ ¦¦¦   ¦¦¦ ¦¦¦¦¦¦¯¯¯¯¯¯¯¦¦¦ 
-¦¦¦       ¦¦¦     ¦¦¦           ¦¦¦      ¦¦¦          ¦¦¦       ¦¦¦ ¦¦¦    ¦¦¦¦¦¦ ¦¦¦    ¦¦¦¦¦¦¦¦¦       ¦¦¦ 
-¦¦¦_______¦¦¦ ____¦¦¦____       ¦¦¦      ¦¦¦_________ ¦¦¦       ¦¦¦ ¦¦¦     ¦¦¦¦¦ ¦¦¦     ¦¦¦¦¦¦¦¦       ¦¦¦ 
-¦¦¦¦¦¦¦¦¦¦¦¦ ¦¦¦¦¦¦¦¦¦¦¦¦¦      ¦¦¦      ¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦¦       ¦¦¦ ¦¦¦      ¦¦¦¦ ¦¦¦      ¦¦¦¦¦¦¦       ¦¦¦ 
- ¯¯¯¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯¯¯¯¯        ¯        ¯¯¯¯¯¯¯¯¯¯¯  ¯         ¯   ¯        ¯¯   ¯        ¯¯  ¯         ¯  
+ ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄   ▄▄        ▄   ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  
+▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌ ▐░░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌ ▐░░▌      ▐░▌ ▐░░▌      ▐░▌▐░░░░░░░░░░░▌ 
+▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀█░█▀▀▀▀   ▀▀▀▀█░█▀▀▀▀  ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌ ▐░▌░▌     ▐░▌ ▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀█░▌ 
+▐░▌       ▐░▌     ▐░▌           ▐░▌      ▐░▌          ▐░▌       ▐░▌ ▐░▌▐░▌    ▐░▌ ▐░▌▐░▌    ▐░▌▐░▌       ▐░▌ 
+▐░█▄▄▄▄▄▄▄█░▌     ▐░▌           ▐░▌      ▐░▌          ▐░█▄▄▄▄▄▄▄█░▌ ▐░▌ ▐░▌   ▐░▌ ▐░▌ ▐░▌   ▐░▌▐░█▄▄▄▄▄▄▄█░▌ 
+▐░░░░░░░░░░▌      ▐░▌           ▐░▌      ▐░▌          ▐░░░░░░░░░░░▌ ▐░▌  ▐░▌  ▐░▌ ▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌ 
+▐░█▀▀▀▀▀▀▀█░▌     ▐░▌           ▐░▌      ▐░▌          ▐░█▀▀▀▀▀▀▀█░▌ ▐░▌   ▐░▌ ▐░▌ ▐░▌   ▐░▌ ▐░▌▐░█▀▀▀▀▀▀▀█░▌ 
+▐░▌       ▐░▌     ▐░▌           ▐░▌      ▐░▌          ▐░▌       ▐░▌ ▐░▌    ▐░▌▐░▌ ▐░▌    ▐░▌▐░▌▐░▌       ▐░▌ 
+▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄█░█▄▄▄▄       ▐░▌      ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌ ▐░▌     ▐░▐░▌ ▐░▌     ▐░▐░▌▐░▌       ▐░▌ 
+▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌      ▐░▌      ▐░░░░░░░░░░░▌▐░▌       ▐░▌ ▐░▌      ▐░░▌ ▐░▌      ▐░░▌▐░▌       ▐░▌ 
+ ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀        ▀        ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀   ▀        ▀▀   ▀        ▀▀  ▀         ▀  
 
-
-               ##################################################################################
-               ##                                                                              ##
-               ##                     Project Ver: V1.9.8.15                                   ##
-               ##                                                                              ##
-               ##  by DoMato aka hellresistor                                                  ##
-               ##  Support donating Bitcanna                                                   ##
-               ##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
-               ##                                                                              ##
-               ##################################################################################
+             ##################################################################################
+             ##                                                                              ##
+             ##                         Project Ver: V1.9.8.15                               ##
+             ##                                                                              ##
+             ##  by DoMato aka hellresistor                                                  ##
+             ##                       Support donating Bitcanna                              ##
+             ##  BCNA Address: B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL                            ##
+             ##                                                                              ##
+             ##################################################################################
 EOF
 sleep 5
 FOP
