@@ -243,6 +243,10 @@ WLTUNLOCK=\$"bitcanna-cli walletpassphrase \$WALLETPASS 0 false"
 \$WLTUNLOCK
 BCNADUMP=\$(bitcanna-cli dumpprivkey "\$WLTADRS")
 cat <<EOF > $BCNAHOME/BACKUP/walletinfo.txt
+Server Info:
+Host: \$HOSTNAME
+IP: \$VPSIP
+Wallet Info:
 Address: \$WLTADRS
 Password: \$WALLETPASS
 Dump: \$BCNADUMP
