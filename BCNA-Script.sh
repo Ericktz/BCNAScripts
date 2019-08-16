@@ -78,8 +78,8 @@ if [ "root" != "$USER" ]
 fi
 }
 getinfo(){
-echo "###################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "###################"
-read -p"`echo -e '###################\n## What is New User to BCNA Wallet?:  '`" BCNAUSER 
+echo "#######################################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "#######################################"
+read -p"`echo -e '#######################################\n## What is New User to BCNA Wallet?:  '`" BCNAUSER 
 varys
 echo "#####################################" && echo "## Getting Public/External IP SRV ##" && echo "#####################################"
 VPSIP="$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')"
@@ -154,7 +154,7 @@ echo "##########################################" && echo "## BitCanna Service (
 }
 bypass(){
 clear
-echo "################################################" && echo "## Preparing Script to Continue with user: $BCNAUSER ##" && echo "################################################"
+echo "###################################################" && echo "## Preparing Script to Continue with user: $BCNAUSER ##" && echo "###################################################"
 cat<<FOP > $BCNAHOME/BCNA-Installer2.sh
 #!/bin/bash
 clear
@@ -272,9 +272,11 @@ sleep 5
 }
 cryptwallet(){
 read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
+echo "################################" && echo "##Please Wait a little bit... ##" && echo "################################"
 WLTPSSCMD=\$"bitcanna-cli encryptwallet \$WALLETPASS"
 \$WLTPSSCMD
-sleep 5
+sleep 15
+echo "###################################################" && echo "## Restart BitCanna Wallet with Wallet Encrypted ##" && echo "###################################################"
 bitcannad -daemon
 sleep 15
 WLTUNLOCK=\$"bitcanna-cli walletpassphrase \$WALLETPASS 0 false"
@@ -284,10 +286,10 @@ if [ "$choiz" == "p" ] || [ "$choiz" == "P" ]
  clear && sleep 1 && echo "############################" && echo "## Set to Staking forever ##" && echo "############################" && sleep 0.5
   WLTUNLOCK=\$"bitcanna-cli walletpassphrase \$WALLETPASS 0 true"
   \$WLTUNLOCK
-  echo "##############" && echo "## Unlocked to Stake! ##" && echo "##############" && sleep 3 
+  sleep 2 && echo "##############" && echo "## Unlocked to Stake! ##" && echo "##############" && sleep 3 
   WLTSTAKE=\$"bitcanna-cli setstakesplitthreshold $STAKE"
   \$WLTSTAKE
-  echo "##############" && echo "## Staking with $STAKE ! ##" && echo "##############" && sleep 3
+  sleep 2 && echo "##############" && echo "## Staking with $STAKE ! ##" && echo "##############" && sleep 3
  fi
 }
 walletposconf(){
@@ -458,7 +460,7 @@ cat<<ETF
 ## System ready for BitCanna Wallet installation ##
 ###################################################
 ##      !!!! Dont Forget To Continue !!!!        ##
-##      Next Login, With User: $BCNAUSER         ##
+##       Next Login, With User: $BCNAUSER         ##
 ###################################################
 ETF
 read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 2 && reboot
