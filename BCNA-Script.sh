@@ -98,14 +98,14 @@ cat <<ETF
 ##            Make sure WILL BE like this:              ##
 ##########################################################
 ##########################################################
-##   root	ALL=(ALL:ALL) ALL                             ##
-##   $BCNAUSER	ALL=(ALL:ALL) ALL                       ## 
+##   root ALL=(ALL:ALL) ALL                             ##
+##   $BCNAUSER ALL=(ALL:ALL) ALL                       ## 
 ##########################################################
 ## MAKE SURE IS A <TAB-SPACE> BETWEEN $BCNAUSER and ALL ##
 ##########################################################
 ## Copy this line to easy things a little bit           ##
-## $BCNAUSER	 ALL=(ALL:ALL) ALL                        ##
-## You need PASTE below of line: root	ALL=(ALL:ALL) ALL ##
+## $BCNAUSER ALL=(ALL:ALL) ALL                        ##
+## You need PASTE below of line: root ALL=(ALL:ALL) ALL ##
 ##########################################################
 ETF
 read -n 1 -s -r -p "Press any key to continue to VISUDO" && visudo
@@ -200,7 +200,7 @@ do
 ##############################################
 OFT
  BLKCNT=\$(bitcanna-cli getblockcount)
- BLKHSH=\$(bitcanna-cli getblockhash $BLKCNT)
+ BLKHSH=\$(bitcanna-cli getblockhash \$BLKCNT)
  t=\$(bitcanna-cli getblock "\$BLKHSH" | grep '"time"' | awk -F ":" '{print \$2}' | sed -e 's/,\$//g')
  cur_t=\$(date +%s)
  diff_t=\$[\$cur_t - \$t]
@@ -235,7 +235,7 @@ mkdir $BCNAHOME/BACKUP && chmod 700 $BCNAHOME/BACKUP
 cat<<EOF 
 #########################################################
 ## To Do This you need set Unlock wallet and NOT stake ##
-## 			                                       			       ##
+##                                                     ##
 ##            Write your wallet password               ##
 #########################################################
 EOF
