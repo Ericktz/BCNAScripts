@@ -6,11 +6,14 @@
 EXTRACTEDPKG=bcna_unix_29_07_19
 ####################################
 varys(){
+STAKE="100"    ### Can ChangeIt!! Sure yourself You Know What Are You Doing!! ###
+BCNAREP="https://github.com/BitCannaGlobal/BCNA/releases/download"
+GETLAST=$(curl --silent "https://api.github.com/repos/BitCannaGlobal/BCNA/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+BCNAPKG="bcna-$GETLAST-unix.zip"
 BCNAHOME=/home/$BCNAUSER
 BCNACONF=$BCNAHOME/.bitcanna
 BCNADIR=$BCNAHOME/Bitcanna
 BCNAPORT="12888"
-STAKE="100"    #<-- Can ChangeIt!! Sure yourself You Know What Are You Doing!!
 }
 ####################################
 clear
@@ -75,8 +78,8 @@ if [ "root" != "$USER" ]
 fi
 }
 getinfo(){
-echo "#######################################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "#######################################"
-read -p"`echo -e '##########################################################\n## What is New User to BCNA Wallet? (default. bitcanna):  '`" BCNAUSER 
+echo "###################" && echo "## Some questions to do before start ##"  && sleep 0.4 && echo "###################"
+read -p"`echo -e '###################\n## What is New User to BCNA Wallet?:  '`" BCNAUSER 
 varys
 echo "#####################################" && echo "## Getting Public/External IP SRV ##" && echo "#####################################"
 VPSIP="$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}')"
@@ -111,11 +114,8 @@ echo "##################################################" && echo "## User $BCNA
 bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
-BCNAREP="https://github.com/BitCannaGlobal/BCNA/releases/download"
-GETLAST=$(curl --silent "https://api.github.com/repos/BitCannaGlobal/BCNA/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
-BCNAPKG="bcna-$GETLAST-unix.zip"
 wget -P $BCNAHOME $BCNAREP/$GETLAST/$BCNAPKG
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG && cp $EXTRACTEDPKG/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp bcna_unix_29_07_19/* /usr/local/bin && chmod +x /usr/local/bin/bitcanna*
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG && cp $EXTRACTEDPKG/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp $EXTRACTEDPKG/* /usr/local/bin && chmod +x /usr/local/bin/bitcanna*
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 service(){
@@ -468,6 +468,7 @@ clear && sleep 0.5 && echo "#########################" && echo "## Cleaning the 
 rm $HOME/bcna_unix_29_07_19
 rm $HOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
+rm $BCNAHOME/$EXTRACTEDPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
 fwll(){
