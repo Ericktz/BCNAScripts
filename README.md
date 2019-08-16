@@ -15,7 +15,7 @@ Please, Read the BitCanna WhitePaper at https://www.bitcanna.io/whitepaper/
 
 Please, Protect your SERVER! Can use this script to Hardening Server (https://github.com/konstruktoid/hardening.git) or Do an Server Audit with Lynis (https://github.com/CISOfy/lynis.git).
 
-PS: This Scripts are in development/Update/Upgrade every time. Sure you have know what are you doing!
+PS: This Scripts always in development/Update/Upgrade every time. Sure you have know what are you doing!
 
 
 # STATUS: *V1.9.8.15*
@@ -38,8 +38,10 @@ $ apt update && apt upgrade -y && apt install -y git unzip iptables
 
 # Run:
 $ git clone https://github.com/hellresistor/BCNAScripts.git && chmod 770 -R BCNAScripts && ./BCNAScripts/BCNA-Installer.sh
+
 Or
-$ wget https://raw.githubusercontent.com/hellresistor/BCNAScripts/Joining/BCNA-Script.sh && chmod 700 BCNA-Script.sh  && ./BCNA-Script.sh
+
+$ wget https://raw.githubusercontent.com/hellresistor/BCNAScripts/master/BCNA-Script.sh && chmod 700 BCNA-Script.sh  && ./BCNA-Script.sh
 
 # $ Please, Check all code! Not Judge me before read it! So much work done here, some respect will be gratefull $
  
