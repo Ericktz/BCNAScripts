@@ -473,18 +473,18 @@ echo "##############################" && echo "## Cleaned garbage and tracks ##"
 fwll(){
 clear
 echo "#################################################################" && echo "## Openning Port $BCNAPORT and 22(SSH) on Firewall (iptables)" ##" && echo "##            WILL FLASH ACTUAL RULES              ##" && echo "#################################################################" && sleep 5
- iptables -F
- iptables -P INPUT DROP
- iptables -P FORWARD DROP
- iptables -P OUTPUT ACCEPT
- iptables -A INPUT -i lo -j ACCEPT
- iptables -A INPUT -p tcp --dport 22 -j ACCEPT
- iptables -A INPUT -p tcp --dport $BCNAPORT -j LOG --log-level 7 --log-prefix "Accept $BCNAPORT HTTP"
- iptables -A INPUT -p tcp -d $HOSTNAME --dport $BCNAPORT -j ACCEPT 
- iptables -A INPUT -d $HOSTNAME -j LOG --log-level 7 --log-prefix "Default Deny"
- iptables -A INPUT -j DROP 
- netfilter-persistent save
- netfilter-persistent restart
+#Lets do It SBasic ....
+iptables -F
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport $BCNAPORT
+iptables -A INPUT -j DROP 
+netfilter-persistent save
+netfilter-persistent restart
+read -n 1 -s -r -p "`echo -e '#########################################################################\n## PLEASE ITS APLLIED BASIC OPEN TO: 22, localhost and $BCNAPORT Ports ##\n##        And LAST BLOCK ALL!! Adapt your best firewall rules!!        ##\n#########################################################################\n Press any Key To Continue...'`"
 }
 intro
 check
