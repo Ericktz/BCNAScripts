@@ -476,8 +476,8 @@ echo "#################################################################" && echo
  iptables -A INPUT -i lo -j ACCEPT
  iptables -A INPUT -p tcp --dport 22 -j ACCEPT
  iptables -A INPUT -p tcp --dport $BCNAPORT -j LOG --log-level 7 --log-prefix "Accept $BCNAPORT HTTP"
- iptables -A INPUT -p tcp -d $VPSIP --dport $BCNAPORT -j ACCEPT 
- iptables -A INPUT -d $VPSIP -j LOG --log-level 7 --log-prefix "Default Deny"
+ iptables -A INPUT -p tcp -d $HOSTNAME --dport $BCNAPORT -j ACCEPT 
+ iptables -A INPUT -d $HOSTNAME -j LOG --log-level 7 --log-prefix "Default Deny"
  iptables -A INPUT -j DROP 
  netfilter-persistent save
  netfilter-persistent restart
