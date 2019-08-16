@@ -264,7 +264,7 @@ tar -zcvf $BCNAHOME/WalletBackup.tar.gz $BCNAHOME/BACKUP && chmod 500 $BCNAHOME/
 cat<<EOF
 #################################################################
 ## Info Wallet Backuped in: $BCNAHOME/WalletBackup.tar.gz 
-##						                !!!PLEASE!!!	                          ##
+##                        !!!PLEASE!!                          ##
 ##        SAVE THIS FILE ON MANY DEVICES ON SECURE             ##
 #################################################################
 EOF
@@ -272,7 +272,7 @@ sleep 5
 }
 cryptwallet(){
 read -s -p "Set PassPhrase to wallet.dat: " WALLETPASS
-echo "################################" && echo "##Please Wait a little bit... ##" && echo "################################"
+echo && echo "################################" && echo "##Please Wait a little bit... ##" && echo "################################"
 WLTPSSCMD=\$"bitcanna-cli encryptwallet \$WALLETPASS"
 \$WLTPSSCMD
 sleep 15
