@@ -30,11 +30,11 @@ PS: This Scripts always in development/Update/Upgrade every time. Sure you have 
  - Configuration Bitcanna MasterNode (see BCNA MasterNode Guide)
  - Adding bitcanna AS BINary (just type: $ bitcannd OR $ bitcanna-cli )
  - Encrypt wallets with password/passphrase
- - Backup (wallet.dat + wallet address + dumpprivkey + wallet pass = Backup.tar.gz)
+ - Backup (wallet.dat + wallet address + dumpprivkey + wallet pass = WalletBackup.tar.gz)
  - Final Cleaning and Fresh Running
 
 # Requirements: 
-$ apt update && apt upgrade -y && apt install -y git unzip iptables
+$ apt update && apt upgrade -y && apt install -y git unzip
 
 # Run:
 $ git clone https://github.com/hellresistor/BCNAScripts.git && chmod 770 -R BCNAScripts && ./BCNAScripts/BCNA-Installer.sh
@@ -63,8 +63,8 @@ Its every time open to new things to implementation.
 Bitcanna Telegram Channel (https://t.me/joinchat/F4JfThITJB3cU-uaCwtKlQ)
 
 # Extra
- Need a VPS to run MasterNode?? 
+ Need a VPS to run your FullNode or MasterNode?? 
 Time4VPS: https://www.time4vps.com/?affid=4335
- Need Get Some BitCannas To Staking or MasterNode?
-Coin Deal: https://coindeal.com/ref/AV4X
+ Need Get Some BitCanna To Staking or MasterNode?
+CoinDeal: https://coindeal.com/ref/AV4X
 Stex: https://app.stex.com/?ref=75177165
