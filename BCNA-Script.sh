@@ -115,7 +115,7 @@ bcnadown(){
 clear
 echo "###############################################################" && echo "## Lets Download and Extract the Bitcanna Wallet from GitHub ##" && echo "###############################################################"
 wget -P $BCNAHOME $BCNAREP/$GETLAST/$BCNAPKG
-mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG && cp $EXTRACTEDPKG/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp $EXTRACTEDPKG/* /usr/local/bin && chmod +x /usr/local/bin/bitcanna*
+mkdir $BCNADIR && unzip $BCNAHOME/$BCNAPKG -d $BCNAHOME && cp $BCNAHOME/$EXTRACTEDPKG/* $BCNADIR && chmod -R 770 $BCNADIR && chown -R $BCNAUSER $BCNADIR && cp $BCNAHOME/$EXTRACTEDPKG/* /usr/local/bin && chmod +x /usr/local/bin/bitcanna*
 echo "###########################################" && echo "## Downloaded and Extracted to: $BCNADIR ##" && echo "###########################################" && sleep 1
 }
 service(){
