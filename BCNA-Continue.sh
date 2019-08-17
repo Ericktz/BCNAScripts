@@ -1,3 +1,4 @@
+############# DEPRECATED ############
 #!/bin/bash
 #### PREPARED TO JOIN WITH BCNA_INSTALLER.SH
 clear
