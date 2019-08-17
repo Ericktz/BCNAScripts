@@ -31,7 +31,7 @@ jjjjjjjj    jjjjjijjjj      tjjj              - MN    (Master-Node)             
 jjjjij        jjj jijjj                                                         ##
 jjjjij         jjjjjj               ##############################################
 jjjjjj         jjjjjj                                                           ##
-jjtjjj         jjjjtj                          Project Ver: V1.9.8.15           ##
+jjtjjj         jjjjtj                          Project Ver: V1.9.8.18           ##
 jjjjjj         jjjjj j                                                          ##
 jjjjjjjj      jjjjjjjjjj,    tjjj           by DoMato aka hellresistor          ##
   jjjjjjjjjjjjjtjj jjjjjjjjjjjjj            Support donating Bitcanna           ##
