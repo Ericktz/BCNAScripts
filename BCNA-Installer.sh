@@ -1,3 +1,4 @@
+############# DEPRECATED ############
 #!/bin/bash
 ### Bitcanna Team!!
 # Compile next Version the Programs directly into .ZIP no into folder
