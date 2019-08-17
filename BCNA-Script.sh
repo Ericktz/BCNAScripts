@@ -3,16 +3,16 @@
 # Compile next Version of wallet directly into .ZIP no into folder with that name (or put the name same as package :p
 ### Pleaaasseee :P
 ####################################
-EXTRACTEDPKG=bcna_unix_29_07_19
+EXTRACTEDPKG="bcna_unix_29_07_19"
 ####################################
 varys(){
 STAKE="100"    ### Can ChangeIt!! Sure yourself You Know What Are You Doing!! ###
 BCNAREP="https://github.com/BitCannaGlobal/BCNA/releases/download"
 GETLAST=$(curl --silent "https://api.github.com/repos/BitCannaGlobal/BCNA/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
 BCNAPKG="bcna-$GETLAST-unix.zip"
-BCNAHOME=/home/$BCNAUSER
-BCNACONF=$BCNAHOME/.bitcanna
-BCNADIR=$BCNAHOME/Bitcanna
+BCNAHOME="/home/$BCNAUSER"
+BCNACONF="$BCNAHOME/.bitcanna"
+BCNADIR="$BCNAHOME/Bitcanna"
 BCNAPORT="12888"
 }
 ####################################
@@ -476,9 +476,8 @@ clear
 echo "##############################" && echo "## Openning Port $BCNAPORT" ##" && echo "##  WILL FLASH ACTUAL RULES   ##" && echo "##############################" && sleep 5
 #Lets do It SBasic ....
 iptables -A INPUT -p tcp -m tcp --dport $BCNAPORT -j ACCEPT
-iptables -L -n
 iptables-save | sudo tee /etc/sysconfig/iptables
-read -n 1 -s -r -p "`echo -e '#########################################################################\n## PLEASE ITS APLLIED BASIC OPEN TO: 22, localhost and $BCNAPORT Ports ##\n##        And LAST BLOCK ALL!! Adapt your best firewall rules!!        ##\n#########################################################################\n Press any Key To Continue...'`"
+read -n 1 -s -r -p "`echo -e '######################################################\n## PLEASE ITS APLLIED BASIC OPEN TO: $BCNAPORT Port ##\n##     PLEASE!! Adapt your best firewall rules!!    ##\n#######################################################\n Press any Key To Continue...'`"
 }
 intro
 check
