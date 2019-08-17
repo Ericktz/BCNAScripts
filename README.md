@@ -18,11 +18,11 @@ Please, Protect your SERVER! Can use this script to Hardening Server (https://gi
 PS: This Scripts always in development/Update/Upgrade every time. Sure you have know what are you doing!
 
 
-# STATUS: *V1.9.8.15*
+# STATUS: *V1.9.8.18*
 
 *BCNA_Script.sh Container:*
  - Create Username to Bitcanna Wallet
- - Prepare User to sudo (visudo)
+ - Prepare User as a sudo member
  - Download and Extract bcna-1.0.0-unix.zip
  - Configure Bitcanna run as Service
  - Configure Firewall to Bitcanna e SSH (RUN YOUR SCRIPT RULES)
