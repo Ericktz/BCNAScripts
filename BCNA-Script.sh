@@ -29,7 +29,7 @@ jjjjj jjjjjjjjj     jjjjjjjjjj                                                  
 jjjtj jjjjjjjjjj   tjjjjjjtjjjj               - Stake (Proof-Of-Stake)          ##
 jjjjjjjj    jjjjjijjjj      tjjj              - MN    (Master-Node)             ##
 jjjjij        jjj jijjj                                                         ##
-jjjjij         jjjjjj               ###############################################
+jjjjij         jjjjjj               ##############################################
 jjjjjj         jjjjjj                                                           ##
 jjtjjj         jjjjtj                          Project Ver: V1.9.8.15           ##
 jjjjjj         jjjjj j                                                          ##
