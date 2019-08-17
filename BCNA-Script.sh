@@ -378,9 +378,8 @@ fi
 }
 mess(){
 clear && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
-rm $BCNADIR/bcna_unix_29_07_19
 rm -R -f $BCNAHOME/BACKUP
-rm $BCNAHOME/.bash_history
+echo " " > $HOME/.bash_history
 sed -i "/BCNA-Installer2.sh/d" $BCNAHOME/.bashrc
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
 }
@@ -467,8 +466,7 @@ read -n 1 -s -r -p "Press any key to REBOOT" && echo "Rebooting..." && sleep 2 &
 }
 mess(){
 clear && sleep 0.5 && echo "#########################" && echo "## Cleaning the things ##" && echo "#########################"
-rm $HOME/bcna_unix_29_07_19
-rm $HOME/.bash_history
+echo " " > $HOME/.bash_history
 rm $BCNAHOME/$BCNAPKG
 rm $BCNAHOME/$EXTRACTEDPKG
 echo "##############################" && echo "## Cleaned garbage and tracks ##" && echo "##############################" && sleep 1
