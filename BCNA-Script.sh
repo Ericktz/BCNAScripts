@@ -412,6 +412,8 @@ EOF
 else
 bitcannad --maxconnections=1000 -daemon
 sleep 10
+bitcanna-cli walletpassphrase \$WALLETPASS 0 false
+sleep 10
 bitcanna-cli masternode start-many
 sleep 2
 cat<<EOF
