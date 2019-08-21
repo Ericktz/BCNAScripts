@@ -18,14 +18,14 @@ Please, Protect your SERVER! Can use this script to Hardening Server (https://gi
 PS: This Scripts always in development/Update/Upgrade every time. Sure you have know what are you doing!
 
 
-# STATUS: *V1.9.8.18*
+# STATUS: *V1.9.8.21*
 
 *BCNA_Script.sh Container:*
  - Create Username to Bitcanna Wallet
  - Prepare User as a sudo member
  - Download and Extract bcna-1.0.0-unix.zip
  - Configure Bitcanna run as Service
- - Configure Firewall to Bitcanna e SSH (RUN YOUR SCRIPT RULES)
+ *(TEMPORARY REMOVED) - Configure Firewall to Bitcanna e SSH (RUN YOUR SCRIPT RULES)*
  - Configuration Bitcanna FullNode to Proof-of-Stake (see BCNA FullNode Guide)
  - Configuration Bitcanna MasterNode (see BCNA MasterNode Guide)
  - Adding bitcanna AS BINary (just type: $ bitcannd OR $ bitcanna-cli )
@@ -65,6 +65,7 @@ Bitcanna Telegram Channel (https://t.me/joinchat/F4JfThITJB3cU-uaCwtKlQ)
 # Extra
  Need a VPS to run your FullNode or MasterNode?? 
 Time4VPS: https://www.time4vps.com/?affid=4335
+
  Need Get Some BitCanna To Staking or MasterNode?
 CoinDeal: https://coindeal.com/ref/AV4X
 Stex: https://app.stex.com/?ref=75177165
