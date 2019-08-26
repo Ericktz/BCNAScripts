@@ -40,7 +40,7 @@ PS: This Scripts always in development/Update/Upgrade every time. Sure you have 
 
 To Best Experience of this script, Recommended set on Putty Console Window Settings. Should be: Columns:90 Rows:35 (check in screenshots/0-PuttyConf.png)
 
-$ apt update && apt upgrade -y && apt install -y git unzip
+$ apt update && apt upgrade -y && apt install -y git unzip fail2ban ufw
 
 # Run:
 $ git clone https://github.com/hellresistor/BCNAScripts.git && chmod 770 -R BCNAScripts && ./BCNAScripts/BCNA-Script.sh
