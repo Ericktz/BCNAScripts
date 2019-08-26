@@ -888,7 +888,7 @@ echo "####################################################
 ####################################################"
 
 sleep 1
-ufw allow $BCNAPORT && ufw allow ssh && ufw allow http && ufw allow https 
+ufw allow $BCNAPORT
 ufw enable
 
 echo "########################################################
