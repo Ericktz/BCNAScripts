@@ -18,14 +18,17 @@ Please, Protect your SERVER! Can use this script to Hardening Server (https://gi
 PS: This Scripts always in development/Update/Upgrade every time. Sure you have know what are you doing!
 
 
-# STATUS: *V1.9.8.21*
+# STATUS: *V1.9.8.27*
+*Update*
+ - Add Allow Rule to Bitcanna Port on UFW Firewall (ONLY ADD 12888 PORT)
+ - Add Bitcanna jails on Fail2Ban
+ - Add User Terminal Console
 
 *BCNA_Script.sh Container:*
  - Create Username to Bitcanna Wallet
  - Prepare User as a sudo member
  - Download and Extract bcna-1.0.0-unix.zip
  - Configure Bitcanna run as Service
- *(TEMPORARY REMOVED) - Configure Firewall to Bitcanna e SSH (RUN YOUR SCRIPT RULES)*
  - Configuration Bitcanna FullNode to Proof-of-Stake (see BCNA FullNode Guide)
  - Configuration Bitcanna MasterNode (see BCNA MasterNode Guide)
  - Adding bitcanna AS BINary (just type: $ bitcannd OR $ bitcanna-cli )
@@ -34,6 +37,9 @@ PS: This Scripts always in development/Update/Upgrade every time. Sure you have 
  - Final Cleaning and Fresh Running
 
 # Requirements: 
+
+To Best Experience of this script, Recommended set on Putty Console Window Settings. Should be: Columns:90 Rows:35 (check in screenshots/0-PuttyConf.png)
+
 $ apt update && apt upgrade -y && apt install -y git unzip
 
 # Run:
@@ -47,7 +53,7 @@ $ wget https://raw.githubusercontent.com/hellresistor/BCNAScripts/master/BCNA-Sc
  
 # Support donating:
 You like, as usefull, or saved you much time
-fell free do donating some CBD with Bitcanna Coins.
+fell free do give tips to get some CBD with Bitcanna Coins.
 BCNA:  B9bMDqgoAY7XA5bCwiUazdLKA78h4nGyfL
 
 # 420 Time
