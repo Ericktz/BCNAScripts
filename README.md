@@ -37,7 +37,7 @@ PS: This Scripts always in development/Update/Upgrade every time. Sure you have 
 $ apt update && apt upgrade -y && apt install -y git unzip
 
 # Run:
-$ git clone https://github.com/hellresistor/BCNAScripts.git && chmod 770 -R BCNAScripts && ./BCNAScripts/BCNA-Installer.sh
+$ git clone https://github.com/hellresistor/BCNAScripts.git && chmod 770 -R BCNAScripts && ./BCNAScripts/BCNA-Script.sh
 
 Or
 
