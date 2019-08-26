@@ -918,7 +918,7 @@ maxretry = 0
 bantime  = 1w
 findtime = 1d
 [Definition]
-failregex = .*receive version message: Why\? Because fuck u.*peeraddr=<HOST>:.*
+failregex = .*receive version message: Why\? Because fack u.*peeraddr=<HOST>:.*
 ignoreregex =
 EOF
 
@@ -947,7 +947,7 @@ fail2ban-client reload
 fail2ban-client add bitcanna
 fail2ban-client add bitcannad_banned
 
-echo"###########################################
+echo "###########################################
 ## Fail 2 Ban Configured to $CRYPTOCOIN
 ###########################################"
 sleep 3
