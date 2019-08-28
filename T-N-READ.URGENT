@@ -1,0 +1,16 @@
+# To N00bs Needs Read This ASAP
+
+If you are new or low exp with linux servers
+VPS - Virtual Private Servers or home/enterprise servers ...
+
+Please ... don't run wallet or other serices before do this!:
+- Create a admin user with sudo permissions and do strong password
+- Change SSH Server Port .. Change to any . UNLESS 22 (this will stop the auto bruteforce ssh spyers ;) )
+- Add a SSH Key Authentication to admin user
+- Remove Password and root authentication on SSH Server
+
+
+
+If you have troubles with this ...
+MAYYYBEEEE I can get to you a init-script to do that on first run / installation of server ;)
+Contact me: See README 
