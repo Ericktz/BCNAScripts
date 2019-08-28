@@ -33,7 +33,7 @@ cat<< EOF
 ##  bbbbib        bbb bibbb                                                     ##
 ##  bbbbib         bbbbbb             ############################################
 ##  bbbbbb         bbbbbb                                                       ##
-##  bbcbbb         bbbbcb                      Project Ver: V1.9.8.27           ##
+##  bbcbbb         bbbbcb                      Project Ver: V1.9.8.28           ##
 ##  bbbbbb         bbbbbcb                                                      ##
 ##  bbbbbbbb      bbbbbbbbbc     cbbb       by DoMato aka hellresistor          ##
 ##    bbbbbbbbbbbbbcbb bbbbbbbbbbbbb        Support donating Bitcanna           ##
@@ -136,7 +136,7 @@ echo "##################################################
 ## Creating user to bitcanna and add to sudoers ##
 ##################################################"
 
-adduser $BCNAUSER --shell=/bin/bash
+adduser $BCNAUSER --shell=/bin/bash --gecos GECOS
 usermod -aG sudo $BCNAUSER
 
 sed -i "/root/a$BCNAUSER\tALL=(ALL:ALL) ALL" /etc/sudoers
@@ -196,7 +196,7 @@ if [ "$choiz" == "m" ] || [ "$choiz" == "M" ]
   echo "ExecStart=$BCNADIR/bitcannad -daemon -pid=$BCNACONF/bitcannad.pid -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONF" >> /tmp/bitcannad.service
 fi
 cat <<EOF>> /tmp/bitcannad.service
-ExecStop=$BCNADIR/bitcanna-cli stop
+ExecStop=$BCNADIR/bitcanna-cli -conf=$BCNACONF/bitcanna.conf -datadir=$BCNACONFstop
 Restart=on-failure
 PrivateTmp=true
 TimeoutStopSec=60s
@@ -302,36 +302,14 @@ done
 
 firstrun(){
 clear
-echo "######################################
-## Lets Initiate configurations ... ##
-######################################"
-
-sleep 0.5
-bitcannad -daemon
-sleep 10
-
-cat <<EOF
-############################################
-##   COPY the Returned values (example):  ##
-##          rpcuser = xxxxxxxxxx          ##
-##          rpcpassword = yyyyyyy         ##
-############################################
-############################################
-## PASTE the line of rpcuser = xxxxxxxxxx ##
-############################################
-EOF
-
-read RPCUSR
-
-echo "###########################################
-## PASTE the line of rpcpassword=yyyyyyy ##
-###########################################"
-
-read RPCPWD
-echo \$RPCUSR >> $BCNACONF/bitcanna.conf
-echo \$RPCPWD >> $BCNACONF/bitcanna.conf
-rm $BCNACONF/masternode.conf
-
+echo "##############################################
+## Lets Generate a RPC User and Password... ##
+##############################################"
+mkdir $BCNACONF >/dev/null 2>&1
+RPCUSR=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w10 | head -n1)
+RPCPWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w22 | head -n1)
+echo "rpcuser=\$RPCUSR" >> $BCNACONF/bitcanna.conf
+echo "rpcpassword=\$RPCPWD" >> $BCNACONF/bitcanna.conf
 echo "#################################
 ## Initial Configurations Done ##
 #################################"
@@ -692,7 +670,7 @@ cat<<EOF
 
              ##################################################################################
              ##                                                                              ##
-             ##                         Project Ver: V1.9.8.27                               ##
+             ##                         Project Ver: V1.9.8.28                               ##
              ##                                                                              ##
              ##  by DoMato aka hellresistor                                                  ##
              ##                       Support donating Bitcanna                              ##
