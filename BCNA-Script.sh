@@ -80,15 +80,22 @@ check(){
 echo "###########################################
 ## Checking If script is running as root ##
 ###########################################"
-
 sleep 1
-if [ "root" != "$USER" ]
-  then  sudo su -c "$0" root
-  else
-  echo "#########################################
- ## You are Root! Will Continue! wait.. ##
- #########################################"
+
+if [ "$(whoami)" != "root" ]
+ then 
+ echo "###################
+## Login as root ##
+###################"
  sleep 2
+ clear
+ sudo su -c "$0" root
+ else
+  clear
+  echo "##################################
+## You are Root! Will Continue! ##
+##################################"
+sleep 2
 fi
 }
 
