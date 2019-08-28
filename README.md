@@ -18,11 +18,13 @@ Please, Protect your SERVER! Can use this script to Hardening Server (https://gi
 PS: This Scripts always in development/Update/Upgrade every time. Sure you have know what are you doing!
 
 
-# STATUS: *V1.9.8.27*
+# STATUS: *V1.9.8.28*
 *Update*
  - Add Allow Rule to Bitcanna Port on UFW Firewall (ONLY ADD 12888 PORT)
  - Add Bitcanna jails on Fail2Ban
- - Add User Terminal Console
+ - Add User Terminal Console (under Dev..)
+ - Removed manually rpcuser and rpcpassword
+ - Can be run as root or as a user as member of sudo group
 
 *BCNA_Script.sh Container:*
  - Create Username to Bitcanna Wallet
