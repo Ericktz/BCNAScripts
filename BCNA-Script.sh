@@ -55,7 +55,16 @@ echo && read -n 1 -s -r -p "Press any key to continue this Script..."
 sleep 0.5 && echo && echo
 }
 choi(){
+while true
+do
 clear
+echo "$USER"
+## Temporary Solved Issue to end with old user script
+## execution. And after sudo execution script will verified kill usradm script
+if [ "$(whoami)" != "root" ]
+ then 
+ exit 0
+fi
 cat<<EOF
 #######################################
 ## BitCanna Wallet Installation Menu ##
@@ -65,15 +74,16 @@ cat<<EOF
 ##   M --> MasterNode (MN)?          ##
 #######################################
 EOF
-read -n 1 -p "(P/M): " choiz;
+read -p "(P/M): " choiz;
 case $choiz in
-    p|P) echo ;;
-    m|M) echo ;;
+    p|P) break ;;
+    m|M) break ;;
     *) echo "########################
 ## Really??? Missed!? ##
 ########################"
        sleep 3 ;;
- esac
+esac
+done
 }
 
 check(){
@@ -81,7 +91,6 @@ echo "###########################################
 ## Checking If script is running as root ##
 ###########################################"
 sleep 1
-
 if [ "$(whoami)" != "root" ]
  then 
  echo "###################
